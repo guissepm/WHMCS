@@ -1,0 +1,745 @@
+﻿========================================================================
+--- WHMCS Module Release Notes ---
+========================================================================
+
+Released 5.2.1 on
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Feature] Improve log system
+* [Resolved] Template fix
+
+Released 5.2.0 on 03-JUN-2026
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Feature] Added the ability to edit DC token/delivery pricing
+* [Resolved] Improve language support
+
+Released 5.1.1 on 28-MAY-2026
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Resolved] CRON Job bug fix (FIX)
+
+Released 5.1.0 on 18-MAY-2026
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Feature] Prevent WHMCS email template reset during plugin re-activation
+* [Resolved] CS Token delivery pricing update via API (FIX)
+
+Released 5.0.1 on 27-APR-2026
+---------------------------------------------------------------------
+NEW FEATURES:
+* [FEATURE] Code optimization performed
+* [FEATURE] Proper CRON JOB adjusted
+
+Released 5.0.0 on 23-APR-2026
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Feature] DV/OV/EV and multi-domain certificates supported
+* [Feature] Automatic switch to email validation if DNS or HTTP file validation fails within 65 minutes
+* [Feature] Option for manual SSL download from Order page
+* [Feature] CMC and VMC generation process. Logo upload/change
+* [Feature] Product Sync. Enable/disable notification emails
+* [Resolved] CS Token delivery pricing update via API (FIX)
+
+Released 4.9.2 on 03-Nov-2025
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Resolved] WHMCS: JSON Malformed
+* [Resolved] WHMCS: invoicing
+* [Resolved] Minor Bug fixes.
+
+Released 4.9.1 on 17-Mar-2025
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Resolved] WHMCS: Activation Error.
+* [Resolved] Minor Bug fixes.
+
+Released 4.9 on 13-Dec-2024
+---------------------------------------------------------------------
+NEW FEATURES:
+
+* [Feature]  WHOIS Remove functionality
+* [Resolved] WHMCS: Validation Scope fixed the issue.
+* [Resolved] Minor Bug fixes.
+
+Released 4.8.4 on 03-Oct-2024
+---------------------------------------------------------------------
+NEW FEATURES:
+
+* [Resolved] Resolved WHMCS: CPAC issue.
+* [Resolved] Resolved WHMCS: common name not covering both versions.
+* [Resolved] Minor Bug fixes.
+
+Released 4.8.3 on 30-Sep-2024
+---------------------------------------------------------------------
+NEW FEATURES:
+
+* [Resolved] Resolved WHMCS: Extra SAN purchase error.
+* [Resolved] Resolved WHMCS: Addon Wildcard Authentication method issue.
+* [Resolved] Minor Bug fixes.
+
+Released 4.8.2 on 17-Sep-2024
+---------------------------------------------------------------------
+NEW FEATURES:
+
+* [Resolved] Resolved duplicate invoices generate after Cron run.
+* [Resolved] Improving AutoRenew Setting issue and fixed.
+* [Resolved] Minor Bug fixes.
+
+
+Released 4.8.1 on 24-July-2024
+---------------------------------------------------------------------
+NEW FEATURES:
+
+* [Feature] Module Email Improvements for email sending if action is needed.
+* [Feature] Multi-Year Improvements for added "Next Reissue Date" field in client area on WHMCS Details page.
+* [Feature] Added Extra Cron for Renewal Improvements orders to check all the orders & set to the updated details.
+* [Resolved] WHMCS One Time and Fix Configurable Options
+   •The nature of the identified bug and its impact on product pricing.
+   • Detailed explanation of the enhanced logic and its implementation.
+   • Instructions for using the updated "Fix Configurable Options" feature with "One-Time" settings.
+   • Troubleshooting steps for potential issues related to the new logic.
+
+* [Resolved] WHMCS Renewals Not Occurring
+  • Improve logging within our module to capture more detailed information about renewal orders.
+  • Ensure logs provide clear indicators of any issues encountered during the renewal process.
+
+* [Resolved] Including both WWW and Non-WWW for DigiCert products.
+* [Resolved] Minor Bug fixes.
+
+
+Released 4.8 on 08-Aug-2023
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Feature] Added WHMCS Streamlining Support Requests to added extra informations.
+* [Feature] Added WHMCS Add DC CS token activation for codesigning products.
+* [Resolved] WHMCS Reducing SQL Updates loging entry
+* [Resolved] Modify the WHMCS Module email logic so that it only dispatches cron related emails if there are actions needed.
+* [Resolved] WHMCS Fix functionality when AutoRenew & Enrollment Reminder option is selected only enrollment reminder emails are sent. not perform to AutoInstall process when selecting this option. After invoice is paid then plugin should send enrollment email so customer can input a new CSR every time.
+* [Resolved] The Hoster Profile displays two users and two cPanel accounts after WHMCS AutoInstall fills all domains. User 1 can choose domains that are associated with their cPanel account.
+* [Resolved] The moment retired products retain the ability to be renewed, we have added methodology to convert renewals on discontinued products to current skus. Ideally when retiring products, the Admin selects the new SKU for renewals.
+* [Resolved] WHMCS Fix File Auth Content when enabeled wildcard products remove file auth toggle from settings area.
+* [Resolved] WHMCS DigiCert DNS Domain Name Scope
+
+
+IMPROVEMENTS:
+* We have fixed the time-out problem that occurred when importing products. We have successfully reduced the time needed to complete the product import process.
+
+BUG FIXES:
+* Fixed issue of WHMCS SiteLock Order Enrollment Error
+* Fixed an issue of changing DCV method on Flex
+* Fixed issue of WHMCS Module Updating Items and Reporting Client IP
+* Fixed issues adding SANs to order
+
+---------------------------------------------------------------------
+Released 4.7.2 on 23-Nov-2023
+---------------------------------------------------------------------
+BUG FIXES:
+* Next Due Date setting issue resolved.
+* Added CNAME DCV Method for Comodo Products.
+* Fixed issue DigiCert DNS Domain Name Scope.
+* Various bug fixes.
+
+---------------------------------------------------------------------
+Released 4.7 on 08-Aug-2023
+---------------------------------------------------------------------
+NEW FEATURES:
+* A new option for “Disable Expiration Check” has been added to plugin settings area that will disable the order renewal date check. When enabled, the order can be renewed at any time without error or blocking from the plugin. 
+Please note that any roll-over days or days remaining on the old certificate may be forfeit if it is outside of the vendor allowed 30-day early renewal period. 
+
+IMPROVEMENTS:
+* We have removed any due date adjustments from the plugin code, so the due date will match the WHMCS issued due date (matching the order exp), unless otherwise designated in the plugin settings area set by the reseller.
+* We have added a “retire” function to bring our plugin more in-line with WHMCS standard product flows and to prevent database discrepancies for older orders using legacy products.
+* The “Symantec replacement list” has been removed since it is no longer relevant.
+* Minor UI improvements for wildcard DCV options and SiteLock products.
+
+BUG FIXES:
+* Changes to resolve duplicate invoicing experienced by some users.
+* Fixed an issue when trying to bulk update product pricing using plugin tool was returning an error.
+* Fixed issue where updating the DCV method after submission on Flex products was not syncing or submitting properly.
+* Fixed issues with AutoInstall flow in WHMCS because its function was not consistent.
+
+---------------------------------------------------------------------
+Released 4.6 on 15-May-2023
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added Code Signing Product's Industry changes.
+*[Resolved] Issue of Getting error after Invoice paid.
+*[Resolved] Renewal orders not syncing with old orders.
+
+BUG FIXES:
+
+---------------------------------------------------------------------
+Released 4.5 on 22-Mar-2023
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added ability to add product as Add-Ons.
+*[Resolved] Issue of Getting error after Invoice paid.
+*[Resolved] Cannot redeclare class domain.
+*[Resolved] Reissue count issue.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 4.4.3 on 09-Feb-2023
+---------------------------------------------------------------------
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 4.4.2 on 25-Jan-2023
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Resolved] Issue of Getting error after Invoice paid.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 4.4.1 on 22-Dec-2022
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Improvement] Improved Plugin compatibility with WHMCS v8.6.
+*[Improvement] Added support of PHP v8.1.
+*[Resolved] SiteLock Monitor product, set to annual instead of monthly subscription.
+*[Resolved] Reissue reminder email not sent issue has been solved.
+*[Resolved] A bug because of some data conflict, which causes issue in cron run.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 4.4 on 15-Jul-2022
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added SiteLock product compatibility.
+*[Improvement] Improved Plugin compatibility with WHMCS v8.5.1.
+*[Improvement] Improved CodeGuard product compatibility to WHMCS.
+*[Resolved] A bug because of Order Expiry date misconfigured with Next Due date and Next Invoice date, which causes issue of Duplicate Invoice generation for same service.
+*[Resolved] A bug because of some data conflict with email paramters of Autoinstall on SSL Renewal process, which causes issue in cron run.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 4.3.1 on 11-Apr-2022
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Improvement] Improved Plugin compatibility with WHMCS v8.4.1.
+*[Resolved] A bug because of some older WHMCS order stored invalid/blank date in order placed date, which causes issue in cron run.
+*[Resolved] Renew button at admin side does nothing is resolved.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 4.3 on 26-Jan-2022
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added options for choosing HTTP Auth (File validation) to hide it from the frontend. Because now wildcard domain does not support file validation.
+*[Feature] Added new special cron for syncing certificate start date and end date.
+*[Improvement] Improved WHMCS AutoRenew process. AutoRenew process will now perform based on the selection of AutoRenew Configuration.
+*[Improvement] Module log reporting is now converted to single date selection to maximum 7 Days date selection.
+*[Improvement] Module Other Settings section is redesigned to easy interaction with a user.
+*[Resolved] A bug because of some data missing in module, which causes issue reissue reminder.
+*[Resolved] A bug because of DCV Scope in San enabled products.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 4.2 on 10-Nov-2021
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added DCV scope (domain validation) selection feature for Digicert Single Domain products.so from now client can select DCV scope for domain validation.
+*[Improvement] Improved WHMCS Autoinstall process. From now wildcard domain does not support file validation so from now in our WHMCS AutoInstall we set email validation for that wildcard domains and display the instruction for the same on the thank you page.
+*[Resolved] A bug because of which Admin/Tech details missing on Auto Renewal orders.
+*[Resolved] A bug because of which additional days not added on Auto Renewal orders.
+*[Resolved] A bug because of which CPAC order details disappear.
+
+BUG FIXES:
+* Various bug fixes
+
+
+---------------------------------------------------------------------
+Released 4.1.1 on 04-Aug-2021
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Resolved] A bug because of which the renewal invoice log entry not found in the table "mod_sslstore_invoice_log" and because of that our module gives an error of "The order is already active" on auto renewal.
+
+BUG FIXES:
+* Various bug fixes
+
+
+---------------------------------------------------------------------
+Released 4.1 on 08-March-2021
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Improvement] Improved import products function so from now it will not import the products for the old product codes.
+*[Resolved] A bug because of which our module gives an error of "General Error: 1267 Illegal Mix of Collations" on cart and product pricing page.
+
+BUG FIXES:
+* Various bug fixes
+
+
+---------------------------------------------------------------------
+Released 4.0 on 20-Jan-2021
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added support for DigiCert Flex Products Integration.
+*[Feature] Added support for DigiCert Document Signing Products Integration.
+*[Improvement] Updated the renewal logic to 30 Days by default. For that we have reduced the number of days selection to “0,3,7,15” on the Module Settings page to set the certificate next due date, prior to the certificate expiration date.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 3.9.1 on 19-Oct-2020
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Improvement] Now the module is compatible with the WHMCS version 8.x.
+
+BUG FIXES:
+* Various bug fixes
+
+
+---------------------------------------------------------------------
+Released 3.9 on 26-Aug-2020
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added support for DigiCert Velocity Products Integration.
+*[Feature] Added support for DigiCert Code Signing Products Integration.
+*[Feature] Added support for DigiCert SMIME Products Integration.
+*[Feature] Added support for Digicert multiyear functionality.
+*[Feature] Added support for AutoInstall option selection for DigiCert Products.
+*[Feature] Added support of cpanelextended server for AutoInstall functionality.
+*[Improvement] Improved support for Sectigo multiyear functionality.
+*[Improvement] Improved upgrade product cost logic in profit report for CodeGuard products. 
+*[Improvement] From now cPanel API will be authenticate using API Token as well, before it was authenticated using the API password only.
+
+BUG FIXES:
+* Various bug fixes
+
+
+---------------------------------------------------------------------
+Released 3.8.2 on 30-March-2020
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added support for Digicert OV/EV Product Integration.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 3.8.1 on 09-March-2020
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added support for Codeguard Product Integration.
+*[Feature] Added support to purchase Sectigo products for 3 years.
+*[Improvement] Improved hook file condition so from now Configurable Options Upgrade link will not be hidden in client area for other products that should have this option.
+*[Resolved] An issue because of which the filter on Datewise Sales Report not working.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 3.8 on 23-Dec-2019
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added support to Purchase additional SANs on an active multi-domain order.
+*[Feature] Added support for display CSR information in certificate generation process.
+*[Improvement] The AuthToken is now saved in an encrypted format inside the database.
+*[Improvement] Files will no longer be displayed in list format when accessed using specific URLs.
+*[Improvement] Files will no longer be able to be viewed when accessed using specific URLs.
+*[Improvement] Improved UI on the Import Product page.
+*[Improvement] Added support for custom WHMCS Admin URLs in the module.
+*[Resolved] An issue where the domain name on the renewal may have been blank after running the renewal corn.
+*[Resolved] Added an exception to cease error logging in activity log when a cPanel hosting profile is not found.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 3.7.3 on 20-March-2019
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added support for Sectigo Product Integration.
+*[Resolved] A bug because of which the Renewal order process gives an error for expired certificate.
+
+---------------------------------------------------------------------
+Released 3.7.2 on 27-Feb-2019
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added an option on the WHMCS Admin side to select number of days to set the certificate next due date, prior to the certificate expiration date.
+*[Improvement] All the single cron files are deprecated from now.
+*[Improvement] We have added module update guide in this version.
+*[Resolved] A bug because of which the Activity log not written to the log file.
+*[Resolved] A bug because of which the Domain Name and Order ID not passing in the renewal email.
+*[Resolved] A bug because of which the Renewal order process gives an Authentication Failure error.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 3.7.1 on 23-January-2019
+---------------------------------------------------------------------
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 3.7 on 16-January-2019
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] cWatch Product Integration.
+*[Feature] AutoSSL functionality.
+*[Feature] Added an option on the WHMCS Admin side to enable/disable download certificate zip will include the "Nginx" and "Apache" folder including the "Certificates.zip".
+*[Feature] Added an option on the WHMCS Admin side to set default Web Server during certificate generation for end-user convenience.
+*[Feature] Added an option on the WHMCS Admin side to Hide the AutoInstall SSL hosting profile section from client Area.
+*[Feature] Added an option on the WHMCS Admin side to enable/disable the email post-cron run under the “Sync Settings” on the settings page. By default, it set to enabled.
+*[Improvement] Improved the EMAIL selection option for COMODO multidomain products, end-user can select a global alias (i.e. admin@domain.com) for all their SAN entries. When clicking “Apply” it will populate the address throughout all the entries. IF the end-user clicks “Clear Selection” it will default select back to “Please choose one…”.
+*[Improvement] Improved the download certificate zip function, so now it will include the PKCS7 zip by default.
+*[Resolved] A bug because of which the API gives an error of Authentication failure while Auto Renew.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 3.6
+---------------------------------------------------------------------
+NEW FEATURES:
+*[Feature] Added the ability for the end user to switch the approval method of pending certificates in the order detail view for COMODO Products.
+*[Feature] The Admin can “re-issue” the SSL Certificate from the backend of the module. 
+*[Feature] The Admin can “Renew” with the click of a button on the backend of the module. 
+*[Feature] The Admin can switch the validation method or change the Approval Email from the backend of the module. 
+*[Feature] Added an option to specify default Technical Contact Information on the WHMCS Admin.
+*[Improvement] Uses the “Custom” identification for all our email templates to inform Admin that the email templates are custom.
+*[Improvement] On change Approver Email option, our module will present all the pre-approved email aliases as default, with an additional option labeled “Retrieve Domain WHOIS Email”, if the user selects that option then it will attempt to pull whois emails for the domain and present the options retrieved from vendor. 
+*[Improvement] We have made many design related changes on the client area and Admin area. 
+*[Improvement] We have prevented the access of “activity_log” file directly.
+*[Improvement] We have moved the resource files (CSS, images etc.) from our module directory to the WHMCS templates directory. 
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Released 3.5.2
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Feature] Added compatibility with template "Five" based theme.
+* [Feature] Added the ability to manage additional days passing on to New/Renew orders.
+
+---------------------------------------------------------------------
+Released 3.5.1
+---------------------------------------------------------------------
+BUG FIXES:
+* [Resolved] A bug because of which Comodo CNAME instructions was showing TXT instructions instead of CNAME instructions.
+* [Resolved] A bug because of which Approver Email loading was not showing proper indicator and it also locked windows in some browsers   during the certificate generation process.
+* [Resolved] A bug because of which domain name were being listed in approver email list.
+* [Resolved] A bug because of which cancellation button didn’t work in WHMCS admin.
+* [Resolved] A bug that resulted in a MySQL error in Create Table for older MySQL versions.
+
+---------------------------------------------------------------------
+Released 3.5 on 06-June-2018
+---------------------------------------------------------------------
+NEW FEATURES:
+* [Feature] Added the ability to specify individual approval emails for multi-domain products.
+* [Feature] Added the ability to import existing orders from your TheSSLStore.com account.
+* [Feature] Added native support for the WHMCS cancellation process into the module.
+* [Feature] Added the ability for the end user to change the approval method of pending certificates in the 	   order detail view.
+* [Feature] Added support for the administrator to input the days prior to sending the renewal reminder.
+* [Feature] Added certificate authority authentication comments within the order detail view. 
+* [Improvement] Modified the generation and re-issue forms to support bulk subject alternative name (SAN)       pasting.
+* [Improvement] For S/MIME orders, the email address will populate in the domain name field for ease of     management in the client area and backend.
+* [Improvement] Modified the import products feature to allow for selective imports.
+* [Improvement] Made the setup process easier by consolidating the multiple crons to a new single cron.
+* [Improvement] Refined the release packaging to include additional variations of the module for those using     older versions of PHP and Ioncube Loaders. 
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 3.4.2
+---------------------------------------------------------------------
+BUG FIXES:
+* Fixed a bug because of which StartDate and End Date were not getting updated in the database for reporting purpose.
+
+---------------------------------------------------------------------
+Release 3.4.1
+---------------------------------------------------------------------
+BUG FIXES:
+* Fixed a bug because of which a client couldn't reissue certificate that had lifespan of 3 years.
+* Fixed a bug in Product-Sync Cron because of which WHMCS admin couldn't receive the "Sync Manually" email.
+* Fixed a bug because of which admin couldn't see "Cancel Certificate" button.
+* Fixed a bug because of which the 'resend email' function didn't work.
+* Fixed a bug because of which database related error occurred.
+* Fixed a bug because of which Multi-domain products couldn't get reissued with Email Based validation.
+
+---------------------------------------------------------------------
+Release 3.4
+---------------------------------------------------------------------
+NEW FEATURES:
+* We've added certificate validity period to the Product-Synchronisation Cron.
+* Improved support and compatibility with MariaDB.
+
+BUG FIXES:
+* Products labeled as "One-Time" will no longer automatically renew.
+
+---------------------------------------------------------------------
+Release 3.3.2
+---------------------------------------------------------------------
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 3.3.1
+---------------------------------------------------------------------
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 3.3
+---------------------------------------------------------------------
+NEW FEATURES:
+
+* Added settings on Admin side to show/hide change approval email option on client-side certificate details page for Symantec DV products.
+* Added page on Admin side from where Admin can check the Symantec Replacement Order list if there are any order associated to their account.
+* Added an alert message in certificate details page on client side for the orders that are part of the Symantec Order Replacement list.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 3.2
+---------------------------------------------------------------------
+NEW FEATURES:
+
+* Added support of updated Comodo DCV Authentication Changes.
+
+
+BUG FIXES:
+* Various bug fixes
+
+
+---------------------------------------------------------------------
+Release 3.1.1
+---------------------------------------------------------------------
+BUG FIXES:
+* Various bug fixes
+
+
+---------------------------------------------------------------------
+Release 3.1
+---------------------------------------------------------------------
+NEW FEATURES:
+
+* In this version of our module we have introduced a dashboard which have three different versions of the homepage depending upon if the
+   user has an update available, fresh install, and the standard version.
+* We have passed WHMCS Order id as custom order id in our API Request. So, it will be easy for the reseller to find out the WHMCS 
+	order from the Reseller Dashboard.
+* Added support of Symantec/Certum DV Authentication Changes.
+
+BUG FIXES:
+* Various bug fixes
+
+
+---------------------------------------------------------------------
+Release 3.0
+---------------------------------------------------------------------
+NEW FEATURES:
+* This version of the module is Compatible with the WHMCS 7.1 and PHP 7/PHP 5.6.
+
+MINOR EDITS:
+* Display CNAME Point To value for Symantec DV products.
+* Updated the flow of signature algorithm option while certificate generation process
+	* For Symantec Secure Site Pro SHA-1 Private product there will be an options of "PRIVATE-SHA1-PCA3G1" and "PRIVATE-SHA1-PCA3G2".
+	* For Symantec Secure Site Pro and Symantec Secure Site Pro with EV product there will be an options of "SHA-2","FULL SHA-2","ECC-FULL" and "ECC-HYBRID".
+	* For Rest of the Symantec Products there will be an options of "SHA-2" and "FULL SHA-2".
+	* For all the Comodo SSL certificate 'PREFER_SHA2' will be pass by default in signature algorithm. All the Comodo SSL certificate can be issued with ECC algorithm. The only thing need to provide is the CSR generated with ECC algorithm, while processing the order
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 2.9
+---------------------------------------------------------------------
+
+NEW FEATURES:
+* Added currency selection option on the following pages.
+	* Import Products
+	* Setup Product Pricing
+	* Module Settings, Under the Product Import Settings for the Sync Products functionality. 
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 2.8
+---------------------------------------------------------------------
+
+NEW FEATURES:
+* Added new CNAME based authentication in Order Process for DV products.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 2.7
+---------------------------------------------------------------------
+
+NEW FEATURES:
+* Added new email template for Renewal SSL Certificate - Enrollment steps.
+* Now we have given an option of reporting on Admin side. From where Admin can access the report. Also we have given an option to export the report to CSV file. 
+	* Datewise Sales Report
+	* Renewal Report
+	* Profit & Loss Report
+	
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 2.6.1
+---------------------------------------------------------------------
+
+BUG FIXES:
+* Bug fixes of Product Synchronization.
+
+---------------------------------------------------------------------
+Release 2.6
+---------------------------------------------------------------------
+NEW FEATURES:
+* Added new feature of WHMCS product Synchronization.
+* Added new feature of Activity Log Reporting.
+
+MINOR EDITS:
+* Updated the domain name field in the AutoRenewal Order Process while placing the incomplete order.
+* Added an option of HTTPS file based authentication in Order Process for Comodo Products.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 2.5
+---------------------------------------------------------------------
+MINOR EDITS:
+* Change in the Auto Renewal Functionality.
+* Change in import products and setup product pricing page.
+* Change in the email template to add Token field instead of Token Code and Token ID.
+
+
+---------------------------------------------------------------------
+Release 2.4
+---------------------------------------------------------------------
+NEW FEATURES:
+* Added support to prefilled data in Re-Issue order process.
+
+MINOR EDITS:
+* Display the certificate date based on the user date format.
+
+
+---------------------------------------------------------------------
+Release 2.3
+---------------------------------------------------------------------
+NEW FEATURES:
+* Added additional server configuration option.
+* Added functionality to pass customers details to AutoInstall SSL cPanel server.
+
+
+---------------------------------------------------------------------
+Release 2.2
+---------------------------------------------------------------------
+NEW FEATURES:
+* Client order details page made compatible and responsive. 
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 2.1
+---------------------------------------------------------------------
+MINOR EDITS:
+* Updated the order process code to decode the html entity.
+
+BUG FIXES:
+* Various bug fixes
+
+---------------------------------------------------------------------
+Release 2.0.5
+---------------------------------------------------------------------
+MINOR EDITS:
+* Updated the reissue order process code for multi domain products.
+* Updated the client area code to update the domain name.
+* Updated the Auto Renewal order process code for file bases validation.
+
+
+---------------------------------------------------------------------
+Release 2.0.4
+---------------------------------------------------------------------
+MINOR EDITS:
+* Minor changes in import order functionality.
+
+---------------------------------------------------------------------
+Release 2.0.3
+---------------------------------------------------------------------
+NEW FEATURES:
+* Added support to import existing orders to WHMCS using a CSV file.
+* Added support to send renewal reminder email and place order to TheSSLStore using cron.
+* Added Login to cPanel button for AutoInstall SSL Plugin on client order details page.
+
+---------------------------------------------------------------------
+Release 2.0.2
+---------------------------------------------------------------------
+NEW FEATURES:
+* Added functionality of Auto import and setup all the products from the admin area.
+* Added support for the Setup product pricing and SAN pricing from the admin area.
+* Added alert to update the products pricing for the live environment when API mode changes from TEST to LIVE.
+* Added Auto Renewal functionality.
+* Added Recurring Payment Type.
+* Added Multi domain products supported for certificate generation process.
+* Added Multilingual support.
+* Added Certificate Management for Admin.
+* Added more fields on client certificate details page.
+* Added more fields on Admin certificate details page.
+* Added support of File-Based Authentication for DV products in certificate generation process.
+* Added support for automatically sending expiration email to client using cron.
+* Added support for automatically order synchronization using cron.
+* Added SSL Tools.
+
+MINOR EDITS:
+* Minor tweak in email templates.
+
+
+---------------------------------------------------------------------
+Release 1.45
+---------------------------------------------------------------------
+NEW FEATURES:
+* The "Use AutoInstall SSL?" control is given in the WHMCS Admin Side on Product Setup Page. 
+
+
+---------------------------------------------------------------------
+Release 1.40
+---------------------------------------------------------------------
+NEW FEATURES:
+* Added Token ID and Token Code fields on Admin order details page.
+* Added Token ID, Token Code and Store Order ID fields in Welcome email. 
+
+
+---------------------------------------------------------------------
+Release 1.37
+---------------------------------------------------------------------
+MINOR EDITS:
+* Disable Free SSL Certificate Renewal.
+
+
+---------------------------------------------------------------------
+Release 1.36
+---------------------------------------------------------------------
+NEW FEATURES:
+* Added option for Admin to Show/Hide the Refund Request button on client order details page.
+
+
+---------------------------------------------------------------------
+Release 1.35
+---------------------------------------------------------------------
+NEW FEATURES:
+* Added Token ID and Token Code fields on clients order details page.

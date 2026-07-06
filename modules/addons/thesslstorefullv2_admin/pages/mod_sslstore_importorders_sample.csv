@@ -1,0 +1,2 @@
+userid,productgroupid,productcode,numberofsan,numberofwildcardsan,additionalserver,domain,billingcycle,paymentmethod,duedate
+1,1, essentialssl ,0,0,0,yourdomain.com,Annually,paypal,12/17/2016

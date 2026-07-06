@@ -1,0 +1,17 @@
+label
+{
+    display:block;
+    width:90%;
+}
+
+.error
+{
+    color:red;
+    font-size: 1.2em;
+}
+
+.success
+{
+    color:green;
+    font-size:1.2em;
+}
