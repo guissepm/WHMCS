@@ -24,15 +24,14 @@ services:
     image: nginx:1.27-alpine
     container_name: whmcs_web
     restart: unless-stopped
-    # Exposé UNIQUEMENT en local : c'est votre reverse proxy existant
-    # (ou Traefik/NPM) qui publie le domaine en 80/443.
-    ports:
-      - "127.0.0.1:8081:80"
+    # Pas de port publié sur l'hôte : le reverse proxy existant (conteneur
+    # "nginx" du projet /opt/deploy) atteint ce service par son nom de
+    # conteneur via le réseau Docker partagé "deploy_app-network".
     volumes:
       - whmcs_app:/var/www/html:ro
       - ./nginx/whmcs.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on: [php]
-    networks: [whmcs_net]
+    networks: [whmcs_net, deploy_app-network]
 
   db:
     image: mariadb:11.4
@@ -76,3 +75,8 @@ volumes:
 networks:
   whmcs_net:
     driver: bridge
+  # Réseau du projet /opt/deploy (nginx + laravel + angular + mysql) déjà
+  # en place sur le VPS — doit exister avant `docker compose up` :
+  #   docker network ls   # -> deploy_app-network
+  deploy_app-network:
+    external: true

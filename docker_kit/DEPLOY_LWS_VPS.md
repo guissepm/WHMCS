@@ -1,36 +1,43 @@
-# Déploiement sur VPS LWS — boutique.syskabsamazone.com
+# Déploiement sur VPS LWS — sslstore.syskabsamazone.com
 
-Ce guide part de ton contexte confirmé :
-- **VPS LWS**, accès **SSH root**, une **autre application tourne déjà** sur les ports 80/443.
-- Reverse-proxy retenu par défaut : **Nginx installé nativement sur l'hôte** (le plus simple à auditer/sécuriser).
-  Si en fait c'est **Traefik** qui gère déjà 80/443 sur ce VPS, saute la partie 3 et utilise la
-  section "Cas Traefik" de `README_DOCKER.md` à la place — tout le reste (Docker WHMCS,
-  module SSL Store, hardening) ne change pas.
+Ce guide part de ton contexte **confirmé par inspection réelle du VPS** :
+- **VPS LWS**, accès **SSH root**.
+- L'app existante (`guissepm/booking` — Laravel + Angular + MySQL) tourne déjà via un
+  projet Docker Compose dans `/opt/deploy/`, réseau `deploy_app-network`.
+- Le reverse-proxy est un **conteneur `nginx:alpine`** (nom `nginx`) qui publie
+  `0.0.0.0:80/443` sur l'hôte. Sa config vhost vit dans `/opt/deploy/nginx/conf.d/`
+  (bind-mount host → conteneur), donc on peut y ajouter un fichier de vhost WHMCS
+  directement depuis l'hôte, sans toucher à l'image ni au reste du site.
+- Les certificats Let's Encrypt sont dans `/opt/deploy/certbot/conf`, obtenus/renouvelés
+  via le webroot `/opt/deploy/certbot/www` (pas de service certbot dédié dans le compose
+  actuel — émission probablement faite via un `docker run certbot/certbot` ponctuel).
+- **Intégration retenue** : la stack WHMCS (Docker, isolée dans son propre réseau
+  `whmcs_net` pour la base de données) connecte uniquement son conteneur `whmcs_web` au
+  réseau existant `deploy_app-network`, pour être joignable par nom depuis le `nginx`
+  du projet `/opt/deploy`. Aucun port supplémentaire n'est exposé sur l'hôte.
 - Licence WHMCS : à ton compte sur whmcs.com (non fournie par ce dépôt).
-- Sous-domaine choisi : `boutique.syskabsamazone.com`.
+- Sous-domaine choisi : `sslstore.syskabsamazone.com`.
 
 ---
 
-## 0. Détecter précisément l'état actuel du VPS (à faire en premier)
+## 0. Rappel de l'état du VPS (déjà vérifié)
 
 ```bash
-ss -tlnp | grep -E ':80|:443'      # qui écoute déjà sur ces ports ?
-docker ps                          # une stack Traefik/NPM tourne-t-elle en conteneur ?
-which nginx && systemctl status nginx --no-pager   # nginx natif installé ?
-docker --version || curl -fsSL https://get.docker.com | sh   # Docker dispo ?
+ss -tlnp | grep -E ':80|:443'                       # -> conteneur "nginx" (docker-proxy)
+docker ps                                            # nginx, laravel, laravel-http, angular, mysql
+docker inspect nginx --format '{{json .Mounts}}'     # conf.d + certbot montés en bind depuis /opt/deploy
+docker network ls                                    # -> deploy_app-network
 ```
-
-Si `nginx` n'est pas encore installé sur l'hôte : `apt update && apt install -y nginx certbot python3-certbot-nginx`.
 
 ---
 
 ## 1. DNS
 
 Dans l'espace client LWS, zone DNS de `syskabsamazone.com` : ajoute un enregistrement
-**A** `boutique` → IP publique du VPS. Vérifie la propagation avant de continuer :
+**A** `sslstore` → IP publique du VPS. Vérifie la propagation avant de continuer :
 
 ```bash
-dig +short boutique.syskabsamazone.com
+dig +short sslstore.syskabsamazone.com
 ```
 
 ---
@@ -42,46 +49,65 @@ mkdir -p /opt/whmcs-boutique && cd /opt/whmcs-boutique
 # Copie ici Dockerfile, docker-compose.yml, nginx/whmcs.conf du dépôt (docker_kit/)
 
 cp .env.example .env
-sed -i "s/CHANGE_ME_DB_PASSWORD/$(openssl rand -base64 24 | tr -d '\n')/" .env
-sed -i "s/CHANGE_ME_DB_ROOT_PASSWORD/$(openssl rand -base64 24 | tr -d '\n')/" .env
+sed -i "s#CHANGE_ME_DB_PASSWORD#$(openssl rand -base64 24 | tr -d '\n')#" .env
+sed -i "s#CHANGE_ME_DB_ROOT_PASSWORD#$(openssl rand -base64 24 | tr -d '\n')#" .env
 chmod 600 .env
 
 docker compose build        # ~3-5 min (compilation extensions + ionCube)
 docker compose up -d
 docker compose exec php php -v   # doit afficher "with the ionCube PHP Loader"
-docker compose ps                # web doit être bindé sur 127.0.0.1:8081 uniquement
+docker compose ps                # "web" ne doit publier AUCUN port sur l'hôte
+docker network inspect deploy_app-network --format '{{range .Containers}}{{.Name}} {{end}}'
+                                  # doit lister whmcs_web à côté de nginx/laravel/angular
 ```
 
-**Vérification de sécurité importante** : `docker compose ps` doit montrer le port
-`web` publié en `127.0.0.1:8081->80/tcp` — jamais `0.0.0.0:8081`. C'est déjà le cas
-dans `docker-compose.yml` fourni ; ne le modifie pas, sinon WHMCS serait exposé
-directement sans passer par ton reverse-proxy/TLS.
+**Vérification de sécurité importante** : `docker compose ps` ne doit montrer **aucune**
+colonne `PORTS` pour le service `web` — il n'est joignable que via le réseau Docker
+`deploy_app-network` par le conteneur `nginx` existant. Si tu vois un port publié sur
+l'hôte (`0.0.0.0:xxxx` ou `127.0.0.1:xxxx`), WHMCS serait exposé en dehors du chemin
+TLS géré par `/opt/deploy/nginx` — ne le fais pas, ce n'est pas nécessaire avec cette
+intégration par réseau partagé.
 
 ---
 
-## 3. Reverse-proxy Nginx hôte + Let's Encrypt
+## 3. Intégrer WHMCS au reverse-proxy Docker existant (`/opt/deploy`)
+
+**a) Obtenir le certificat**, en réutilisant le webroot déjà monté dans le conteneur
+`nginx` existant (fonctionne dès que le DNS de l'étape 1 pointe vers le VPS, même
+avant que la stack WHMCS ne tourne — le `default.conf` actuel sert déjà
+`/.well-known/acme-challenge/` pour n'importe quel domaine) :
 
 ```bash
-certbot certonly --nginx -d boutique.syskabsamazone.com
+docker run --rm \
+  -v /opt/deploy/certbot/conf:/etc/letsencrypt \
+  -v /opt/deploy/certbot/www:/var/www/certbot \
+  certbot/certbot certonly --webroot -w /var/www/certbot \
+  -d sslstore.syskabsamazone.com \
+  --email TON_EMAIL --agree-tos --no-eff-email
 ```
 
-Ajoute une fois dans `http {}` de `/etc/nginx/nginx.conf` (rate-limit anti brute-force admin) :
-
-```nginx
-limit_req_zone $binary_remote_addr zone=whmcs_admin:10m rate=10r/m;
+**b) Démarrer la stack WHMCS** (section 2) — vérifie qu'elle a bien rejoint le réseau
+partagé :
+```bash
+docker network inspect deploy_app-network --format '{{range .Containers}}{{.Name}} {{end}}'
+# doit lister whmcs_web en plus de nginx, laravel, angular, ...
 ```
 
-Copie `docker_kit/nginx/host-reverse-proxy.conf.example` vers
-`/etc/nginx/sites-available/boutique.syskabsamazone.com.conf`, puis :
+**c) Ajouter le vhost** : copie `docker_kit/nginx/sslstore.conf.example` vers
+`/opt/deploy/nginx/conf.d/sslstore.conf` (le dossier existant, à côté de
+`default.conf` — pas de nouveau bind-mount à créer), puis recharge nginx **sans
+redémarrer les autres sites** :
 
 ```bash
-ln -s /etc/nginx/sites-available/boutique.syskabsamazone.com.conf /etc/nginx/sites-enabled/
-nginx -t && systemctl reload nginx
+docker exec nginx nginx -t && docker exec nginx nginx -s reload
 ```
 
-Renouvellement auto déjà géré par le timer `certbot.timer` sur Debian/Ubuntu — vérifie :
+**Renouvellement du certificat** : comme il n'y a pas de service `certbot` dédié dans
+`/opt/deploy/docker-compose.yml`, ajoute une tâche cron sur l'hôte (sinon le certificat
+expire dans 90 jours) :
 ```bash
-systemctl list-timers | grep certbot
+# crontab -e
+0 3 1 * * docker run --rm -v /opt/deploy/certbot/conf:/etc/letsencrypt -v /opt/deploy/certbot/www:/var/www/certbot certbot/certbot renew --webroot -w /var/www/certbot -q && docker exec nginx nginx -s reload
 ```
 
 ---
@@ -94,7 +120,7 @@ docker cp ~/whmcs_vX.X.zip whmcs_php:/tmp/
 docker compose exec php sh -c 'cd /var/www/html && unzip -o /tmp/whmcs_*.zip && chown -R www-data:www-data .'
 ```
 
-Ouvre `https://boutique.syskabsamazone.com/install/install.php` :
+Ouvre `https://sslstore.syskabsamazone.com/install/install.php` :
 - Base : hôte **db**, base **whmcs**, user **whmcs_user**, mot de passe = `DB_PASSWORD` de `.env`
 
 Après installation :
@@ -102,10 +128,20 @@ Après installation :
 docker compose exec php sh -c 'rm -rf /var/www/html/install && chmod 400 /var/www/html/configuration.php'
 ```
 
-Dans `configuration.php`, ajoute (obligatoire, sinon toutes les commandes sembleront
-venir de l'IP du reverse-proxy au lieu de l'IP réelle du client) :
+Dans `configuration.php`, ajoute `$trustedProxies` (obligatoire, sinon toutes les
+commandes sembleront venir de l'IP du conteneur `nginx` au lieu de l'IP réelle du
+client). Le hop qui compte ici est le conteneur `nginx` existant qui se connecte à
+`whmcs_web` via `deploy_app-network` — c'est donc **ce** sous-réseau qu'il faut
+whitelister, pas celui de `whmcs_net`. On le connaît déjà (vu dans l'inspection de
+l'étape 0) :
+
 ```php
-$trustedProxies = ['127.0.0.1'];
+$trustedProxies = ['172.18.0.0/16']; // sous-réseau de deploy_app-network
+```
+
+Si ce sous-réseau change un jour, reconfirme-le avec :
+```bash
+docker network inspect deploy_app-network --format '{{(index .IPAM.Config 0).Subnet}}'
 ```
 
 ---
@@ -129,11 +165,16 @@ Dashboard → credentials Sandbox → devise → import produits.
 
 - [ ] **Firewall** : `ufw allow OpenSSH && ufw allow 80,443/tcp && ufw enable` (SSH sur port
       non-standard si possible ; sinon `fail2ban` sur sshd au minimum).
-- [ ] **fail2ban** : `apt install fail2ban`, active la jail `nginx-http-auth` et ajoute une
-      jail custom sur les tentatives de login WHMCS (`/admin/login.php`) via les logs Nginx.
+- [ ] **fail2ban anti brute-force WHMCS** : le conteneur `nginx` de `/opt/deploy` n'a pas
+      ses logs montés sur l'hôte (ils partent dans `docker logs nginx`). Deux options :
+      1. ajouter `- ./nginx/logs:/var/log/nginx` aux volumes du service `nginx` dans
+         `/opt/deploy/docker-compose.yml`, redémarrer, puis pointer fail2ban dessus ; ou
+      2. utiliser le module WHMCS "Fail2Ban Integration" / IP Ban natif si disponible,
+         qui bloque au niveau applicatif après N échecs de login sur `/admin/login.php`.
 - [ ] **2FA** activée sur tous les comptes admin WHMCS (Setup > Staff Management).
-- [ ] **Renommer le dossier admin** (`/admin` → nom aléatoire) dans WHMCS General Settings,
-      puis mettre à jour `location /admin/` dans le vhost avec le nouveau nom.
+- [ ] **Renommer le dossier admin** (`/admin` → nom aléatoire) dans WHMCS General Settings.
+      Comme le vhost `sslstore.conf` proxy-passe tout vers `whmcs_web` sans distinguer
+      `/admin/`, aucune modification du vhost n'est nécessaire pour ça.
 - [ ] **SMTP externe** configuré (Setup > General > Mail) — n'envoie jamais depuis le
       conteneur directement (risque de blacklist IP du VPS).
 - [ ] **Restreindre l'accès admin par IP** si l'équipe a des IP fixes (dans le vhost Nginx
@@ -171,18 +212,45 @@ perte du serveur.
 
 Voir `.github/workflows/deploy.yml` à la racine du dépôt : à chaque push sur `main`,
 le contenu de `modules/` et `assets/` est synchronisé vers le VPS puis copié dans le
-conteneur `whmcs_php`. Secrets GitHub requis (Settings > Secrets and variables > Actions) :
+conteneur `whmcs_php`. Secrets GitHub requis (Settings > Secrets and variables > Actions,
+sur `guissepm/WHMCS`) :
 
 | Secret            | Contenu                                             |
 |-------------------|------------------------------------------------------|
-| `SSH_HOST`        | IP ou nom d'hôte du VPS LWS                          |
-| `SSH_USER`        | utilisateur SSH (root ou utilisateur sudo dédié)     |
+| `SSH_HOST`        | IP publique du VPS LWS                               |
+| `SSH_USER`        | `deploy` (utilisateur dédié, PAS `root` — voir ci-dessous) |
 | `SSH_PORT`        | port SSH (22 ou custom)                              |
-| `SSH_DEPLOY_KEY`  | clé privée SSH dédiée au déploiement (pas ta clé perso) |
+| `SSH_DEPLOY_KEY`  | clé privée SSH dédiée au déploiement (pas ta clé perso, pas celle de `root`) |
 
-Génère une clé dédiée plutôt que de réutiliser ta clé personnelle :
+### Créer l'utilisateur `deploy` (sur le VPS, en root)
+
 ```bash
-ssh-keygen -t ed25519 -f deploy_key -C "github-actions-deploy" -N ""
-# Ajoute deploy_key.pub à ~/.ssh/authorized_keys sur le VPS
-# Colle le contenu de deploy_key (clé privée) dans le secret SSH_DEPLOY_KEY
+adduser --disabled-password --gecos "" deploy
+usermod -aG docker deploy          # nécessaire pour `docker cp` / `docker exec`
+
+mkdir -p /home/deploy/.ssh
+ssh-keygen -t ed25519 -f /home/deploy/.ssh/whmcs_deploy_key -C "github-actions-deploy" -N ""
+cat /home/deploy/.ssh/whmcs_deploy_key.pub >> /home/deploy/.ssh/authorized_keys
+chown -R deploy:deploy /home/deploy/.ssh
+chmod 700 /home/deploy/.ssh
+chmod 600 /home/deploy/.ssh/authorized_keys /home/deploy/.ssh/whmcs_deploy_key
+
+# Le workflow rsync écrit dans /opt/whmcs-boutique/overlay/ : donne les droits à `deploy`
+mkdir -p /opt/whmcs-boutique/overlay/{modules,assets}
+chown -R deploy:deploy /opt/whmcs-boutique/overlay
+
+cat /home/deploy/.ssh/whmcs_deploy_key
+# Copie ce contenu (BEGIN...END inclus) directement dans le secret SSH_DEPLOY_KEY —
+# ne le colle nulle part ailleurs (pas dans un fichier du dépôt, pas dans ce chat).
 ```
+
+**Important — limite réelle de cet isolement** : l'appartenance au groupe `docker`
+équivaut en pratique à un accès root sur l'hôte (un conteneur peut monter `/` et donner
+un accès complet au système de fichiers). Ce n'est donc **pas** une sandbox stricte —
+c'est surtout utile pour : ne pas exposer ta clé/session root personnelle à GitHub,
+pouvoir révoquer l'accès CI sans toucher à ton compte root, et tracer les connexions
+séparément dans les logs `auth.log`. Pour un vrai cloisonnement (la clé ne peut exécuter
+qu'un script de déploiement précis, rien d'autre), il faudrait remplacer l'accès direct
+par une *forced command* dans `authorized_keys` (`command="/opt/whmcs-boutique/deploy.sh" ssh-ed25519 ...`)
+couplée à `rrsync` pour les étapes de synchronisation — dis-moi si tu veux que je mette
+ça en place, c'est plus long à cabler correctement.

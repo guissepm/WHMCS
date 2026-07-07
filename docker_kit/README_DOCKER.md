@@ -1,6 +1,11 @@
 # Boutique WHMCS en Docker — Guide de déploiement
 ### Sys Kabs Amazone SAS — VPS Debian avec Docker existant
 
+> **Ce VPS précis (booking) a déjà été audité** : reverse-proxy = conteneur
+> `nginx:alpine` du projet `/opt/deploy`, réseau `deploy_app-network`. Utilise
+> directement **`DEPLOY_LWS_VPS.md`**, qui contient la procédure exacte pour ce
+> cas — ce fichier-ci reste une référence générique (Traefik, Nginx hôte natif...).
+
 Cette stack fait tourner WHMCS + le module The SSL Store en conteneurs, **à côté de votre application Docker actuelle**, sans rien installer sur l'hôte.
 
 ```

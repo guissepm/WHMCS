@@ -1,0 +1,62 @@
+# =============================================================================
+# Vhost pour sslstore.syskabsamazone.com — à copier vers
+# /opt/deploy/nginx/conf.d/sslstore.conf sur le VPS (même dossier que le
+# default.conf existant du projet /opt/deploy ; les deux coexistent, nginx
+# route par server_name).
+#
+# Pré-requis avant d'activer le bloc 443 :
+#   1. DNS : enregistrement A `sslstore` -> IP du VPS (zone syskabsamazone.com
+#      dans l'espace client LWS), propagation vérifiée avec `dig +short`.
+#   2. Certificat obtenu via le webroot déjà en place (réutilise le même
+#      /opt/deploy/certbot/www que le reste du site) :
+#        docker run --rm \
+#          -v /opt/deploy/certbot/conf:/etc/letsencrypt \
+#          -v /opt/deploy/certbot/www:/var/www/certbot \
+#          certbot/certbot certonly --webroot -w /var/www/certbot \
+#          -d sslstore.syskabsamazone.com \
+#          --email TON_EMAIL --agree-tos --no-eff-email
+#   3. Stack WHMCS démarrée (docker compose up -d dans /opt/whmcs-boutique)
+#      et connectée au réseau `deploy_app-network` (voir docker-compose.yml).
+#   4. Après avoir copié ce fichier : `docker exec nginx nginx -s reload`
+# =============================================================================
+
+server {
+    listen 80;
+    server_name sslstore.syskabsamazone.com;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name sslstore.syskabsamazone.com;
+
+    ssl_certificate     /etc/letsencrypt/live/sslstore.syskabsamazone.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/sslstore.syskabsamazone.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    client_max_body_size 32M;
+
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+    add_header X-Frame-Options SAMEORIGIN always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    # whmcs_web = nom du conteneur nginx interne à la stack WHMCS, joignable
+    # ici car il est aussi connecté au réseau deploy_app-network.
+    location / {
+        proxy_pass http://whmcs_web:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+}
