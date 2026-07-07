@@ -7,7 +7,7 @@ FROM php:8.2-fpm-bookworm
 # --- Dépendances système pour compiler les extensions PHP
 RUN apt-get update && apt-get install -y --no-install-recommends \
       libpng-dev libjpeg-dev libfreetype6-dev libzip-dev libicu-dev \
-      libxml2-dev libc-client-dev libkrb5-dev libgmp-dev unzip curl \
+      libxml2-dev libc-client-dev libkrb5-dev libgmp-dev unzip curl cron \
     && rm -rf /var/lib/apt/lists/*
 
 # --- Extensions PHP requises par WHMCS
