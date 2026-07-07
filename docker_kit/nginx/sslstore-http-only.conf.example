@@ -1,0 +1,28 @@
+# =============================================================================
+# Vhost TEMPORAIRE (HTTP uniquement, sans certificat) pour tester le routage
+# vers whmcs_web avant que le DNS/certificat ne soient prêts.
+#
+# À copier vers /opt/deploy/nginx/conf.d/sslstore.conf, puis :
+#   docker exec nginx nginx -t && docker exec nginx nginx -s reload
+#
+# À REMPLACER par docker_kit/nginx/sslstore.conf.example (redirection HTTPS +
+# certificat) dès que le DNS pointe vers le VPS et que le certificat Let's
+# Encrypt a été obtenu (étape 3 de DEPLOY_LWS_VPS.md).
+# =============================================================================
+
+server {
+    listen 80;
+    server_name sslstore.syskabsamazone.com;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        proxy_pass http://whmcs_web:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto http;
+    }
+}
