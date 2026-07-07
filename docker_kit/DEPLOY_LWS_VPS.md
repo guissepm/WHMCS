@@ -49,8 +49,8 @@ mkdir -p /opt/whmcs-boutique && cd /opt/whmcs-boutique
 # Copie ici Dockerfile, docker-compose.yml, nginx/whmcs.conf du dépôt (docker_kit/)
 
 cp .env.example .env
-sed -i "s/CHANGE_ME_DB_PASSWORD/$(openssl rand -base64 24 | tr -d '\n')/" .env
-sed -i "s/CHANGE_ME_DB_ROOT_PASSWORD/$(openssl rand -base64 24 | tr -d '\n')/" .env
+sed -i "s#CHANGE_ME_DB_PASSWORD#$(openssl rand -base64 24 | tr -d '\n')#" .env
+sed -i "s#CHANGE_ME_DB_ROOT_PASSWORD#$(openssl rand -base64 24 | tr -d '\n')#" .env
 chmod 600 .env
 
 docker compose build        # ~3-5 min (compilation extensions + ionCube)
