@@ -1,4 +1,4 @@
-# Déploiement sur VPS LWS — boutique.syskabsamazone.com
+# Déploiement sur VPS LWS — sslstore.syskabsamazone.com
 
 Ce guide part de ton contexte **confirmé par inspection réelle du VPS** :
 - **VPS LWS**, accès **SSH root**.
@@ -16,7 +16,7 @@ Ce guide part de ton contexte **confirmé par inspection réelle du VPS** :
   réseau existant `deploy_app-network`, pour être joignable par nom depuis le `nginx`
   du projet `/opt/deploy`. Aucun port supplémentaire n'est exposé sur l'hôte.
 - Licence WHMCS : à ton compte sur whmcs.com (non fournie par ce dépôt).
-- Sous-domaine choisi : `boutique.syskabsamazone.com`.
+- Sous-domaine choisi : `sslstore.syskabsamazone.com`.
 
 ---
 
@@ -34,10 +34,10 @@ docker network ls                                    # -> deploy_app-network
 ## 1. DNS
 
 Dans l'espace client LWS, zone DNS de `syskabsamazone.com` : ajoute un enregistrement
-**A** `boutique` → IP publique du VPS. Vérifie la propagation avant de continuer :
+**A** `sslstore` → IP publique du VPS. Vérifie la propagation avant de continuer :
 
 ```bash
-dig +short boutique.syskabsamazone.com
+dig +short sslstore.syskabsamazone.com
 ```
 
 ---
@@ -82,7 +82,7 @@ docker run --rm \
   -v /opt/deploy/certbot/conf:/etc/letsencrypt \
   -v /opt/deploy/certbot/www:/var/www/certbot \
   certbot/certbot certonly --webroot -w /var/www/certbot \
-  -d boutique.syskabsamazone.com \
+  -d sslstore.syskabsamazone.com \
   --email TON_EMAIL --agree-tos --no-eff-email
 ```
 
@@ -93,8 +93,8 @@ docker network inspect deploy_app-network --format '{{range .Containers}}{{.Name
 # doit lister whmcs_web en plus de nginx, laravel, angular, ...
 ```
 
-**c) Ajouter le vhost** : copie `docker_kit/nginx/boutique.conf.example` vers
-`/opt/deploy/nginx/conf.d/boutique.conf` (le dossier existant, à côté de
+**c) Ajouter le vhost** : copie `docker_kit/nginx/sslstore.conf.example` vers
+`/opt/deploy/nginx/conf.d/sslstore.conf` (le dossier existant, à côté de
 `default.conf` — pas de nouveau bind-mount à créer), puis recharge nginx **sans
 redémarrer les autres sites** :
 
@@ -120,7 +120,7 @@ docker cp ~/whmcs_vX.X.zip whmcs_php:/tmp/
 docker compose exec php sh -c 'cd /var/www/html && unzip -o /tmp/whmcs_*.zip && chown -R www-data:www-data .'
 ```
 
-Ouvre `https://boutique.syskabsamazone.com/install/install.php` :
+Ouvre `https://sslstore.syskabsamazone.com/install/install.php` :
 - Base : hôte **db**, base **whmcs**, user **whmcs_user**, mot de passe = `DB_PASSWORD` de `.env`
 
 Après installation :
@@ -173,7 +173,7 @@ Dashboard → credentials Sandbox → devise → import produits.
          qui bloque au niveau applicatif après N échecs de login sur `/admin/login.php`.
 - [ ] **2FA** activée sur tous les comptes admin WHMCS (Setup > Staff Management).
 - [ ] **Renommer le dossier admin** (`/admin` → nom aléatoire) dans WHMCS General Settings.
-      Comme le vhost `boutique.conf` proxy-passe tout vers `whmcs_web` sans distinguer
+      Comme le vhost `sslstore.conf` proxy-passe tout vers `whmcs_web` sans distinguer
       `/admin/`, aucune modification du vhost n'est nécessaire pour ça.
 - [ ] **SMTP externe** configuré (Setup > General > Mail) — n'envoie jamais depuis le
       conteneur directement (risque de blacklist IP du VPS).
