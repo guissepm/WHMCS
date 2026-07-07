@@ -194,7 +194,7 @@ Dashboard → credentials Sandbox → devise → import produits.
 ```bash
 # Dump base quotidien (crontab -e sur l'hôte)
 0 3 * * * docker compose -f /opt/whmcs-boutique/docker-compose.yml exec -T db \
-  mariadb-dump -u root -p"$(grep DB_ROOT_PASSWORD /opt/whmcs-boutique/.env | cut -d= -f2)" whmcs \
+  mariadb-dump -u root -p"$(grep '^DB_ROOT_PASSWORD=' /opt/whmcs-boutique/.env | cut -d= -f2-)" whmcs \
   | gzip > /backup/whmcs_$(date +\%F).sql.gz
 
 # Fichiers (configuration.php, attachments, templates custom)
