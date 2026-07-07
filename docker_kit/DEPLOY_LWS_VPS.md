@@ -212,18 +212,45 @@ perte du serveur.
 
 Voir `.github/workflows/deploy.yml` à la racine du dépôt : à chaque push sur `main`,
 le contenu de `modules/` et `assets/` est synchronisé vers le VPS puis copié dans le
-conteneur `whmcs_php`. Secrets GitHub requis (Settings > Secrets and variables > Actions) :
+conteneur `whmcs_php`. Secrets GitHub requis (Settings > Secrets and variables > Actions,
+sur `guissepm/WHMCS`) :
 
 | Secret            | Contenu                                             |
 |-------------------|------------------------------------------------------|
-| `SSH_HOST`        | IP ou nom d'hôte du VPS LWS                          |
-| `SSH_USER`        | utilisateur SSH (root ou utilisateur sudo dédié)     |
+| `SSH_HOST`        | IP publique du VPS LWS                               |
+| `SSH_USER`        | `deploy` (utilisateur dédié, PAS `root` — voir ci-dessous) |
 | `SSH_PORT`        | port SSH (22 ou custom)                              |
-| `SSH_DEPLOY_KEY`  | clé privée SSH dédiée au déploiement (pas ta clé perso) |
+| `SSH_DEPLOY_KEY`  | clé privée SSH dédiée au déploiement (pas ta clé perso, pas celle de `root`) |
 
-Génère une clé dédiée plutôt que de réutiliser ta clé personnelle :
+### Créer l'utilisateur `deploy` (sur le VPS, en root)
+
 ```bash
-ssh-keygen -t ed25519 -f deploy_key -C "github-actions-deploy" -N ""
-# Ajoute deploy_key.pub à ~/.ssh/authorized_keys sur le VPS
-# Colle le contenu de deploy_key (clé privée) dans le secret SSH_DEPLOY_KEY
+adduser --disabled-password --gecos "" deploy
+usermod -aG docker deploy          # nécessaire pour `docker cp` / `docker exec`
+
+mkdir -p /home/deploy/.ssh
+ssh-keygen -t ed25519 -f /home/deploy/.ssh/whmcs_deploy_key -C "github-actions-deploy" -N ""
+cat /home/deploy/.ssh/whmcs_deploy_key.pub >> /home/deploy/.ssh/authorized_keys
+chown -R deploy:deploy /home/deploy/.ssh
+chmod 700 /home/deploy/.ssh
+chmod 600 /home/deploy/.ssh/authorized_keys /home/deploy/.ssh/whmcs_deploy_key
+
+# Le workflow rsync écrit dans /opt/whmcs-boutique/overlay/ : donne les droits à `deploy`
+mkdir -p /opt/whmcs-boutique/overlay/{modules,assets}
+chown -R deploy:deploy /opt/whmcs-boutique/overlay
+
+cat /home/deploy/.ssh/whmcs_deploy_key
+# Copie ce contenu (BEGIN...END inclus) directement dans le secret SSH_DEPLOY_KEY —
+# ne le colle nulle part ailleurs (pas dans un fichier du dépôt, pas dans ce chat).
 ```
+
+**Important — limite réelle de cet isolement** : l'appartenance au groupe `docker`
+équivaut en pratique à un accès root sur l'hôte (un conteneur peut monter `/` et donner
+un accès complet au système de fichiers). Ce n'est donc **pas** une sandbox stricte —
+c'est surtout utile pour : ne pas exposer ta clé/session root personnelle à GitHub,
+pouvoir révoquer l'accès CI sans toucher à ton compte root, et tracer les connexions
+séparément dans les logs `auth.log`. Pour un vrai cloisonnement (la clé ne peut exécuter
+qu'un script de déploiement précis, rien d'autre), il faudrait remplacer l'accès direct
+par une *forced command* dans `authorized_keys` (`command="/opt/whmcs-boutique/deploy.sh" ssh-ed25519 ...`)
+couplée à `rrsync` pour les étapes de synchronisation — dis-moi si tu veux que je mette
+ça en place, c'est plus long à cabler correctement.
