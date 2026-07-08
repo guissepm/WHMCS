@@ -15,6 +15,14 @@ services:
       - whmcs_app:/var/www/html
     environment:
       TZ: Africa/Dakar
+    # DNS publics explicites : le résolveur Docker embarqué (127.0.0.11)
+    # échoue à relayer vers l'extérieur sur certains hôtes (résolveur local
+    # du VPS mal exposé aux conteneurs) — sans ça, la validation de licence
+    # WHMCS et les appels API TheSSLStore échouent silencieusement (DNS KO,
+    # connexion par IP nue OK).
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     depends_on:
       db:
         condition: service_healthy
@@ -61,6 +69,9 @@ services:
       - whmcs_app:/var/www/html
     environment:
       TZ: Africa/Dakar
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     entrypoint: >
       sh -c 'echo "*/5 * * * * php -q /var/www/html/crons/cron.php" > /etc/crontab.whmcs &&
              echo "15 3 * * * php -q /var/www/html/modules/addons/thesslstorefullv2_admin/tss_cron.php" >> /etc/crontab.whmcs &&
