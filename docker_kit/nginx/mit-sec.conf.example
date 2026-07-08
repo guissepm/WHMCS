@@ -1,0 +1,74 @@
+# =============================================================================
+# Vhost pour mit-sec.com (domaine racine) — à copier vers
+# /opt/deploy/nginx/conf.d/mit-sec.conf sur le VPS.
+# Remplace l'ancien sslstore.conf (à supprimer après bascule).
+#
+# Pré-requis avant d'activer le bloc 443 :
+#   1. DNS GoDaddy : enregistrements A `@` et `www` -> IP du VPS
+#      (213.156.134.151), propagation vérifiée avec `dig +short mit-sec.com`.
+#   2. Certificat obtenu via le webroot déjà en place :
+#        docker run --rm \
+#          -v /opt/deploy/certbot/conf:/etc/letsencrypt \
+#          -v /opt/deploy/certbot/www:/var/www/certbot \
+#          certbot/certbot certonly --webroot -w /var/www/certbot \
+#          -d mit-sec.com -d www.mit-sec.com \
+#          --email TON_EMAIL --agree-tos --no-eff-email --non-interactive
+#   3. Après avoir copié ce fichier : `docker exec nginx nginx -t && docker exec nginx nginx -s reload`
+# =============================================================================
+
+# HTTP -> HTTPS (racine + www)
+server {
+    listen 80;
+    server_name mit-sec.com www.mit-sec.com;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://mit-sec.com$request_uri;
+    }
+}
+
+# HTTPS www -> racine (canonicalisation)
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name www.mit-sec.com;
+
+    ssl_certificate     /etc/letsencrypt/live/mit-sec.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mit-sec.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    return 301 https://mit-sec.com$request_uri;
+}
+
+# HTTPS racine — proxy vers la stack WHMCS
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name mit-sec.com;
+
+    ssl_certificate     /etc/letsencrypt/live/mit-sec.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mit-sec.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    client_max_body_size 32M;
+
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+    add_header X-Frame-Options SAMEORIGIN always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    # whmcs_web = conteneur nginx interne à la stack WHMCS, joignable via
+    # le réseau partagé deploy_app-network.
+    location / {
+        proxy_pass http://whmcs_web:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+}
