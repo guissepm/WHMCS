@@ -120,13 +120,32 @@ docker cp ~/whmcs_vX.X.zip whmcs_php:/tmp/
 docker compose exec php sh -c 'cd /var/www/html && unzip -o /tmp/whmcs_*.zip && chown -R www-data:www-data .'
 ```
 
+**Vérifie la structure extraite** avant d'aller plus loin — certains zips WHMCS
+contiennent un sous-dossier (ex: `whmcs/`) au lieu d'extraire directement à la racine :
+```bash
+docker compose exec php ls -la /var/www/html/install
+```
+Si `ls` répond "No such file or directory", remonte le contenu du sous-dossier à la racine :
+```bash
+docker compose exec php sh -c '
+  cp -a /var/www/html/whmcs/. /var/www/html/ &&
+  rm -rf /var/www/html/whmcs &&
+  chown -R www-data:www-data /var/www/html
+'
+```
+
 Ouvre `https://sslstore.syskabsamazone.com/install/install.php` :
 - Base : hôte **db**, base **whmcs**, user **whmcs_user**, mot de passe = `DB_PASSWORD` de `.env`
 
 Après installation :
 ```bash
-docker compose exec php sh -c 'rm -rf /var/www/html/install && chmod 400 /var/www/html/configuration.php'
+docker compose exec php sh -c 'rm -rf /var/www/html/install && chmod 640 /var/www/html/configuration.php && chown www-data:www-data /var/www/html/configuration.php'
 ```
+`640` (pas `400`) : WHMCS a besoin d'écrire dans ce fichier pour valider/rafraîchir la
+licence (sinon tu obtiens un écran "Update License Key" bloquant). La vraie protection
+contre l'accès web direct au fichier vient déjà de la règle `deny all` sur
+`configuration.php` dans `docker_kit/nginx/whmcs.conf`, pas du chmod filesystem — `640`
+reste donc sûr : illisible depuis le web, lisible/inscriptible seulement par `www-data`.
 
 Dans `configuration.php`, ajoute `$trustedProxies` (obligatoire, sinon toutes les
 commandes sembleront venir de l'IP du conteneur `nginx` au lieu de l'IP réelle du
