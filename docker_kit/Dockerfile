@@ -26,6 +26,8 @@ RUN PHP_EXT_DIR="$(php -r 'echo ini_get("extension_dir");')" \
  && rm -rf /tmp/ioncube
 
 # --- Tuning PHP pour WHMCS (dont max_input_vars=4000 exigé par le module TSS)
+# OPcache désactivé : WHMCS le déconseille (conflits possibles avec ionCube et
+# les données mises en cache -> avertissement "OPcache is enabled" dans l'admin).
 RUN { \
       echo "max_input_vars = 4000"; \
       echo "memory_limit = 256M"; \
@@ -34,6 +36,8 @@ RUN { \
       echo "max_execution_time = 120"; \
       echo "expose_php = Off"; \
       echo "date.timezone = Africa/Dakar"; \
+      echo "opcache.enable = 0"; \
+      echo "opcache.enable_cli = 0"; \
     } > /usr/local/etc/php/conf.d/zz-whmcs.ini
 
 WORKDIR /var/www/html
