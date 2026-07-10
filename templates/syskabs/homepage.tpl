@@ -1,11 +1,10 @@
-<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.0.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.1.0" rel="stylesheet">
 
 {* ============================================================
    Accueil boutique — Sys Kabs Amazone
-   Catalogue type revendeur SSL : hero, marques, filtres, cartes
-   produits (marque / badge validation / note / prix barré / CTA).
-   Les liens pointent vers le panier WHMCS ; ajustez gid= si votre
-   groupe de produits n'a pas l'ID 1 (visible dans l'admin).
+   Hero + catalogue vitrine au format tableau (même rendu que la
+   page boutique syskabs_cart), filtrable par type de validation.
+   Ajustez gid=1 si votre groupe de produits n'a pas l'ID 1.
    ============================================================ *}
 
 <div class="ska-page">
@@ -51,7 +50,7 @@
     <span>GeoTrust</span><span>Thawte</span><span>Comodo&nbsp;CA</span>
   </section>
 
-  {* ---------- CATALOGUE ---------- *}
+  {* ---------- CATALOGUE (tableau) ---------- *}
   <section class="ska-catalog-sec" id="ska-catalog-sec">
     <div class="ska-sec-head">
       <span class="ska-eyebrow">Catalogue</span>
@@ -69,89 +68,83 @@
       <button class="ska-tab" data-f="cs">Code Signing</button>
     </div>
 
-    <div class="ska-grid" id="skaGrid">
-
-      <article class="ska-card" data-cat="dv">
-        <header><span class="ska-brand"><i class="ska-dot ska-dot-sectigo"></i>Sectigo</span><span class="ska-badge ska-b-dv">DV</span></header>
-        <h3>PositiveSSL</h3>
-        <div class="ska-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <em>4.9</em></div>
-        <div class="ska-price"><b>8,50&nbsp;$</b><span>/an</span><s>12,00&nbsp;$</s><i class="ska-save">-29%</i></div>
-        <ul><li>Émission ~5 min</li><li>Garantie 10&nbsp;k$</li><li>Réémissions gratuites</li></ul>
-        <div class="ska-card-cta"><a class="ska-btn ska-btn-primary" href="{$WEB_ROOT}/cart.php?gid=1">Acheter</a></div>
-      </article>
-
-      <article class="ska-card" data-cat="dv">
-        <header><span class="ska-brand"><i class="ska-dot ska-dot-rapid"></i>RapidSSL</span><span class="ska-badge ska-b-dv">DV</span></header>
-        <h3>RapidSSL Standard</h3>
-        <div class="ska-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <em>4.7</em></div>
-        <div class="ska-price"><b>13,00&nbsp;$</b><span>/an</span><s>17,00&nbsp;$</s><i class="ska-save">-24%</i></div>
-        <ul><li>Émission ~10 min</li><li>Garantie 10&nbsp;k$</li><li>Sceau statique inclus</li></ul>
-        <div class="ska-card-cta"><a class="ska-btn ska-btn-primary" href="{$WEB_ROOT}/cart.php?gid=1">Acheter</a></div>
-      </article>
-
-      <article class="ska-card" data-cat="ov">
-        <header><span class="ska-brand"><i class="ska-dot ska-dot-sectigo"></i>Sectigo</span><span class="ska-badge ska-b-ov">OV</span></header>
-        <h3>Sectigo OV SSL</h3>
-        <div class="ska-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <em>4.8</em></div>
-        <div class="ska-price"><b>42,00&nbsp;$</b><span>/an</span><s>60,00&nbsp;$</s><i class="ska-save">-30%</i></div>
-        <ul><li>Émission 1–3 j</li><li>Garantie 1,25&nbsp;M$</li><li>Organisation vérifiée</li></ul>
-        <div class="ska-card-cta"><a class="ska-btn ska-btn-primary" href="{$WEB_ROOT}/cart.php?gid=1">Acheter</a></div>
-      </article>
-
-      <article class="ska-card" data-cat="ev">
-        <header><span class="ska-brand"><i class="ska-dot ska-dot-sectigo"></i>Sectigo</span><span class="ska-badge ska-b-ev">EV</span></header>
-        <h3>Sectigo EV SSL</h3>
-        <div class="ska-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <em>4.9</em></div>
-        <div class="ska-price"><b>88,00&nbsp;$</b><span>/an</span><s>120,00&nbsp;$</s><i class="ska-save">-27%</i></div>
-        <ul><li>Émission 1–5 j</li><li>Garantie 1,75&nbsp;M$</li><li>Validation étendue</li></ul>
-        <div class="ska-card-cta"><a class="ska-btn ska-btn-primary" href="{$WEB_ROOT}/cart.php?gid=1">Acheter</a></div>
-      </article>
-
-      <article class="ska-card" data-cat="wc">
-        <header><span class="ska-brand"><i class="ska-dot ska-dot-sectigo"></i>Sectigo</span><span class="ska-badge ska-b-dv">DV · Wildcard</span></header>
-        <h3>PositiveSSL Wildcard</h3>
-        <div class="ska-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <em>4.8</em></div>
-        <div class="ska-price"><b>95,00&nbsp;$</b><span>/an</span><s>130,00&nbsp;$</s><i class="ska-save">-27%</i></div>
-        <ul><li>Sous-domaines illimités</li><li>Émission ~5 min</li><li>Serveurs illimités</li></ul>
-        <div class="ska-card-cta"><a class="ska-btn ska-btn-primary" href="{$WEB_ROOT}/cart.php?gid=1">Acheter</a></div>
-      </article>
-
-      <article class="ska-card" data-cat="ov">
-        <header><span class="ska-brand"><i class="ska-dot ska-dot-digicert"></i>DigiCert</span><span class="ska-badge ska-b-ov">OV</span></header>
-        <h3>Secure Site OV</h3>
-        <div class="ska-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <em>5.0</em></div>
-        <div class="ska-price"><b>195,00&nbsp;$</b><span>/an</span><s>268,00&nbsp;$</s><i class="ska-save">-27%</i></div>
-        <ul><li>Garantie 1,75&nbsp;M$</li><li>Scan malware inclus</li><li>Sceau premium</li></ul>
-        <div class="ska-card-cta"><a class="ska-btn ska-btn-primary" href="{$WEB_ROOT}/cart.php?gid=1">Acheter</a></div>
-      </article>
-
-      <article class="ska-card" data-cat="san">
-        <header><span class="ska-brand"><i class="ska-dot ska-dot-sectigo"></i>Sectigo</span><span class="ska-badge ska-b-dv">DV · SAN</span></header>
-        <h3>PositiveSSL Multi-Domain</h3>
-        <div class="ska-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <em>4.7</em></div>
-        <div class="ska-price"><b>45,00&nbsp;$</b><span>/an</span><s>62,00&nbsp;$</s><i class="ska-save">-27%</i></div>
-        <ul><li>Jusqu'à 250 domaines</li><li>3 domaines inclus</li><li>Émission ~5 min</li></ul>
-        <div class="ska-card-cta"><a class="ska-btn ska-btn-primary" href="{$WEB_ROOT}/cart.php?gid=1">Acheter</a></div>
-      </article>
-
-      <article class="ska-card" data-cat="ev">
-        <header><span class="ska-brand"><i class="ska-dot ska-dot-digicert"></i>DigiCert</span><span class="ska-badge ska-b-ev">EV</span></header>
-        <h3>Secure Site EV</h3>
-        <div class="ska-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <em>5.0</em></div>
-        <div class="ska-price"><b>340,00&nbsp;$</b><span>/an</span><s>449,00&nbsp;$</s><i class="ska-save">-24%</i></div>
-        <ul><li>Garantie 2,00&nbsp;M$</li><li>Validation prioritaire</li><li>Confiance maximale</li></ul>
-        <div class="ska-card-cta"><a class="ska-btn ska-btn-primary" href="{$WEB_ROOT}/cart.php?gid=1">Acheter</a></div>
-      </article>
-
-      <article class="ska-card" data-cat="cs">
-        <header><span class="ska-brand"><i class="ska-dot ska-dot-sectigo"></i>Sectigo</span><span class="ska-badge ska-b-ov">Code</span></header>
-        <h3>Code Signing</h3>
-        <div class="ska-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <em>4.8</em></div>
-        <div class="ska-price"><b>210,00&nbsp;$</b><span>/an</span><s>289,00&nbsp;$</s><i class="ska-save">-27%</i></div>
-        <ul><li>Supprime « éditeur inconnu »</li><li>Réputation SmartScreen</li><li>Timestamping inclus</li></ul>
-        <div class="ska-card-cta"><a class="ska-btn ska-btn-primary" href="{$WEB_ROOT}/cart.php?gid=1">Acheter</a></div>
-      </article>
-
+    <div class="ska-ptable-wrap">
+      <table class="ska-ptable">
+        <thead>
+          <tr>
+            <th class="ska-col-name">Produits</th>
+            <th>Marque</th>
+            <th>Validation</th>
+            <th class="ska-col-price">Prix le plus bas</th>
+            <th class="ska-col-cta"></th>
+          </tr>
+        </thead>
+        <tbody id="skaGrid">
+          <tr data-cat="dv">
+            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">PositiveSSL</a></td>
+            <td>Sectigo</td>
+            <td><span class="ska-vbadge ska-v-dv">Domaine (DV)</span></td>
+            <td class="ska-col-price"><b>8,50&nbsp;$</b><span>/an</span></td>
+            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
+          </tr>
+          <tr data-cat="dv">
+            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">RapidSSL Standard</a></td>
+            <td>RapidSSL</td>
+            <td><span class="ska-vbadge ska-v-dv">Domaine (DV)</span></td>
+            <td class="ska-col-price"><b>13,00&nbsp;$</b><span>/an</span></td>
+            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
+          </tr>
+          <tr data-cat="ov">
+            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Sectigo OV SSL</a></td>
+            <td>Sectigo</td>
+            <td><span class="ska-vbadge ska-v-ov">Domaine + Organisation (OV)</span></td>
+            <td class="ska-col-price"><b>42,00&nbsp;$</b><span>/an</span></td>
+            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
+          </tr>
+          <tr data-cat="ev">
+            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Sectigo EV SSL</a></td>
+            <td>Sectigo</td>
+            <td><span class="ska-vbadge ska-v-ev">Domaine + Organisation (EV)</span></td>
+            <td class="ska-col-price"><b>88,00&nbsp;$</b><span>/an</span></td>
+            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
+          </tr>
+          <tr data-cat="wc">
+            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">PositiveSSL Wildcard</a></td>
+            <td>Sectigo</td>
+            <td><span class="ska-vbadge ska-v-dv">Domaine (Wildcard)</span></td>
+            <td class="ska-col-price"><b>95,00&nbsp;$</b><span>/an</span></td>
+            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
+          </tr>
+          <tr data-cat="ov">
+            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Secure Site OV</a></td>
+            <td>DigiCert</td>
+            <td><span class="ska-vbadge ska-v-ov">Domaine + Organisation (OV)</span></td>
+            <td class="ska-col-price"><b>195,00&nbsp;$</b><span>/an</span></td>
+            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
+          </tr>
+          <tr data-cat="san">
+            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">PositiveSSL Multi-Domain</a></td>
+            <td>Sectigo</td>
+            <td><span class="ska-vbadge ska-v-dv">Multi-domaine (SAN)</span></td>
+            <td class="ska-col-price"><b>45,00&nbsp;$</b><span>/an</span></td>
+            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
+          </tr>
+          <tr data-cat="ev">
+            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Secure Site EV</a></td>
+            <td>DigiCert</td>
+            <td><span class="ska-vbadge ska-v-ev">Domaine + Organisation (EV)</span></td>
+            <td class="ska-col-price"><b>340,00&nbsp;$</b><span>/an</span></td>
+            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
+          </tr>
+          <tr data-cat="cs">
+            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Code Signing</a></td>
+            <td>Sectigo</td>
+            <td><span class="ska-vbadge ska-v-ov">Code Signing</span></td>
+            <td class="ska-col-price"><b>210,00&nbsp;$</b><span>/an</span></td>
+            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <p class="ska-empty" id="skaEmpty" style="display:none">Aucun produit dans cette catégorie.</p>
     <div class="ska-more">
@@ -194,16 +187,16 @@
 <script>
 (function(){
   var bar=document.getElementById('skaFilters'); if(!bar) return;
-  var cards=[].slice.call(document.querySelectorAll('#skaGrid .ska-card'));
+  var rows=[].slice.call(document.querySelectorAll('#skaGrid tr[data-cat]'));
   var empty=document.getElementById('skaEmpty');
   bar.addEventListener('click',function(e){
     var t=e.target.closest('.ska-tab'); if(!t) return;
     bar.querySelectorAll('.ska-tab').forEach(function(b){b.classList.remove('active')});
     t.classList.add('active');
     var f=t.getAttribute('data-f'), n=0;
-    cards.forEach(function(c){
-      var ok=(f==='all'||c.getAttribute('data-cat')===f);
-      c.style.display=ok?'':'none'; if(ok)n++;
+    rows.forEach(function(r){
+      var ok=(f==='all'||r.getAttribute('data-cat')===f);
+      r.style.display=ok?'':'none'; if(ok)n++;
     });
     empty.style.display=n?'none':'block';
   });
