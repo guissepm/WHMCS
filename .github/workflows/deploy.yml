@@ -6,6 +6,8 @@ on:
     paths:
       - "modules/**"
       - "assets/**"
+      - "templates/**"
+      - "includes/**"
   workflow_dispatch: {}
 
 jobs:
@@ -21,18 +23,22 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Synchroniser modules/ et assets/ vers le staging du VPS
+      - name: Synchroniser modules, assets, templates et hooks vers le staging du VPS
         run: |
-          rsync -rlptzv --checksum --delete \
-            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT }}" \
-            modules/ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/whmcs-boutique/overlay/modules/"
-          rsync -rlptzv --checksum --delete \
-            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT }}" \
-            assets/ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/whmcs-boutique/overlay/assets/"
+          for dir in modules assets templates includes; do
+            if [ -d "$dir" ]; then
+              rsync -rlptzv --checksum \
+                -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT }}" \
+                "$dir/" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/whmcs-boutique/overlay/$dir/"
+            fi
+          done
 
       - name: Copier l'overlay dans le conteneur WHMCS et corriger les permissions
         run: |
           ssh -i ~/.ssh/deploy_key -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" '
-            docker cp /opt/whmcs-boutique/overlay/modules/. whmcs_php:/var/www/html/modules/ &&
-            docker cp /opt/whmcs-boutique/overlay/assets/.  whmcs_php:/var/www/html/assets/ &&
-            docker exec whmcs_php chown -R www-data:www-data /var/www/html/modules /var/www/html/assets'
+            for dir in modules assets templates includes; do
+              if [ -d "/opt/whmcs-boutique/overlay/$dir" ]; then
+                docker cp "/opt/whmcs-boutique/overlay/$dir/." "whmcs_php:/var/www/html/$dir/" || exit 1
+              fi
+            done
+            docker exec whmcs_php chown -R www-data:www-data /var/www/html/modules /var/www/html/assets /var/www/html/templates /var/www/html/includes'

@@ -1,0 +1,136 @@
+/* =============================================================
+   Thème Sys Kabs Amazone — styles boutique SSL
+   Enfant de Twenty-One : ce fichier stylise la page d'accueil
+   (catalogue) et affine le header/menu du parent.
+   ============================================================= */
+
+:root{
+  --ska-primary:#1E50E2;
+  --ska-primary-dk:#173FB0;
+  --ska-green:#08916A;
+  --ska-green-soft:#E4F5EE;
+  --ska-gold:#B7791F;
+  --ska-ink:#0E1A2B;
+  --ska-muted:#54657E;
+  --ska-line:#E2E8F2;
+  --ska-bg:#F5F7FB;
+  --ska-surface:#FFFFFF;
+  --ska-r:14px;
+  --ska-shadow:0 1px 2px rgba(14,26,43,.05),0 12px 32px -12px rgba(14,26,43,.14);
+}
+
+/* ---------- Affinage header Twenty-One (barre nav bleue) ---------- */
+#main-menu.navbar, .navbar-main{background:var(--ska-primary) !important}
+#main-menu .navbar-nav > li > a{color:#fff !important; font-weight:600}
+#main-menu .navbar-nav > li > a:hover{background:var(--ska-primary-dk) !important}
+
+/* ---------- Page ---------- */
+.ska-page{background:var(--ska-bg); color:var(--ska-ink); margin:-20px -15px 0; padding:0}
+.ska-page section{padding:56px 24px}
+.ska-eyebrow{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ska-green); font-weight:600}
+.ska-sec-head{max-width:640px; margin:0 auto 34px; text-align:center}
+.ska-sec-head h2{font-size:2rem; font-weight:800; letter-spacing:-.02em; margin:.4em 0 .3em}
+.ska-sec-head p{color:var(--ska-muted); font-size:1.04rem; margin:0}
+.ska-green{color:var(--ska-green)}
+
+/* ---------- Boutons ---------- */
+.ska-btn{display:inline-flex; align-items:center; justify-content:center; gap:.5em; font-weight:650; font-size:.92rem; padding:.66em 1.2em; border-radius:10px; border:1px solid transparent; cursor:pointer; text-decoration:none !important; transition:transform .12s, box-shadow .2s}
+.ska-btn-lg{padding:.85em 1.5em; font-size:1rem}
+.ska-btn-primary{background:var(--ska-primary); color:#fff !important; box-shadow:0 8px 20px -8px rgba(30,80,226,.7)}
+.ska-btn-primary:hover{transform:translateY(-1px); color:#fff !important}
+.ska-btn-ghost{background:transparent; color:var(--ska-ink) !important; border-color:#D3DCEA}
+.ska-btn-ghost:hover{border-color:var(--ska-primary); color:var(--ska-primary) !important}
+.ska-btn-white{background:#fff; color:var(--ska-primary-dk) !important}
+
+/* ---------- Hero ---------- */
+.ska-hero{background:
+  radial-gradient(60% 55% at 80% 10%, rgba(30,80,226,.14), transparent 70%),
+  radial-gradient(50% 50% at 10% 95%, rgba(8,145,106,.12), transparent 70%), var(--ska-bg)}
+.ska-hero-inner{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center}
+.ska-hero h1{font-size:clamp(2rem,4.2vw,3.2rem); font-weight:820; letter-spacing:-.02em; line-height:1.1; margin:.4em 0}
+.ska-lede{color:var(--ska-muted); font-size:1.1rem; max-width:36ch}
+.ska-hero-cta{display:flex; gap:14px; flex-wrap:wrap; margin-top:24px}
+.ska-trust{list-style:none; display:flex; gap:24px; flex-wrap:wrap; padding:0; margin:26px 0 0}
+.ska-trust li{color:var(--ska-muted); font-size:.9rem; position:relative; padding-left:22px}
+.ska-trust li::before{content:"\2713"; position:absolute; left:0; color:var(--ska-green); font-weight:700}
+
+.ska-hero-card{display:flex; flex-direction:column; gap:16px; align-items:center}
+.ska-urlbar{width:100%; max-width:340px; background:var(--ska-surface); border:1px solid var(--ska-line); border-radius:11px; padding:11px 14px; font-family:ui-monospace,Menlo,monospace; font-size:.9rem; box-shadow:var(--ska-shadow); display:flex; gap:10px; align-items:center}
+.ska-urlbar b{color:var(--ska-green)}
+.ska-cert{width:100%; max-width:340px; background:var(--ska-surface); border:1px solid var(--ska-line); border-radius:var(--ska-r); box-shadow:var(--ska-shadow); overflow:hidden}
+.ska-cert-head{display:flex; gap:14px; align-items:center; padding:18px 20px; border-bottom:1px solid var(--ska-line)}
+.ska-cert-head small{display:block; color:var(--ska-muted); font-family:ui-monospace,Menlo,monospace; font-size:.72rem}
+.ska-shield{width:44px;height:44px;border-radius:50%;background:var(--ska-green-soft);color:var(--ska-green);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;flex:0 0 auto}
+.ska-cert-rows{padding:14px 20px; display:grid; gap:10px}
+.ska-cert-rows > div{display:flex; justify-content:space-between; font-size:.88rem}
+.ska-cert-rows span{color:var(--ska-muted)}
+.ska-cert-rows b{font-family:ui-monospace,Menlo,monospace}
+.ska-ok{color:var(--ska-green)}
+
+/* ---------- Marques ---------- */
+.ska-brands{background:var(--ska-surface); border-top:1px solid var(--ska-line); border-bottom:1px solid var(--ska-line); display:flex; gap:30px; align-items:center; justify-content:center; flex-wrap:wrap; padding:20px 24px !important}
+.ska-brands span{font-weight:750; color:var(--ska-muted); font-size:1rem}
+.ska-brands-label{font-family:ui-monospace,Menlo,monospace; font-size:.68rem !important; letter-spacing:.14em; text-transform:uppercase; color:#8798AE !important; font-weight:600 !important}
+
+/* ---------- Filtres ---------- */
+.ska-filters{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:26px}
+.ska-tab{font-size:.86rem; font-weight:600; color:var(--ska-muted); background:var(--ska-surface); border:1px solid var(--ska-line); border-radius:999px; padding:.5em 1.05em; cursor:pointer; transition:.15s}
+.ska-tab:hover{color:var(--ska-ink); border-color:#D3DCEA}
+.ska-tab.active{background:var(--ska-primary); border-color:var(--ska-primary); color:#fff}
+
+/* ---------- Cartes produits ---------- */
+.ska-catalog-sec{max-width:1160px; margin:0 auto}
+.ska-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.ska-card{background:var(--ska-surface); border:1px solid var(--ska-line); border-radius:var(--ska-r); padding:18px; display:flex; flex-direction:column; gap:10px; transition:transform .15s, box-shadow .2s}
+.ska-card:hover{transform:translateY(-3px); box-shadow:var(--ska-shadow)}
+.ska-card header{display:flex; justify-content:space-between; align-items:center}
+.ska-brand{display:inline-flex; align-items:center; gap:7px; font-weight:750; font-size:.84rem}
+.ska-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.ska-dot-sectigo{background:#12A150}
+.ska-dot-digicert{background:#0E63B3}
+.ska-dot-rapid{background:#1D9BD1}
+.ska-badge{font-family:ui-monospace,Menlo,monospace; font-size:.62rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:3px 8px; border-radius:6px; border:1px solid var(--ska-line); color:var(--ska-muted)}
+.ska-b-dv{color:var(--ska-green); background:var(--ska-green-soft); border-color:rgba(8,145,106,.35)}
+.ska-b-ov{color:var(--ska-primary); background:rgba(30,80,226,.08); border-color:rgba(30,80,226,.35)}
+.ska-b-ev{color:var(--ska-gold); background:rgba(183,121,31,.1); border-color:rgba(183,121,31,.35)}
+.ska-card h3{font-size:1.12rem; font-weight:750; margin:0; letter-spacing:-.01em}
+.ska-stars{color:var(--ska-gold); font-size:.84rem}
+.ska-stars em{color:var(--ska-muted); font-style:normal; font-family:ui-monospace,Menlo,monospace}
+.ska-price{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
+.ska-price b{font-family:ui-monospace,Menlo,monospace; font-size:1.5rem; font-weight:700; letter-spacing:-.02em}
+.ska-price span{color:var(--ska-muted); font-size:.8rem}
+.ska-price s{color:#8798AE; font-family:ui-monospace,Menlo,monospace; font-size:.85rem}
+.ska-save{font-style:normal; font-family:ui-monospace,Menlo,monospace; font-size:.66rem; font-weight:600; color:var(--ska-green); background:var(--ska-green-soft); padding:2px 7px; border-radius:5px}
+.ska-card ul{list-style:none; padding:10px 0 0; margin:0; border-top:1px solid var(--ska-line); display:grid; gap:6px; flex:1}
+.ska-card ul li{font-size:.85rem; color:var(--ska-muted); position:relative; padding-left:20px}
+.ska-card ul li::before{content:"\2713"; position:absolute; left:0; color:var(--ska-green); font-weight:700}
+.ska-card-cta{display:flex; gap:10px; margin-top:6px}
+.ska-card-cta .ska-btn{flex:1; padding:.6em 1em; font-size:.86rem}
+.ska-empty{text-align:center; color:var(--ska-muted); padding:32px}
+.ska-more{text-align:center; margin-top:28px}
+
+/* ---------- Comparatif ---------- */
+.ska-compare{max-width:1000px; margin:0 auto}
+.ska-table-wrap{overflow-x:auto; border:1px solid var(--ska-line); border-radius:var(--ska-r); background:var(--ska-surface)}
+.ska-table{border-collapse:collapse; width:100%; min-width:620px; margin:0}
+.ska-table th,.ska-table td{text-align:left; padding:13px 16px; border-bottom:1px solid var(--ska-line); font-size:.9rem}
+.ska-table thead th{font-family:ui-monospace,Menlo,monospace; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ska-muted); background:#EEF2F9}
+.ska-table tbody tr:last-child td{border-bottom:none}
+.ska-table td.y{color:var(--ska-green); font-weight:700}
+.ska-table td.n{color:#8798AE}
+
+/* ---------- CTA ---------- */
+.ska-cta{max-width:1120px; margin:0 auto 56px; background:linear-gradient(120deg,var(--ska-primary),var(--ska-primary-dk)); color:#fff; border-radius:var(--ska-r); padding:44px 40px !important; display:flex; align-items:center; justify-content:space-between; gap:28px; flex-wrap:wrap}
+.ska-cta h2{font-size:1.7rem; font-weight:800; margin:0}
+.ska-cta p{color:rgba(255,255,255,.85); margin:.5em 0 0}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  .ska-hero-inner{grid-template-columns:1fr}
+  .ska-hero-card{order:-1}
+  .ska-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  .ska-grid{grid-template-columns:1fr}
+  .ska-cta{padding:32px 24px !important}
+}
