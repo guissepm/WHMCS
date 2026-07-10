@@ -46,8 +46,11 @@
   {* ---------- BANDEAU MARQUES ---------- *}
   <section class="ska-brands">
     <span class="ska-brands-label">Partenaire officiel</span>
-    <span>Sectigo</span><span>DigiCert</span><span>RapidSSL</span>
-    <span>GeoTrust</span><span>Thawte</span><span>Comodo&nbsp;CA</span>
+    <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/digicert-logo.svg" alt="DigiCert" class="ska-brandlogo">
+    <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/geotrust-logo.svg" alt="GeoTrust" class="ska-brandlogo">
+    <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/thawte-logo.svg" alt="Thawte" class="ska-brandlogo">
+    <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/rapidssl-logo.svg" alt="RapidSSL" class="ska-brandlogo">
+    <span>Sectigo</span><span>Comodo&nbsp;CA</span>
   </section>
 
   {* ---------- CATALOGUE (tableau) ---------- *}

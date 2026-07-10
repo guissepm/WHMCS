@@ -13,6 +13,18 @@
     {if $productGroup.tagline}<p>{$productGroup.tagline}</p>{/if}
   </div>
 
+  <div class="ska-filters" id="skaBrandTabs">
+    <button class="ska-tab active" data-b="all">Toutes les marques</button>
+    <button class="ska-tab" data-b="DigiCert">DigiCert</button>
+    <button class="ska-tab" data-b="GeoTrust">GeoTrust</button>
+    <button class="ska-tab" data-b="Thawte">Thawte</button>
+    <button class="ska-tab" data-b="RapidSSL">RapidSSL</button>
+    <button class="ska-tab" data-b="Sectigo">Sectigo</button>
+    <button class="ska-tab" data-b="Comodo">Comodo</button>
+    <button class="ska-tab" data-b="SiteLock">SiteLock</button>
+    <button class="ska-tab" data-b="CodeGuard">CodeGuard</button>
+  </div>
+
   <div class="ska-ptable-wrap">
     <table class="ska-ptable">
       <thead>
@@ -63,7 +75,7 @@
             {assign var=skaVal value='Domaine (DV)'}{assign var=skaValCls value='ska-v-dv'}
           {/if}
 
-          <tr>
+          <tr data-brand="{$skaBrand}">
             <td class="ska-col-name">
               {if isset($product.slug) && isset($productGroup.slug)}
                 <a href="{$WEB_ROOT}/index.php?rp=/store/{$productGroup.slug}/{$product.slug}" class="ska-pname">{$product.name}</a>
@@ -71,7 +83,19 @@
                 <span class="ska-pname">{$product.name}</span>
               {/if}
             </td>
-            <td>{$skaBrand}</td>
+            <td class="ska-col-brand">
+              {if $skaBrand == 'DigiCert'}
+                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/digicert-logo.svg" alt="DigiCert" class="ska-blogo">
+              {elseif $skaBrand == 'GeoTrust'}
+                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/geotrust-logo.svg" alt="GeoTrust" class="ska-blogo">
+              {elseif $skaBrand == 'Thawte'}
+                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/thawte-logo.svg" alt="Thawte" class="ska-blogo">
+              {elseif $skaBrand == 'RapidSSL'}
+                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/rapidssl-logo.svg" alt="RapidSSL" class="ska-blogo">
+              {else}
+                {$skaBrand}
+              {/if}
+            </td>
             <td><span class="ska-vbadge {$skaValCls}">{$skaVal}</span></td>
             <td class="ska-col-price">
               {if isset($product.pricing.minprice)}
@@ -104,3 +128,21 @@
   {/if}
 
 </div>
+
+{literal}
+<script>
+(function(){
+  var bar=document.getElementById('skaBrandTabs'); if(!bar) return;
+  var rows=[].slice.call(document.querySelectorAll('.ska-ptable tbody tr[data-brand]'));
+  bar.addEventListener('click',function(e){
+    var t=e.target.closest('.ska-tab'); if(!t) return;
+    bar.querySelectorAll('.ska-tab').forEach(function(b){b.classList.remove('active')});
+    t.classList.add('active');
+    var f=t.getAttribute('data-b');
+    rows.forEach(function(r){
+      r.style.display=(f==='all'||r.getAttribute('data-brand')===f)?'':'none';
+    });
+  });
+})();
+</script>
+{/literal}
