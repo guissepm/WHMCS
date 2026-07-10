@@ -132,6 +132,10 @@
 .ska-brand-slot{display:inline-flex; align-items:center}
 .ska-bfall{font-weight:750; color:var(--ska-muted); font-size:.95rem}
 
+/* ---------- Catalogue importé depuis la boutique (accueil) ---------- */
+.ska-imported .ska-store{padding:0; max-width:none}
+.ska-imported .ska-store-head{display:none}
+
 /* ---------- Onglets de catégories (Certificats / Sécurité Web) ---------- */
 .ska-cattabs{display:flex; justify-content:center; gap:6px; background:#EEF0F6; border-radius:999px; padding:6px; width:max-content; margin:0 auto 26px}
 .ska-cattab{border:none; background:transparent; color:var(--ska-muted); font-weight:700; font-size:.95rem; padding:.7em 1.6em; border-radius:999px; cursor:pointer; transition:.15s; white-space:nowrap}

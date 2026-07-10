@@ -65,13 +65,14 @@
       <p>Filtrez par type de validation, comparez marques et garanties, commandez en quelques clics.</p>
     </div>
 
-    <div class="ska-cattabs" id="skaHomeTabs">
+    <div id="skaCatalogHost">
+    <div class="ska-cattabs" id="skaCatTabs">
       <button class="ska-cattab" data-v="websec">&#128737;&nbsp; Sécurité Web</button>
       <button class="ska-cattab active" data-v="cert">&#128274;&nbsp; Certificats</button>
       <button class="ska-cattab" data-v="pki">&#128273;&nbsp; PKI</button>
     </div>
 
-    <div id="skaHomeCert">
+    <div id="skaViewCert">
     <div class="ska-filters" id="skaFilters">
       <button class="ska-tab active" data-f="all">Tous</button>
       <button class="ska-tab" data-f="dv">DV — Domaine</button>
@@ -129,10 +130,10 @@
     <div class="ska-more">
       <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl" class="ska-btn ska-btn-ghost">Voir les 100+ certificats du catalogue &rarr;</a>
     </div>
-    </div>{* /skaHomeCert *}
+    </div>{* /skaViewCert *}
 
     {* ---------- Vue Sécurité Web (produits réels) ---------- *}
-    <div id="skaHomeWebsec" style="display:none">
+    <div id="skaViewWebsec" style="display:none">
       {if isset($skaWebsecProducts) && $skaWebsecProducts|count > 0}
         <div class="ska-grid ska-store-grid ska-websec-grid">
           {foreach $skaWebsecProducts as $wp}
@@ -158,7 +159,7 @@
     </div>
 
     {* ---------- Vue PKI (solutions sur devis) ---------- *}
-    <div id="skaHomePki" style="display:none">
+    <div id="skaViewPki" style="display:none">
       <div class="ska-grid ska-store-grid ska-websec-grid">
         {foreach [
           ['b' => 'DigiCert', 't' => 'DigiCert CertCentral', 'd' => "Plateforme centralisée pour émettre, déployer et renouveler tous vos certificats à grande échelle."],
@@ -186,6 +187,7 @@
         {/foreach}
       </div>
     </div>
+    </div>{* /skaCatalogHost *}
   </section>
 
   {* ---------- COMPARATIF ---------- *}
@@ -219,40 +221,27 @@
 
 </div>
 
+<script>var skaStoreUrl='{$WEB_ROOT}/index.php?rp=/store/certificats-ssl';</script>
+<script src="{$WEB_ROOT}/templates/syskabs/js/ska-catalog.js?v=1.2.0"></script>
 {literal}
 <script>
+/* Import du catalogue de la boutique : source unique de verite.
+   En cas d'echec reseau, le rendu serveur (hook) reste en place. */
 (function(){
-  var tabs=document.getElementById('skaHomeTabs');
-  if(tabs){
-    var views={cert:'skaHomeCert', websec:'skaHomeWebsec', pki:'skaHomePki'};
-    tabs.addEventListener('click',function(e){
-      var t=e.target.closest('.ska-cattab'); if(!t) return;
-      tabs.querySelectorAll('.ska-cattab').forEach(function(b){b.classList.remove('active')});
-      t.classList.add('active');
-      var v=t.getAttribute('data-v');
-      Object.keys(views).forEach(function(k){
-        var el=document.getElementById(views[k]);
-        if(el) el.style.display=(k===v)?'':'none';
-      });
-    });
-  }
-})();
-
-(function(){
-  var bar=document.getElementById('skaFilters'); if(!bar) return;
-  var rows=[].slice.call(document.querySelectorAll('#skaGrid tr[data-cat]'));
-  var empty=document.getElementById('skaEmpty');
-  bar.addEventListener('click',function(e){
-    var t=e.target.closest('.ska-tab'); if(!t) return;
-    bar.querySelectorAll('.ska-tab').forEach(function(b){b.classList.remove('active')});
-    t.classList.add('active');
-    var f=t.getAttribute('data-f'), n=0;
-    rows.forEach(function(r){
-      var ok=(f==='all'||r.getAttribute('data-cat')===f);
-      r.style.display=ok?'':'none'; if(ok)n++;
-    });
-    empty.style.display=n?'none':'block';
-  });
+  if(!window.fetch || !window.DOMParser) return;
+  fetch(skaStoreUrl, {credentials:'same-origin'})
+    .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+    .then(function(html){
+      var doc=new DOMParser().parseFromString(html,'text/html');
+      var st=doc.getElementById('skaStoreRoot');
+      var host=document.getElementById('skaCatalogHost');
+      if(!st || !host) return;
+      host.classList.add('ska-imported');
+      host.innerHTML='';
+      host.appendChild(st);
+      if(window.skaInitCatalog) window.skaInitCatalog(host);
+    })
+    .catch(function(){ /* fallback serveur conserve */ });
 })();
 </script>
 {/literal}

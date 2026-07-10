@@ -7,7 +7,7 @@
 
 <link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.2.0" rel="stylesheet">
 
-<div class="ska-store">
+<div class="ska-store" id="skaStoreRoot">
 
   <div class="ska-store-head">
     <h1>{$productGroup.name}</h1>
@@ -16,8 +16,9 @@
 
   {* ---------- Onglets de catégories ---------- *}
   <div class="ska-cattabs" id="skaCatTabs">
-    <button class="ska-cattab active" data-v="cert">&#128274;&nbsp; Certificats</button>
     <button class="ska-cattab" data-v="websec">&#128737;&nbsp; Sécurité Web</button>
+    <button class="ska-cattab active" data-v="cert">&#128274;&nbsp; Certificats</button>
+    <button class="ska-cattab" data-v="pki">&#128273;&nbsp; PKI</button>
   </div>
 
   {* ============== VUE CERTIFICATS ============== *}
@@ -195,58 +196,40 @@
     </div>
   </div>
 
+  {* ============== VUE PKI (solutions sur devis) ============== *}
+  <div id="skaViewPki" style="display:none">
+    <div class="ska-grid ska-store-grid ska-websec-grid">
+      {foreach [
+        ['b' => 'DigiCert', 't' => 'DigiCert CertCentral', 'd' => "Plateforme centralisée pour émettre, déployer et renouveler tous vos certificats à grande échelle."],
+        ['b' => 'DigiCert', 't' => 'DigiCert ONE',         'd' => "Gestion PKI moderne et conteneurisée pour un déploiement rapide dans les environnements complexes."],
+        ['b' => 'DigiCert', 't' => 'Trust Lifecycle Manager', 'd' => "Inventoriez, émettez et automatisez le cycle de vie des certificats publics et privés."],
+        ['b' => 'Sectigo',  't' => 'Sectigo Certificate Manager', 'd' => "Pilotez de gros volumes de certificats, réduisez les coûts et évitez les interruptions."],
+        ['b' => 'Sectigo',  't' => 'Sectigo IoT Manager',  'd' => "Sécurité des objets connectés : chiffrement, authentification des équipements, démarrage sécurisé."],
+        ['b' => 'Venafi',   't' => 'Venafi',               'd' => "Gestion de référence des identités machines : clés privées et certificats à l'échelle."],
+        ['b' => 'KeyFactor','t' => 'KeyFactor',            'd' => "La confiance des identités machines pour équipements, applications et charges de travail critiques."],
+        ['b' => 'AppViewX', 't' => 'AppViewX',             'd' => "Automatisation de bout en bout de la PKI et orchestration des certificats multi-équipes."]
+      ] as $pk}
+        <article class="ska-card ska-wcard">
+          <div class="ska-wcard-logo">
+            <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/{$pk.b|lower}-logo.svg"
+                 alt="{$pk.b}" class="ska-wlogo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+            <span class="ska-bfall" style="display:none">{$pk.b}</span>
+          </div>
+          <h3>{$pk.t}</h3>
+          <div class="ska-desc">{$pk.d}</div>
+          <div class="ska-card-cta">
+            <a href="{$WEB_ROOT}/contact.php" class="ska-btn ska-btn-ghost">Nous contacter</a>
+          </div>
+        </article>
+      {/foreach}
+    </div>
+  </div>
+
   {if $products|count == 0}
     <p class="ska-empty">Aucun produit disponible dans cette catégorie pour le moment.</p>
   {/if}
 
 </div>
 
-{literal}
-<script>
-(function(){
-  var logoBase='/assets/ssl_resources/images/emails/';
-
-  // Onglets de catégories : Certificats / Sécurité Web
-  var catBar=document.getElementById('skaCatTabs');
-  var vCert=document.getElementById('skaViewCert');
-  var vSec=document.getElementById('skaViewWebsec');
-  if(catBar){
-    catBar.addEventListener('click',function(e){
-      var t=e.target.closest('.ska-cattab'); if(!t) return;
-      catBar.querySelectorAll('.ska-cattab').forEach(function(b){b.classList.remove('active')});
-      t.classList.add('active');
-      var v=t.getAttribute('data-v');
-      vCert.style.display=(v==='cert')?'':'none';
-      vSec.style.display=(v==='websec')?'':'none';
-    });
-  }
-
-  // Onglets marques + bandeau de marque
-  var bar=document.getElementById('skaBrandTabs');
-  var hero=document.getElementById('skaBHero');
-  var heroTitle=document.getElementById('skaBHeroTitle');
-  var heroLogo=document.getElementById('skaBHeroLogo');
-  if(bar){
-    var rows=[].slice.call(document.querySelectorAll('#skaViewCert .ska-ptable tbody tr[data-brand]'));
-    bar.addEventListener('click',function(e){
-      var t=e.target.closest('.ska-tab'); if(!t) return;
-      bar.querySelectorAll('.ska-tab').forEach(function(b){b.classList.remove('active')});
-      t.classList.add('active');
-      var f=t.getAttribute('data-b');
-      rows.forEach(function(r){
-        r.style.display=(f==='all'||r.getAttribute('data-brand')===f)?'':'none';
-      });
-      if(f==='all'){ hero.style.display='none'; }
-      else{
-        heroTitle.textContent='Certificats SSL ' + f;
-        heroLogo.style.display='';
-        heroLogo.alt=f;
-        heroLogo.onerror=function(){ this.style.display='none'; };
-        heroLogo.src=logoBase + f.toLowerCase() + '-logo.svg';
-        hero.style.display='';
-      }
-    });
-  }
-})();
-</script>
-{/literal}
+<script src="{$WEB_ROOT}/templates/syskabs/js/ska-catalog.js?v=1.2.0"></script>
