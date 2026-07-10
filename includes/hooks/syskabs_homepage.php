@@ -34,13 +34,10 @@ add_hook('ClientAreaPageHome', 1, function ($vars) {
             ->get();
 
         $list = [];
+        $webs = [];
         foreach ($products as $p) {
             $n = mb_strtolower($p->name);
-
-            // La vitrine accueil ne montre que les certificats
-            if (preg_match('/sitelock|codeguard|cwatch|hackerguardian|pci/', $n)) {
-                continue;
-            }
+            $isWebsec = (bool) preg_match('/sitelock|codeguard|cwatch|hackerguardian|pci/', $n);
 
             $pricing = Capsule::table('tblpricing')
                 ->where('type', 'product')
@@ -67,6 +64,27 @@ add_hook('ClientAreaPageHome', 1, function ($vars) {
                 }
             }
             if ($best === null) {
+                continue;
+            }
+
+            if ($isWebsec) {
+                if (count($webs) < 8) {
+                    $wbrand = 'Comodo';
+                    if (strpos($n, 'sitelock') !== false) { $wbrand = 'SiteLock'; }
+                    elseif (strpos($n, 'codeguard') !== false) { $wbrand = 'CodeGuard'; }
+                    $webs[] = [
+                        'pid'       => $p->id,
+                        'name'      => $p->name,
+                        'brand'     => $wbrand,
+                        'brandslug' => strtolower($wbrand),
+                        'desc'      => trim(mb_substr(strip_tags((string) $p->description), 0, 130)),
+                        'price'     => $currency->prefix . number_format($best, 2) . ' ' . $currency->suffix,
+                        'cycle'     => $bestCycle,
+                    ];
+                }
+                continue;
+            }
+            if (count($list) >= 10) {
                 continue;
             }
 
@@ -113,12 +131,12 @@ add_hook('ClientAreaPageHome', 1, function ($vars) {
                 'cycle'     => $bestCycle,
             ];
 
-            if (count($list) >= 10) {
+            if (count($list) >= 10 && count($webs) >= 8) {
                 break;
             }
         }
 
-        return ['skaProducts' => $list];
+        return ['skaProducts' => $list, 'skaWebsecProducts' => $webs];
     } catch (\Throwable $e) {
         return ['skaProducts' => []];
     }

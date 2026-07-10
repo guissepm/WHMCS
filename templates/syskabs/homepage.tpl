@@ -65,6 +65,13 @@
       <p>Filtrez par type de validation, comparez marques et garanties, commandez en quelques clics.</p>
     </div>
 
+    <div class="ska-cattabs" id="skaHomeTabs">
+      <button class="ska-cattab" data-v="websec">&#128737;&nbsp; Sécurité Web</button>
+      <button class="ska-cattab active" data-v="cert">&#128274;&nbsp; Certificats</button>
+      <button class="ska-cattab" data-v="pki">&#128273;&nbsp; PKI</button>
+    </div>
+
+    <div id="skaHomeCert">
     <div class="ska-filters" id="skaFilters">
       <button class="ska-tab active" data-f="all">Tous</button>
       <button class="ska-tab" data-f="dv">DV — Domaine</button>
@@ -120,7 +127,64 @@
     </div>
     <p class="ska-empty" id="skaEmpty" style="display:none">Aucun produit dans cette catégorie.</p>
     <div class="ska-more">
-      <a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-btn ska-btn-ghost">Voir les 100+ certificats du catalogue &rarr;</a>
+      <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl" class="ska-btn ska-btn-ghost">Voir les 100+ certificats du catalogue &rarr;</a>
+    </div>
+    </div>{* /skaHomeCert *}
+
+    {* ---------- Vue Sécurité Web (produits réels) ---------- *}
+    <div id="skaHomeWebsec" style="display:none">
+      {if isset($skaWebsecProducts) && $skaWebsecProducts|count > 0}
+        <div class="ska-grid ska-store-grid ska-websec-grid">
+          {foreach $skaWebsecProducts as $wp}
+            <article class="ska-card ska-wcard">
+              <div class="ska-wcard-logo">
+                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/{$wp.brandslug}-logo.svg"
+                     alt="{$wp.brand}" class="ska-wlogo"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+                <span class="ska-bfall" style="display:none">{$wp.brand}</span>
+              </div>
+              <h3><a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$wp.pid}" class="ska-pname">{$wp.name}</a></h3>
+              {if $wp.desc}<div class="ska-desc">{$wp.desc}&hellip;</div>{/if}
+              <div class="ska-price ska-wprice"><b>{$wp.price}</b><span>{$wp.cycle}</span></div>
+              <div class="ska-card-cta">
+                <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$wp.pid}" class="ska-btn ska-btn-primary">Commander</a>
+              </div>
+            </article>
+          {/foreach}
+        </div>
+      {else}
+        <p class="ska-empty">Les produits Sécurité Web arrivent bientôt &mdash; consultez le <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl">catalogue</a>.</p>
+      {/if}
+    </div>
+
+    {* ---------- Vue PKI (solutions sur devis) ---------- *}
+    <div id="skaHomePki" style="display:none">
+      <div class="ska-grid ska-store-grid ska-websec-grid">
+        {foreach [
+          ['b' => 'DigiCert', 't' => 'DigiCert CertCentral', 'd' => "Plateforme centralisée pour émettre, déployer et renouveler tous vos certificats à grande échelle."],
+          ['b' => 'DigiCert', 't' => 'DigiCert ONE',         'd' => "Gestion PKI moderne et conteneurisée pour un déploiement rapide dans les environnements complexes."],
+          ['b' => 'DigiCert', 't' => 'Trust Lifecycle Manager', 'd' => "Inventoriez, émettez et automatisez le cycle de vie des certificats publics et privés."],
+          ['b' => 'Sectigo',  't' => 'Sectigo Certificate Manager', 'd' => "Pilotez de gros volumes de certificats, réduisez les coûts et évitez les interruptions."],
+          ['b' => 'Sectigo',  't' => 'Sectigo IoT Manager',  'd' => "Sécurité des objets connectés : chiffrement, authentification des équipements, démarrage sécurisé."],
+          ['b' => 'Venafi',   't' => 'Venafi',               'd' => "Gestion de référence des identités machines : clés privées et certificats à l'échelle."],
+          ['b' => 'KeyFactor','t' => 'KeyFactor',            'd' => "La confiance des identités machines pour équipements, applications et charges de travail critiques."],
+          ['b' => 'AppViewX', 't' => 'AppViewX',             'd' => "Automatisation de bout en bout de la PKI et orchestration des certificats multi-équipes."]
+        ] as $pk}
+          <article class="ska-card ska-wcard">
+            <div class="ska-wcard-logo">
+              <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/{$pk.b|lower}-logo.svg"
+                   alt="{$pk.b}" class="ska-wlogo"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+              <span class="ska-bfall" style="display:none">{$pk.b}</span>
+            </div>
+            <h3>{$pk.t}</h3>
+            <div class="ska-desc">{$pk.d}</div>
+            <div class="ska-card-cta">
+              <a href="{$WEB_ROOT}/contact.php" class="ska-btn ska-btn-ghost">Nous contacter</a>
+            </div>
+          </article>
+        {/foreach}
+      </div>
     </div>
   </section>
 
@@ -157,6 +221,23 @@
 
 {literal}
 <script>
+(function(){
+  var tabs=document.getElementById('skaHomeTabs');
+  if(tabs){
+    var views={cert:'skaHomeCert', websec:'skaHomeWebsec', pki:'skaHomePki'};
+    tabs.addEventListener('click',function(e){
+      var t=e.target.closest('.ska-cattab'); if(!t) return;
+      tabs.querySelectorAll('.ska-cattab').forEach(function(b){b.classList.remove('active')});
+      t.classList.add('active');
+      var v=t.getAttribute('data-v');
+      Object.keys(views).forEach(function(k){
+        var el=document.getElementById(views[k]);
+        if(el) el.style.display=(k===v)?'':'none';
+      });
+    });
+  }
+})();
+
 (function(){
   var bar=document.getElementById('skaFilters'); if(!bar) return;
   var rows=[].slice.call(document.querySelectorAll('#skaGrid tr[data-cat]'));
