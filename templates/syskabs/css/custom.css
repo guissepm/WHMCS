@@ -129,6 +129,8 @@
 .ska-brandlogo:hover{opacity:1}
 .ska-blogo{height:18px; width:auto; vertical-align:middle}
 .ska-col-brand{white-space:nowrap}
+.ska-brand-slot{display:inline-flex; align-items:center}
+.ska-bfall{font-weight:750; color:var(--ska-muted); font-size:.95rem}
 
 /* ---------- Page boutique : tableau produits ---------- */
 .ska-ptable-wrap{overflow-x:auto; border-radius:8px; box-shadow:var(--ska-shadow)}

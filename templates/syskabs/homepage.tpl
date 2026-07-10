@@ -46,11 +46,15 @@
   {* ---------- BANDEAU MARQUES ---------- *}
   <section class="ska-brands">
     <span class="ska-brands-label">Partenaire officiel</span>
-    <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/digicert-logo.svg" alt="DigiCert" class="ska-brandlogo">
-    <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/geotrust-logo.svg" alt="GeoTrust" class="ska-brandlogo">
-    <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/thawte-logo.svg" alt="Thawte" class="ska-brandlogo">
-    <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/rapidssl-logo.svg" alt="RapidSSL" class="ska-brandlogo">
-    <span>Sectigo</span><span>Comodo&nbsp;CA</span>
+    {* chaque marque affiche son logo si <marque>-logo.svg existe, sinon repli texte *}
+    {foreach ['DigiCert','GeoTrust','Thawte','RapidSSL','Sectigo','Comodo','SiteLock','CodeGuard'] as $skaB}
+      <span class="ska-brand-slot">
+        <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/{$skaB|lower}-logo.svg"
+             alt="{$skaB}" class="ska-brandlogo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+        <span class="ska-bfall" style="display:none">{$skaB}</span>
+      </span>
+    {/foreach}
   </section>
 
   {* ---------- CATALOGUE (tableau) ---------- *}

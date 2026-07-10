@@ -84,16 +84,14 @@
               {/if}
             </td>
             <td class="ska-col-brand">
-              {if $skaBrand == 'DigiCert'}
-                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/digicert-logo.svg" alt="DigiCert" class="ska-blogo">
-              {elseif $skaBrand == 'GeoTrust'}
-                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/geotrust-logo.svg" alt="GeoTrust" class="ska-blogo">
-              {elseif $skaBrand == 'Thawte'}
-                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/thawte-logo.svg" alt="Thawte" class="ska-blogo">
-              {elseif $skaBrand == 'RapidSSL'}
-                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/rapidssl-logo.svg" alt="RapidSSL" class="ska-blogo">
+              {if $skaBrand != '—'}
+                {* le logo s'affiche si le fichier <marque>-logo.svg existe ; sinon repli texte *}
+                <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/{$skaBrand|lower}-logo.svg"
+                     alt="{$skaBrand}" class="ska-blogo"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+                <span class="ska-bfall" style="display:none">{$skaBrand}</span>
               {else}
-                {$skaBrand}
+                —
               {/if}
             </td>
             <td><span class="ska-vbadge {$skaValCls}">{$skaVal}</span></td>
