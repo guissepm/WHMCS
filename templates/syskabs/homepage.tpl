@@ -87,69 +87,34 @@
           </tr>
         </thead>
         <tbody id="skaGrid">
-          <tr data-cat="dv">
-            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">PositiveSSL</a></td>
-            <td>Sectigo</td>
-            <td><span class="ska-vbadge ska-v-dv">Domaine (DV)</span></td>
-            <td class="ska-col-price"><b>8,50&nbsp;$</b><span>/an</span></td>
-            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
-          </tr>
-          <tr data-cat="dv">
-            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">RapidSSL Standard</a></td>
-            <td>RapidSSL</td>
-            <td><span class="ska-vbadge ska-v-dv">Domaine (DV)</span></td>
-            <td class="ska-col-price"><b>13,00&nbsp;$</b><span>/an</span></td>
-            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
-          </tr>
-          <tr data-cat="ov">
-            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Sectigo OV SSL</a></td>
-            <td>Sectigo</td>
-            <td><span class="ska-vbadge ska-v-ov">Domaine + Organisation (OV)</span></td>
-            <td class="ska-col-price"><b>42,00&nbsp;$</b><span>/an</span></td>
-            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
-          </tr>
-          <tr data-cat="ev">
-            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Sectigo EV SSL</a></td>
-            <td>Sectigo</td>
-            <td><span class="ska-vbadge ska-v-ev">Domaine + Organisation (EV)</span></td>
-            <td class="ska-col-price"><b>88,00&nbsp;$</b><span>/an</span></td>
-            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
-          </tr>
-          <tr data-cat="wc">
-            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">PositiveSSL Wildcard</a></td>
-            <td>Sectigo</td>
-            <td><span class="ska-vbadge ska-v-dv">Domaine (Wildcard)</span></td>
-            <td class="ska-col-price"><b>95,00&nbsp;$</b><span>/an</span></td>
-            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
-          </tr>
-          <tr data-cat="ov">
-            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Secure Site OV</a></td>
-            <td>DigiCert</td>
-            <td><span class="ska-vbadge ska-v-ov">Domaine + Organisation (OV)</span></td>
-            <td class="ska-col-price"><b>195,00&nbsp;$</b><span>/an</span></td>
-            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
-          </tr>
-          <tr data-cat="san">
-            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">PositiveSSL Multi-Domain</a></td>
-            <td>Sectigo</td>
-            <td><span class="ska-vbadge ska-v-dv">Multi-domaine (SAN)</span></td>
-            <td class="ska-col-price"><b>45,00&nbsp;$</b><span>/an</span></td>
-            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
-          </tr>
-          <tr data-cat="ev">
-            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Secure Site EV</a></td>
-            <td>DigiCert</td>
-            <td><span class="ska-vbadge ska-v-ev">Domaine + Organisation (EV)</span></td>
-            <td class="ska-col-price"><b>340,00&nbsp;$</b><span>/an</span></td>
-            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
-          </tr>
-          <tr data-cat="cs">
-            <td class="ska-col-name"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-pname">Code Signing</a></td>
-            <td>Sectigo</td>
-            <td><span class="ska-vbadge ska-v-ov">Code Signing</span></td>
-            <td class="ska-col-price"><b>210,00&nbsp;$</b><span>/an</span></td>
-            <td class="ska-col-cta"><a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-addcart">Ajouter au panier</a></td>
-          </tr>
+          {if isset($skaProducts) && $skaProducts|count > 0}
+            {foreach $skaProducts as $sp}
+              <tr data-cat="{$sp.cat}">
+                <td class="ska-col-name">
+                  <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$sp.pid}" class="ska-pname">{$sp.name}</a>
+                </td>
+                <td class="ska-col-brand">
+                  {if $sp.brand != '—'}
+                    <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/{$sp.brandslug}-logo.svg"
+                         alt="{$sp.brand}" class="ska-blogo"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+                    <span class="ska-bfall" style="display:none">{$sp.brand}</span>
+                  {else}
+                    —
+                  {/if}
+                </td>
+                <td><span class="ska-vbadge {$sp.valcls}">{$sp.val}</span></td>
+                <td class="ska-col-price"><b>{$sp.price}</b><span>{$sp.cycle}</span></td>
+                <td class="ska-col-cta">
+                  <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$sp.pid}" class="ska-addcart">Ajouter au panier</a>
+                </td>
+              </tr>
+            {/foreach}
+          {else}
+            <tr><td colspan="5" style="text-align:center;padding:28px;color:#54657E">
+              Consultez le <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl">catalogue complet</a> pour découvrir nos certificats.
+            </td></tr>
+          {/if}
         </tbody>
       </table>
     </div>
