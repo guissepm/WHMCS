@@ -1,10 +1,10 @@
 {* ============================================================
-   syskabs_cart — override de la liste des produits (grille cartes)
-   Hérite de standard_cart pour tout le reste. Détecte marque et
-   type de validation depuis le nom du produit pour les badges.
+   syskabs_cart — liste des produits en tableau
+   Colonnes : Produit / Marque / Validation / Prix le plus bas / CTA
+   Hérite de standard_cart pour tout le reste du tunnel.
    ============================================================ *}
 
-<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.0.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.1.0" rel="stylesheet">
 
 <div class="ska-store">
 
@@ -13,88 +13,90 @@
     {if $productGroup.tagline}<p>{$productGroup.tagline}</p>{/if}
   </div>
 
-  <div class="ska-grid ska-store-grid">
-    {foreach $products as $product}
-      {assign var=n value=$product.name|lower}
+  <div class="ska-ptable-wrap">
+    <table class="ska-ptable">
+      <thead>
+        <tr>
+          <th class="ska-col-name">Produits</th>
+          <th>Marque</th>
+          <th>Validation</th>
+          <th class="ska-col-price">Prix le plus bas</th>
+          <th class="ska-col-cta"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {foreach $products as $product}
+          {assign var=n value=$product.name|lower}
 
-      {* --- marque --- *}
-      {assign var=skaBrand value=''}
-      {assign var=skaDot value='ska-dot-sectigo'}
-      {if $n|strstr:'sectigo' or $n|strstr:'positivessl' or $n|strstr:'instantssl' or $n|strstr:'essentialssl'}
-        {assign var=skaBrand value='Sectigo'}
-      {elseif $n|strstr:'comodo' or $n|strstr:'cwatch'}
-        {assign var=skaBrand value='Comodo'}
-      {elseif $n|strstr:'digicert' or $n|strstr:'secure site'}
-        {assign var=skaBrand value='DigiCert'}{assign var=skaDot value='ska-dot-digicert'}
-      {elseif $n|strstr:'rapidssl'}
-        {assign var=skaBrand value='RapidSSL'}{assign var=skaDot value='ska-dot-rapid'}
-      {elseif $n|strstr:'geotrust' or $n|strstr:'quickssl' or $n|strstr:'true businessid'}
-        {assign var=skaBrand value='GeoTrust'}{assign var=skaDot value='ska-dot-digicert'}
-      {elseif $n|strstr:'thawte'}
-        {assign var=skaBrand value='Thawte'}{assign var=skaDot value='ska-dot-digicert'}
-      {elseif $n|strstr:'sitelock'}
-        {assign var=skaBrand value='SiteLock'}
-      {elseif $n|strstr:'codeguard'}
-        {assign var=skaBrand value='CodeGuard'}
-      {/if}
-
-      {* --- type de validation --- *}
-      {assign var=skaBadge value=''}
-      {assign var=skaBadgeCls value='ska-b-dv'}
-      {if $n|strstr:'code sign'}
-        {assign var=skaBadge value='Code'}{assign var=skaBadgeCls value='ska-b-ov'}
-      {elseif $n|strstr:' ev' or $n|strstr:'ev ' or $n|strstr:'extended'}
-        {assign var=skaBadge value='EV'}{assign var=skaBadgeCls value='ska-b-ev'}
-      {elseif $n|strstr:'wildcard'}
-        {assign var=skaBadge value='Wildcard'}
-      {elseif $n|strstr:'multi' or $n|strstr:'ucc' or $n|strstr:'san'}
-        {assign var=skaBadge value='Multi-domaine'}
-      {elseif $n|strstr:' ov' or $n|strstr:'ov ' or $n|strstr:'organization' or $n|strstr:'businessid' or $n|strstr:'instantssl'}
-        {assign var=skaBadge value='OV'}{assign var=skaBadgeCls value='ska-b-ov'}
-      {elseif $n|strstr:'dv' or $n|strstr:'positivessl' or $n|strstr:'rapidssl' or $n|strstr:'quickssl' or $n|strstr:'essentialssl'}
-        {assign var=skaBadge value='DV'}
-      {/if}
-
-      <article class="ska-card">
-        <header>
-          {if $skaBrand}
-            <span class="ska-brand"><i class="ska-dot {$skaDot}"></i>{$skaBrand}</span>
-          {else}
-            <span class="ska-brand"><i class="ska-dot ska-dot-sectigo"></i>SSL</span>
+          {* --- marque --- *}
+          {assign var=skaBrand value='—'}
+          {if $n|strstr:'sectigo' or $n|strstr:'positivessl' or $n|strstr:'instantssl' or $n|strstr:'essentialssl'}
+            {assign var=skaBrand value='Sectigo'}
+          {elseif $n|strstr:'comodo' or $n|strstr:'cwatch'}
+            {assign var=skaBrand value='Comodo'}
+          {elseif $n|strstr:'digicert' or $n|strstr:'secure site' or $n|strstr:'basic ev' or $n|strstr:'basic ov'}
+            {assign var=skaBrand value='DigiCert'}
+          {elseif $n|strstr:'rapidssl'}
+            {assign var=skaBrand value='RapidSSL'}
+          {elseif $n|strstr:'geotrust' or $n|strstr:'quickssl' or $n|strstr:'businessid'}
+            {assign var=skaBrand value='GeoTrust'}
+          {elseif $n|strstr:'thawte'}
+            {assign var=skaBrand value='Thawte'}
+          {elseif $n|strstr:'sitelock'}
+            {assign var=skaBrand value='SiteLock'}
+          {elseif $n|strstr:'codeguard'}
+            {assign var=skaBrand value='CodeGuard'}
           {/if}
-          {if $skaBadge}<span class="ska-badge {$skaBadgeCls}">{$skaBadge}</span>{/if}
-        </header>
 
-        <h3>{$product.name}</h3>
-
-        {if $product.description}
-          <div class="ska-desc">{$product.description|strip_tags|truncate:150:"…"}</div>
-        {/if}
-
-        <div class="ska-price">
-          {if $product.pricing.hasconfigoptions || $product.pricing.minprice.cycle}
-            <span class="ska-from">à partir de</span>
+          {* --- validation --- *}
+          {assign var=skaVal value='—'}
+          {assign var=skaValCls value=''}
+          {if $n|strstr:'code sign'}
+            {assign var=skaVal value='Code Signing'}{assign var=skaValCls value='ska-v-ov'}
+          {elseif $n|strstr:'ev'}
+            {assign var=skaVal value='Domaine + Organisation (EV)'}{assign var=skaValCls value='ska-v-ev'}
+          {elseif $n|strstr:'wildcard'}
+            {assign var=skaVal value='Domaine (Wildcard)'}{assign var=skaValCls value='ska-v-dv'}
+          {elseif $n|strstr:' ov' or $n|strstr:'ov ' or $n|strstr:'organization' or $n|strstr:'businessid' or $n|strstr:'instantssl' or $n|strstr:'secure site'}
+            {assign var=skaVal value='Domaine + Organisation (OV)'}{assign var=skaValCls value='ska-v-ov'}
+          {elseif $n|strstr:'dv' or $n|strstr:'positivessl' or $n|strstr:'rapidssl' or $n|strstr:'quickssl' or $n|strstr:'essentialssl'}
+            {assign var=skaVal value='Domaine (DV)'}{assign var=skaValCls value='ska-v-dv'}
           {/if}
-          {if isset($product.pricing.minprice)}
-            <b>{$product.pricing.minprice.price}</b>
-            {if $product.pricing.minprice.cycle == 'annually'}<span>/an</span>
-            {elseif $product.pricing.minprice.cycle == 'biennially'}<span>/2 ans</span>
-            {elseif $product.pricing.minprice.cycle == 'triennially'}<span>/3 ans</span>
-            {/if}
-          {elseif isset($product.pricing.totalonetime)}
-            <b>{$product.pricing.totalonetime}</b>
-          {/if}
-        </div>
 
-        <div class="ska-card-cta">
-          {if $product.bid}
-            <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-btn ska-btn-primary">Commander</a>
-          {else}
-            <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$product.pid}" class="ska-btn ska-btn-primary">Commander</a>
-          {/if}
-        </div>
-      </article>
-    {/foreach}
+          <tr>
+            <td class="ska-col-name">
+              {if isset($product.slug) && isset($productGroup.slug)}
+                <a href="{$WEB_ROOT}/index.php?rp=/store/{$productGroup.slug}/{$product.slug}" class="ska-pname">{$product.name}</a>
+              {else}
+                <span class="ska-pname">{$product.name}</span>
+              {/if}
+            </td>
+            <td>{$skaBrand}</td>
+            <td><span class="ska-vbadge {$skaValCls}">{$skaVal}</span></td>
+            <td class="ska-col-price">
+              {if isset($product.pricing.minprice)}
+                <b>{$product.pricing.minprice.price}</b>
+                {if $product.pricing.minprice.cycle == 'annually'}<span>/an</span>
+                {elseif $product.pricing.minprice.cycle == 'biennially'}<span>/2 ans</span>
+                {elseif $product.pricing.minprice.cycle == 'triennially'}<span>/3 ans</span>
+                {/if}
+              {elseif isset($product.pricing.totalonetime)}
+                <b>{$product.pricing.totalonetime}</b>
+              {else}
+                —
+              {/if}
+            </td>
+            <td class="ska-col-cta">
+              {if $product.bid}
+                <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-addcart">Ajouter au panier</a>
+              {else}
+                <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$product.pid}" class="ska-addcart">Ajouter au panier</a>
+              {/if}
+            </td>
+          </tr>
+        {/foreach}
+      </tbody>
+    </table>
   </div>
 
   {if $products|count == 0}

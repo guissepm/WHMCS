@@ -124,6 +124,30 @@
 .ska-cta h2{font-size:1.7rem; font-weight:800; margin:0}
 .ska-cta p{color:rgba(255,255,255,.85); margin:.5em 0 0}
 
+/* ---------- Page boutique : tableau produits ---------- */
+.ska-ptable-wrap{overflow-x:auto; border-radius:8px; box-shadow:var(--ska-shadow)}
+.ska-ptable{border-collapse:collapse; width:100%; min-width:760px; margin:0; background:var(--ska-surface)}
+.ska-ptable thead th{background:var(--ska-green); color:#fff; font-weight:700; font-size:1rem; text-align:left; padding:16px 18px; letter-spacing:-.01em}
+.ska-ptable tbody td{padding:14px 18px; font-size:.92rem; color:var(--ska-ink); border:none; vertical-align:middle}
+.ska-ptable tbody tr:nth-child(odd){background:#E7EAF4}
+.ska-ptable tbody tr:nth-child(even){background:#fff}
+.ska-ptable tbody tr:hover{background:#DCE3F2}
+.ska-pname{font-weight:600; color:var(--ska-ink) !important; text-decoration:underline; text-underline-offset:3px}
+.ska-pname:hover{color:var(--ska-primary) !important}
+.ska-col-price b{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:1rem; font-variant-numeric:tabular-nums}
+.ska-col-price span{color:var(--ska-muted); font-size:.8rem}
+.ska-col-cta{text-align:right; white-space:nowrap}
+.ska-addcart{display:inline-block; background:#1F2B6C; color:#fff !important; font-weight:700; font-size:.74rem; letter-spacing:.06em; text-transform:uppercase; padding:.75em 1.3em; border-radius:4px; text-decoration:none !important; transition:background .15s, transform .12s}
+.ska-addcart:hover{background:var(--ska-primary); transform:translateY(-1px)}
+.ska-vbadge{font-size:.85rem; color:var(--ska-muted)}
+.ska-v-dv{color:var(--ska-green)}
+.ska-v-ov{color:var(--ska-primary)}
+.ska-v-ev{color:var(--ska-gold)}
+@media (max-width:760px){
+  .ska-ptable thead th, .ska-ptable tbody td{padding:11px 12px; font-size:.85rem}
+  .ska-addcart{font-size:.68rem; padding:.65em 1em}
+}
+
 /* ---------- Page boutique (order form syskabs_cart) ---------- */
 .ska-store{max-width:1160px; margin:0 auto; padding:8px 0 40px}
 .ska-store-head{margin:6px 0 24px}
