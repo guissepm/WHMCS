@@ -132,6 +132,32 @@
 .ska-brand-slot{display:inline-flex; align-items:center}
 .ska-bfall{font-weight:750; color:var(--ska-muted); font-size:.95rem}
 
+/* ---------- Onglets de catégories (Certificats / Sécurité Web) ---------- */
+.ska-cattabs{display:flex; justify-content:center; gap:6px; background:#EEF0F6; border-radius:999px; padding:6px; width:max-content; margin:0 auto 26px}
+.ska-cattab{border:none; background:transparent; color:var(--ska-muted); font-weight:700; font-size:.95rem; padding:.7em 1.6em; border-radius:999px; cursor:pointer; transition:.15s; white-space:nowrap}
+.ska-cattab:hover{color:var(--ska-ink)}
+.ska-cattab.active{background:#1F2B6C; color:#fff}
+
+/* ---------- Bandeau de marque (au-dessus du tableau) ---------- */
+.ska-bhero{display:flex; align-items:center; justify-content:space-between; gap:24px; background:var(--ska-surface); border:1px solid var(--ska-line); border-radius:var(--ska-r); padding:22px 26px; margin-bottom:18px}
+.ska-bhero h2{font-size:1.5rem; font-weight:800; letter-spacing:-.02em; color:#1F2B6C; margin:0 0 4px}
+.ska-bhero p{color:var(--ska-muted); margin:0; font-size:.92rem}
+.ska-bhero-logo{height:44px; width:auto; flex:0 0 auto}
+@media (max-width:600px){ .ska-bhero{flex-direction:column; text-align:center} }
+
+/* ---------- Cartes Sécurité Web ---------- */
+.ska-websec-grid{grid-template-columns:repeat(4,1fr)}
+.ska-wcard{text-align:center; align-items:center}
+.ska-wcard h3{font-size:1.05rem}
+.ska-wcard-logo{height:52px; display:flex; align-items:center; justify-content:center; margin-bottom:4px}
+.ska-wlogo{max-height:44px; width:auto}
+.ska-wcard .ska-desc{text-align:center}
+.ska-wprice{justify-content:center}
+.ska-wprice b{color:var(--ska-green)}
+.ska-wcard .ska-card-cta{width:100%}
+@media (max-width:1100px){ .ska-websec-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:640px){ .ska-websec-grid{grid-template-columns:1fr} }
+
 /* ---------- Page boutique : tableau produits ---------- */
 .ska-ptable-wrap{overflow-x:auto; border-radius:8px; box-shadow:var(--ska-shadow)}
 .ska-ptable{border-collapse:collapse; width:100%; min-width:760px; margin:0; background:var(--ska-surface)}
