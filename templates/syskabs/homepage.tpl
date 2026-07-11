@@ -1,4 +1,4 @@
-<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.1.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.3.0" rel="stylesheet">
 
 {* ============================================================
    Accueil boutique — Sys Kabs Amazone
@@ -10,37 +10,92 @@
 <div class="ska-page">
 
   {* ---------- HERO ---------- *}
-  <section class="ska-hero">
-    <div class="ska-hero-inner">
-      <div class="ska-hero-copy">
-        <span class="ska-eyebrow">Revendeur agréé — Autorités de certification mondiales</span>
-        <h1>Chaque connexion mérite le <span class="ska-green">cadenas vert</span>.</h1>
-        <p class="ska-lede">Certificats SSL/TLS, signature de code et sécurité web — émis en quelques minutes, aux tarifs revendeur, avec installation automatique.</p>
-        <div class="ska-hero-cta">
-          <a href="{$WEB_ROOT}/cart.php?gid=1" class="ska-btn ska-btn-primary ska-btn-lg">Choisir mon certificat</a>
-          <a href="#ska-compare" class="ska-btn ska-btn-ghost ska-btn-lg">Comparer DV / OV / EV</a>
-        </div>
-        <ul class="ska-trust">
-          <li>Émission dès 5 minutes</li>
-          <li>Garantie jusqu'à 1,75&nbsp;M$</li>
-          <li>Support 24/7</li>
-        </ul>
-      </div>
-      <div class="ska-hero-card">
-        <div class="ska-urlbar"><span class="ska-lock">&#128274;</span><span class="ska-url"><b>https://</b>votredomaine.com</span></div>
-        <div class="ska-cert">
-          <div class="ska-cert-head">
-            <span class="ska-shield">&#10003;</span>
-            <div><strong>Certificat validé</strong><small>TLS 1.3 · RSA 2048 / ECC</small></div>
+  <section class="ska-slider" id="skaSlider">
+    <div class="ska-slides" id="skaSlides">
+
+      {* --- Slide 1 : promesse générale --- *}
+      <div class="ska-slide ska-sl-a">
+        <div class="ska-slide-inner">
+          <div class="ska-slide-copy">
+            <span class="ska-eyebrow">Revendeur agréé — Autorités de certification mondiales</span>
+            <h2>Chaque connexion mérite le <span class="ska-green">cadenas vert</span>.</h2>
+            <p>Certificats SSL/TLS, signature de code et sécurité web — émis en quelques minutes, aux tarifs revendeur.</p>
+            <div class="ska-hero-cta">
+              <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl" class="ska-btn ska-btn-primary ska-btn-lg">Choisir mon certificat</a>
+              <a href="#ska-compare" class="ska-btn ska-btn-ghost ska-btn-lg">Comparer DV / OV / EV</a>
+            </div>
           </div>
-          <div class="ska-cert-rows">
-            <div><span>Autorité</span><b>Sectigo</b></div>
-            <div><span>Chiffrement</span><b>256 bits</b></div>
-            <div><span>Statut</span><b class="ska-ok">ACTIF</b></div>
+          <div class="ska-hero-card">
+            <div class="ska-urlbar"><span class="ska-lock">&#128274;</span><span class="ska-url"><b>https://</b>votredomaine.com</span></div>
+            <div class="ska-cert">
+              <div class="ska-cert-head">
+                <span class="ska-shield">&#10003;</span>
+                <div><strong>Certificat validé</strong><small>TLS 1.3 · RSA 2048 / ECC</small></div>
+              </div>
+              <div class="ska-cert-rows">
+                <div><span>Autorité</span><b>Sectigo</b></div>
+                <div><span>Chiffrement</span><b>256 bits</b></div>
+                <div><span>Statut</span><b class="ska-ok">ACTIF</b></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      {* --- Slide 2 : DigiCert --- *}
+      <div class="ska-slide ska-sl-b">
+        <div class="ska-slide-inner">
+          <div class="ska-slide-copy">
+            <span class="ska-eyebrow">Le leader mondial de la PKI</span>
+            <h2>Certificats DigiCert au tarif revendeur.</h2>
+            <p>Secure Site, Basic et Multi-domaine — la référence des grandes marques, émise en un temps record.</p>
+            <div class="ska-hero-cta">
+              <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl" class="ska-btn ska-btn-white ska-btn-lg">Voir les certificats</a>
+            </div>
+          </div>
+          <div class="ska-slide-visual">
+            <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/digicert-logo.svg" alt="DigiCert"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+            <span class="ska-bfall-big" style="display:none">DigiCert</span>
+          </div>
+        </div>
+      </div>
+
+      {* --- Slide 3 : Wildcard --- *}
+      <div class="ska-slide ska-sl-c">
+        <div class="ska-slide-inner">
+          <div class="ska-slide-copy">
+            <span class="ska-eyebrow">*.votredomaine.com</span>
+            <h2>Un Wildcard pour tous vos sous-domaines.</h2>
+            <p>Sécurisez le domaine principal et un nombre illimité de sous-domaines avec un seul certificat.</p>
+            <div class="ska-hero-cta">
+              <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl" class="ska-btn ska-btn-white ska-btn-lg">Découvrir les Wildcard</a>
+            </div>
+          </div>
+          <div class="ska-slide-visual"><span class="ska-wild-mark">*.</span></div>
+        </div>
+      </div>
+
+      {* --- Slide 4 : Code Signing & PKI --- *}
+      <div class="ska-slide ska-sl-d">
+        <div class="ska-slide-inner">
+          <div class="ska-slide-copy">
+            <span class="ska-eyebrow">Entreprises & éditeurs</span>
+            <h2>Signature de code &amp; solutions PKI.</h2>
+            <p>Signez vos logiciels, gérez vos identités machines et automatisez le cycle de vie de vos certificats.</p>
+            <div class="ska-hero-cta">
+              <a href="{$WEB_ROOT}/contact.php" class="ska-btn ska-btn-white ska-btn-lg">Parler à un expert</a>
+            </div>
+          </div>
+          <div class="ska-slide-visual"><span class="ska-code-mark">&lt;/&gt;</span></div>
+        </div>
+      </div>
+
     </div>
+
+    <button class="ska-sl-arrow ska-sl-prev" id="skaSlPrev" aria-label="Bannière précédente">&#10094;</button>
+    <button class="ska-sl-arrow ska-sl-next" id="skaSlNext" aria-label="Bannière suivante">&#10095;</button>
+    <div class="ska-sl-dots" id="skaSlDots"></div>
   </section>
 
   {* ---------- BANDEAU MARQUES ---------- *}
@@ -242,6 +297,51 @@
       if(window.skaInitCatalog) window.skaInitCatalog(host);
     })
     .catch(function(){ /* fallback serveur conserve */ });
+})();
+</script>
+<script>
+/* Carrousel de bannières : autoplay 6s, fleches, points, swipe.
+   Respecte prefers-reduced-motion (pas d'autoplay). */
+(function(){
+  var wrap=document.getElementById('skaSlides'); if(!wrap) return;
+  var slides=wrap.children, n=slides.length, i=0, timer=null;
+  var dots=document.getElementById('skaSlDots');
+  for(var d=0; d<n; d++){
+    var b=document.createElement('button');
+    b.className='ska-sl-dot'+(d===0?' active':'');
+    b.setAttribute('aria-label','Bannière '+(d+1));
+    b.dataset.i=d;
+    dots.appendChild(b);
+  }
+  function go(k){
+    i=(k+n)%n;
+    wrap.style.transform='translateX(-'+(i*100)+'%)';
+    [].forEach.call(dots.children,function(x,j){x.classList.toggle('active',j===i);});
+  }
+  function next(){ go(i+1); }
+  function play(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    stop(); timer=setInterval(next, 6000);
+  }
+  function stop(){ if(timer){clearInterval(timer); timer=null;} }
+  document.getElementById('skaSlNext').addEventListener('click',function(){ next(); play(); });
+  document.getElementById('skaSlPrev').addEventListener('click',function(){ go(i-1); play(); });
+  dots.addEventListener('click',function(e){
+    var t=e.target.closest('.ska-sl-dot'); if(!t) return;
+    go(parseInt(t.dataset.i,10)); play();
+  });
+  var sl=document.getElementById('skaSlider');
+  sl.addEventListener('mouseenter',stop);
+  sl.addEventListener('mouseleave',play);
+  var x0=null;
+  sl.addEventListener('touchstart',function(e){ x0=e.touches[0].clientX; stop(); },{passive:true});
+  sl.addEventListener('touchend',function(e){
+    if(x0===null) return;
+    var dx=e.changedTouches[0].clientX-x0;
+    if(dx>40) go(i-1); else if(dx<-40) next();
+    x0=null; play();
+  },{passive:true});
+  play();
 })();
 </script>
 {/literal}

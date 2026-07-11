@@ -67,6 +67,72 @@
 .ska-cert-rows b{font-family:ui-monospace,Menlo,monospace}
 .ska-ok{color:var(--ska-green)}
 
+/* ---------- Garde-fous responsive (anti-débordement mobile) ---------- */
+.ska-page, .ska-store{max-width:100%; overflow-x:hidden}
+.ska-page *, .ska-store *{max-width:100%}
+.ska-page img, .ska-store img{max-width:100%; height:auto}
+.ska-page pre, .ska-page code{white-space:pre-wrap; word-break:break-word}
+.ska-page a, .ska-store a{overflow-wrap:anywhere}
+/* les tableaux larges défilent dans leur conteneur, jamais la page */
+.ska-ptable-wrap, .ska-table-wrap{max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch}
+.ska-cattabs, .ska-filters{max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; flex-wrap:nowrap; scrollbar-width:thin}
+.ska-cattab, .ska-tab{flex:0 0 auto}
+
+/* ---------- Carrousel de bannières ---------- */
+.ska-slider{position:relative; overflow:hidden; padding:0 !important}
+.ska-slides{display:flex; transition:transform .55s ease; will-change:transform}
+.ska-slide{min-width:100%; padding:56px 24px}
+.ska-slide-inner{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.1fr .9fr; gap:44px; align-items:center; min-height:330px}
+.ska-slide-copy h2{font-size:clamp(1.7rem,4vw,2.9rem); font-weight:820; letter-spacing:-.02em; line-height:1.12; margin:.4em 0}
+.ska-slide-copy p{font-size:1.06rem; max-width:44ch; margin:0 0 4px}
+.ska-slide-visual{display:flex; align-items:center; justify-content:center}
+.ska-slide-visual img{max-width:min(300px,70%); height:auto; background:#fff; padding:22px 30px; border-radius:14px; box-shadow:var(--ska-shadow)}
+.ska-bfall-big{font-size:2.4rem; font-weight:800; color:#fff; opacity:.9}
+.ska-wild-mark,.ska-code-mark{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:clamp(4rem,10vw,7rem); font-weight:700; color:rgba(255,255,255,.85); line-height:1}
+
+/* Fonds par slide */
+.ska-sl-a{background:
+  radial-gradient(60% 55% at 80% 10%, rgba(30,80,226,.14), transparent 70%),
+  radial-gradient(50% 50% at 10% 95%, rgba(8,145,106,.12), transparent 70%), var(--ska-bg)}
+.ska-sl-a .ska-slide-copy p{color:var(--ska-muted)}
+.ska-sl-b{background:linear-gradient(120deg,#16265C,#1F2B6C); color:#fff}
+.ska-sl-b .ska-eyebrow{color:#7BD8BC}
+.ska-sl-b .ska-slide-copy p{color:rgba(255,255,255,.85)}
+.ska-sl-c{background:linear-gradient(120deg,#06563F,#08916A); color:#fff}
+.ska-sl-c .ska-eyebrow{color:#CDEFE3}
+.ska-sl-c .ska-slide-copy p{color:rgba(255,255,255,.88)}
+.ska-sl-d{background:linear-gradient(120deg,#232B38,#3A465C); color:#fff}
+.ska-sl-d .ska-eyebrow{color:#9DB4FF}
+.ska-sl-d .ska-slide-copy p{color:rgba(255,255,255,.85)}
+
+/* Flèches + points */
+.ska-sl-arrow{position:absolute; top:50%; transform:translateY(-50%); z-index:5;
+  width:42px; height:42px; border-radius:50%; border:none; cursor:pointer;
+  background:rgba(255,255,255,.85); color:var(--ska-ink); font-size:1.05rem;
+  box-shadow:var(--ska-shadow); transition:background .15s; display:flex; align-items:center; justify-content:center}
+.ska-sl-arrow:hover{background:#fff}
+.ska-sl-prev{left:14px}
+.ska-sl-next{right:14px}
+.ska-sl-dots{position:absolute; left:0; right:0; bottom:14px; display:flex; justify-content:center; gap:9px; z-index:5}
+.ska-sl-dot{width:10px; height:10px; border-radius:50%; border:none; cursor:pointer; background:rgba(120,130,150,.45); padding:0; transition:.2s}
+.ska-sl-dot.active{background:var(--ska-primary); transform:scale(1.25)}
+
+@media (prefers-reduced-motion:reduce){
+  .ska-slides{transition:none}
+}
+@media (max-width:900px){
+  .ska-slide-inner{grid-template-columns:1fr; gap:26px; min-height:0; text-align:left}
+  .ska-slide-visual{order:-1}
+  .ska-slide-visual img{max-width:200px; padding:14px 20px}
+  .ska-wild-mark,.ska-code-mark{font-size:3.4rem}
+  .ska-slide .ska-hero-card{display:none}
+}
+@media (max-width:560px){
+  .ska-slide{padding:40px 18px 56px}
+  .ska-sl-arrow{width:34px; height:34px; font-size:.9rem}
+  .ska-sl-prev{left:6px} .ska-sl-next{right:6px}
+}
+
 /* ---------- Marques ---------- */
 .ska-brands{background:var(--ska-surface); border-top:1px solid var(--ska-line); border-bottom:1px solid var(--ska-line); display:flex; gap:30px; align-items:center; justify-content:center; flex-wrap:wrap; padding:20px 24px !important}
 .ska-brands span{font-weight:750; color:var(--ska-muted); font-size:1rem}
