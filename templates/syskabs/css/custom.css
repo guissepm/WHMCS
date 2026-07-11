@@ -79,7 +79,8 @@
 .ska-cattab, .ska-tab{flex:0 0 auto}
 
 /* ---------- Carrousel de bannières ---------- */
-.ska-slider{position:relative; overflow:hidden; padding:0 !important}
+.ska-slider{position:relative; overflow:hidden; padding:0 !important; -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent}
+.ska-slider .ska-btn{-webkit-user-select:none; user-select:none}
 .ska-slides{display:flex; transition:transform .55s ease; will-change:transform}
 .ska-slide{min-width:100%; padding:56px 24px}
 .ska-slide-inner{max-width:1120px; margin:0 auto; display:grid; grid-template-columns:1.1fr .9fr; gap:44px; align-items:center; min-height:330px}

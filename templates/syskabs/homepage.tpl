@@ -93,8 +93,8 @@
 
     </div>
 
-    <button class="ska-sl-arrow ska-sl-prev" id="skaSlPrev" aria-label="Bannière précédente">&#10094;</button>
-    <button class="ska-sl-arrow ska-sl-next" id="skaSlNext" aria-label="Bannière suivante">&#10095;</button>
+    <button type="button" class="ska-sl-arrow ska-sl-prev" id="skaSlPrev" aria-label="Bannière précédente">&#10094;</button>
+    <button type="button" class="ska-sl-arrow ska-sl-next" id="skaSlNext" aria-label="Bannière suivante">&#10095;</button>
     <div class="ska-sl-dots" id="skaSlDots"></div>
   </section>
 
@@ -308,6 +308,7 @@
   var dots=document.getElementById('skaSlDots');
   for(var d=0; d<n; d++){
     var b=document.createElement('button');
+    b.type='button';
     b.className='ska-sl-dot'+(d===0?' active':'');
     b.setAttribute('aria-label','Bannière '+(d+1));
     b.dataset.i=d;
@@ -331,6 +332,7 @@
     go(parseInt(t.dataset.i,10)); play();
   });
   var sl=document.getElementById('skaSlider');
+  sl.addEventListener('mousedown',function(e){ if(e.target.closest('.ska-sl-arrow,.ska-sl-dot')) e.preventDefault(); });
   sl.addEventListener('mouseenter',stop);
   sl.addEventListener('mouseleave',play);
   var x0=null;
