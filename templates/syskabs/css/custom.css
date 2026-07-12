@@ -203,7 +203,7 @@
 .ska-imported .ska-store-head{display:none}
 
 /* ---------- Onglets de catégories (Certificats / Sécurité Web) ---------- */
-.ska-cattabs{display:flex; justify-content:center; gap:6px; background:#EEF0F6; border-radius:999px; padding:6px; width:max-content; margin:0 auto 26px}
+.ska-cattabs{display:flex; justify-content:center; gap:6px; background:#EEF0F6; border-radius:999px; padding:6px; width:max-content; max-width:100%; margin:0 auto 26px}
 .ska-cattab{border:none; background:transparent; color:var(--ska-muted); font-weight:700; font-size:.95rem; padding:.7em 1.6em; border-radius:999px; cursor:pointer; transition:.15s; white-space:nowrap}
 .ska-cattab:hover{color:var(--ska-ink)}
 .ska-cattab.active{background:#1F2B6C; color:#fff}
@@ -258,6 +258,11 @@
 /* Portrait étroit (<600px) : le tableau à 5 colonnes devient illisible,
    chaque ligne devient une fiche empilée lisible (libellé + valeur). */
 @media (max-width:600px){
+  /* Barre de catégories : rétrécit pour tenir, défile si vraiment trop étroit */
+  .ska-cattabs{width:auto; max-width:100%; gap:3px; padding:4px; justify-content:flex-start;
+    overflow-x:auto; -webkit-overflow-scrolling:touch}
+  .ska-cattab{padding:.55em .8em; font-size:.82rem; white-space:nowrap}
+
   .ska-ptable-wrap{overflow:visible; border:none; box-shadow:none; background:transparent}
   .ska-ptable{table-layout:auto; min-width:0}
   .ska-ptable thead{display:none}
