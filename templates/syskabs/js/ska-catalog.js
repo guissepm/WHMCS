@@ -3,6 +3,18 @@
    #skaViewWebsec/#skaViewPki), onglets marques (#skaBrandTabs + bandeau
    #skaBHero), filtres validation (#skaFilters). Tolère l'absence de chacun. */
 
+/* Assure une balise viewport correcte : sans elle, Safari mobile rend la
+   page à 980px virtuels et les media queries ne se déclenchent jamais. */
+(function () {
+  var m = document.querySelector('meta[name="viewport"]');
+  if (!m) {
+    m = document.createElement('meta');
+    m.setAttribute('name', 'viewport');
+    (document.head || document.getElementsByTagName('head')[0]).appendChild(m);
+  }
+  m.setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
+})();
+
 function skaInitCatalog(root) {
   root = root || document;
   function q(id) { return root.querySelector('#' + id) || document.getElementById(id); }
