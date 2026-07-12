@@ -75,7 +75,12 @@
 .ska-ok{color:var(--ska-green)}
 
 /* ---------- Garde-fous responsive (anti-débordement mobile) ---------- */
-.ska-page, .ska-store{max-width:100%; overflow-x:hidden}
+/* NB : PAS de max-width:100% ici — .ska-page et .ska-store sont en
+   full-bleed (marges négatives calc(50% - 50vw)). Un max-width:100%
+   les replafonnerait à la largeur du conteneur parent (~1320px) et,
+   combiné aux marges négatives, les DÉCALERAIT vers la gauche en
+   laissant une bande grise à droite. On garde seulement overflow-x. */
+.ska-page, .ska-store{overflow-x:hidden}
 .ska-page *, .ska-store *{max-width:100%}
 .ska-page img, .ska-store img{max-width:100%; height:auto}
 .ska-page pre, .ska-page code{white-space:pre-wrap; word-break:break-word}
