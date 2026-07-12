@@ -1,0 +1,38 @@
+/* =============================================================
+   Sys Kabs Amazone — garde-fous responsive appliqués à TOUT le
+   site client (chargé sur chaque page via le hook syskabs_global).
+   Volontairement léger : le thème parent est déjà responsive
+   (Bootstrap) ; on ne fait que combler les débordements courants.
+   ============================================================= */
+
+/* Médias fluides : jamais plus larges que leur conteneur */
+img, svg, video, iframe, embed, object, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mots/URLs/tokens très longs : coupent au lieu de pousser la page */
+p, li, dd, dt, td, th, span, a, .breadcrumb, .alert, .panel-title, .card-title {
+  overflow-wrap: break-word;
+}
+pre, code, kbd, samp {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Champs de formulaire fluides (paniers, checkout, profil) */
+input, select, textarea, .form-control {
+  max-width: 100%;
+}
+
+/* Tableaux WHMCS : défilent dans leur conteneur sur petit écran */
+.table-responsive { -webkit-overflow-scrolling: touch; }
+table { max-width: 100%; }
+
+/* Empêche un débordement horizontal global sur mobile sans casser
+   les entêtes sticky/dropdowns (on cible body, pas html). */
+@media (max-width: 768px) {
+  body { overflow-x: hidden; }
+  /* conteneurs Bootstrap réellement fluides sur petit écran */
+  .container { padding-left: 15px; padding-right: 15px; }
+}
