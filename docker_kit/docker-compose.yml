@@ -72,10 +72,13 @@ services:
     dns:
       - 1.1.1.1
       - 8.8.8.8
+    # IMPORTANT : cron a un PATH minimal (/usr/bin:/bin) qui n'inclut PAS
+    # /usr/local/bin -> il faut le chemin COMPLET de php, sinon les tâches
+    # échouent silencieusement ("cron never invoked" dans l'admin WHMCS).
     entrypoint: >
-      sh -c 'echo "*/5 * * * * php -q /var/www/html/crons/cron.php" > /etc/crontab.whmcs &&
-             echo "15 3 * * * php -q /var/www/html/modules/addons/thesslstorefullv2_admin/tss_cron.php" >> /etc/crontab.whmcs &&
-             crontab /etc/crontab.whmcs && cron -f'
+      sh -c 'echo "*/5 * * * * /usr/local/bin/php -q /var/www/html/crons/cron.php >> /var/log/whmcs-cron.log 2>&1" > /etc/crontab.whmcs &&
+             echo "15 3 * * * /usr/local/bin/php -q /var/www/html/modules/addons/thesslstorefullv2_admin/tss_cron.php >> /var/log/whmcs-cron.log 2>&1" >> /etc/crontab.whmcs &&
+             crontab /etc/crontab.whmcs && touch /var/log/whmcs-cron.log && cron && tail -f /var/log/whmcs-cron.log'
     depends_on: [php]
     networks: [whmcs_net]
 
