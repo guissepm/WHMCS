@@ -78,6 +78,27 @@
 .ska-cattabs, .ska-filters{max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; flex-wrap:nowrap; scrollbar-width:thin}
 .ska-cattab, .ska-tab{flex:0 0 auto}
 
+/* ---------- Pleine largeur (full-bleed) ----------
+   Le thème parent (twenty-one) enferme le contenu dans un conteneur
+   Bootstrap ~1320px centré : sur grand écran, d'énormes marges grises
+   apparaissent. On fait DÉBORDER le hero et le bandeau de marques sur
+   toute la largeur de l'écran (comme thesslstore), tout en gardant le
+   catalogue centré et lisible.
+   - calc(50% - 50vw) : marges négatives qui tirent chaque bord jusqu'au
+     bord du viewport, sans utiliser width:100vw (évite les décalages).
+   - max-width:none / overflow-x:visible : neutralisent les garde-fous
+     ci-dessus qui, sinon, replafonneraient ces sections dans le conteneur.
+   Le petit dépassement dû à la barre de défilement est absorbé par
+   body{overflow-x:hidden} (global-responsive.css). */
+.ska-page{overflow-x:visible}
+.ska-page .ska-slider,
+.ska-page .ska-brands{
+  max-width:none;
+  width:auto;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+}
+
 /* ---------- Carrousel de bannières ---------- */
 .ska-slider{position:relative; overflow:hidden; padding:0 !important}
 .ska-slides{display:flex; transition:transform .55s ease; will-change:transform}

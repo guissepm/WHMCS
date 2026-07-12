@@ -29,10 +29,13 @@ input, select, textarea, .form-control {
 .table-responsive { -webkit-overflow-scrolling: touch; }
 table { max-width: 100%; }
 
-/* Empêche un débordement horizontal global sur mobile sans casser
-   les entêtes sticky/dropdowns (on cible body, pas html). */
+/* Empêche un débordement horizontal global (on cible body, pas html,
+   pour ne pas casser les entêtes sticky/dropdowns). Appliqué à toutes
+   les tailles : absorbe aussi le dépassement de ~15px induit par les
+   sections pleine largeur (calc 50vw inclut la barre de défilement). */
+body { overflow-x: hidden; }
+
 @media (max-width: 768px) {
-  body { overflow-x: hidden; }
   /* conteneurs Bootstrap réellement fluides sur petit écran */
   .container { padding-left: 15px; padding-right: 15px; }
 }

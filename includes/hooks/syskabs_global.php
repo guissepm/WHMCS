@@ -8,7 +8,7 @@
 
 add_hook('ClientAreaHeadOutput', 1, function ($vars) {
     $root = rtrim($vars['WEB_ROOT'] ?? '', '/');
-    $css  = $root . '/templates/syskabs/css/global-responsive.css?v=1.0.0';
+    $css  = $root . '/templates/syskabs/css/global-responsive.css?v=1.1.0';
 
     return
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
