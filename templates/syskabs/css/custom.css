@@ -243,10 +243,11 @@
   .ska-ptable .ska-col-price{width:18%}
   .ska-ptable .ska-col-cta{width:22%}
   .ska-ptable thead th, .ska-ptable tbody td{padding:14px 8px; font-size:.8rem; vertical-align:top}
-  .ska-ptable thead th{vertical-align:middle}
-  /* les cellules de texte s'enroulent (mots entiers), la ligne grandit */
-  .ska-ptable td, .ska-ptable th{overflow-wrap:break-word}
-  .ska-ptable td.ska-col-name{overflow-wrap:anywhere}
+  /* en-têtes : mots entiers, jamais coupés au milieu (ex. "Validation") */
+  .ska-ptable thead th{vertical-align:middle; font-size:.74rem; overflow-wrap:normal; word-break:keep-all; hyphens:none}
+  /* les cellules de contenu s'enroulent aux espaces (mots entiers) */
+  .ska-ptable tbody td{overflow-wrap:break-word}
+  .ska-ptable tbody td.ska-col-name{overflow-wrap:anywhere}
   /* bouton lisible qui remplit sa colonne, jamais coupé */
   .ska-ptable td.ska-col-cta{overflow:hidden}
   .ska-addcart{display:block; width:100%; box-sizing:border-box; text-align:center;
