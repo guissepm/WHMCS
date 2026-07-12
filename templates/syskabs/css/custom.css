@@ -235,22 +235,25 @@
 @media (max-width:960px){
   .ska-ptable-wrap{overflow-x:hidden}
   .ska-ptable{table-layout:fixed}
-  .ska-ptable .ska-col-name{width:30%}
-  .ska-ptable .ska-col-brand{width:14%}
+  .ska-ptable .ska-col-name{width:28%}
+  .ska-ptable .ska-col-brand{width:13%}
   .ska-ptable .ska-col-price{width:18%}
-  .ska-ptable .ska-col-cta{width:16%}
-  .ska-ptable thead th, .ska-ptable tbody td{padding:12px 10px; font-size:.82rem}
+  .ska-ptable .ska-col-cta{width:21%}
+  .ska-ptable thead th, .ska-ptable tbody td{padding:12px 8px; font-size:.82rem}
   /* seul le nom (potentiellement long) peut se couper ; le reste garde les mots entiers */
   .ska-ptable td.ska-col-name{overflow-wrap:anywhere}
-  .ska-col-cta{white-space:normal}
-  .ska-addcart{white-space:nowrap; padding:.6em .6em; font-size:.6rem; letter-spacing:.02em}
+  /* le bouton remplit exactement sa colonne et ne déborde jamais */
+  .ska-ptable td.ska-col-cta{overflow:hidden; padding-left:4px; padding-right:8px}
+  .ska-addcart{display:block; width:100%; box-sizing:border-box; text-align:center;
+    white-space:nowrap; padding:.6em .4em; font-size:.62rem; letter-spacing:.02em}
   .ska-col-price b{font-size:.9rem}
   .ska-blogo{height:18px}
 }
 @media (max-width:600px){
   .ska-ptable thead th, .ska-ptable tbody td{padding:9px 5px; font-size:.72rem}
   .ska-ptable thead th{font-size:.66rem; padding:10px 5px; letter-spacing:-.01em}
-  .ska-addcart{font-size:.56rem; padding:.55em .45em}
+  .ska-ptable .ska-col-cta{width:24%}
+  .ska-addcart{font-size:.58rem; padding:.55em .3em}
   .ska-col-price b{font-size:.8rem}
   .ska-col-price span{font-size:.64rem}
   .ska-blogo{height:15px}

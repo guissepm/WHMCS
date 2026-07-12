@@ -1,4 +1,4 @@
-<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.7.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.8.0" rel="stylesheet">
 
 {* ============================================================
    Accueil boutique — Sys Kabs Amazone
