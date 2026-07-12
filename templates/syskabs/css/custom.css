@@ -229,10 +229,10 @@
 @media (max-width:640px){ .ska-websec-grid{grid-template-columns:1fr} }
 
 /* ---------- Tableau produits -> cartes empilées sur petit écran ----------
-   Sous 700px de large (portrait mobile, et paysage étroit), chaque ligne
-   devient une carte : plus de scroll horizontal, tout tient dans le cadre.
-   Basé sur la largeur -> la rotation du téléphone est gérée automatiquement. */
-@media (max-width:700px){
+   Sous 960px (téléphone portrait ET paysage — largeur CSS jusqu'à ~930px),
+   chaque ligne devient une carte : plus de scroll horizontal, tout tient
+   dans le cadre. Basé sur la largeur -> la rotation est gérée automatiquement. */
+@media (max-width:960px){
   .ska-ptable-wrap{overflow-x:visible; border:none; box-shadow:none; background:transparent}
   .ska-ptable{min-width:0; width:100%; background:transparent}
   .ska-ptable thead{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
