@@ -6,6 +6,7 @@
    ============================================================ *}
 
 <link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.5.0" rel="stylesheet">
+<script>(function(){var m=document.querySelector('meta[name="viewport"]');if(!m){m=document.createElement('meta');m.setAttribute('name','viewport');(document.head||document.getElementsByTagName('head')[0]).appendChild(m);}m.setAttribute('content','width=device-width, initial-scale=1, viewport-fit=cover');})();</script>
 
 <div class="ska-store" id="skaStoreRoot">
 
