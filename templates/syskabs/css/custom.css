@@ -255,15 +255,39 @@
   .ska-col-price b{font-size:.92rem}
   .ska-blogo{height:18px}
 }
+/* Portrait étroit (<600px) : le tableau à 5 colonnes devient illisible,
+   chaque ligne devient une fiche empilée lisible (libellé + valeur). */
 @media (max-width:600px){
-  .ska-ptable .ska-col-name{width:24%}
-  .ska-ptable .ska-col-cta{width:26%}
-  .ska-ptable thead th, .ska-ptable tbody td{padding:11px 5px; font-size:.74rem}
-  .ska-ptable thead th{font-size:.66rem; letter-spacing:-.01em}
-  .ska-addcart{font-size:.6rem; padding:.65em .3em}
-  .ska-col-price b{font-size:.82rem}
-  .ska-col-price span{font-size:.66rem}
-  .ska-blogo{height:15px}
+  .ska-ptable-wrap{overflow:visible; border:none; box-shadow:none; background:transparent}
+  .ska-ptable{table-layout:auto; min-width:0}
+  .ska-ptable thead{display:none}
+  .ska-ptable tbody tr{
+    display:block; background:var(--ska-surface); border:1px solid var(--ska-line);
+    border-radius:var(--ska-r); box-shadow:var(--ska-shadow); margin:0 0 14px; padding:2px 2px;
+  }
+  .ska-ptable tbody tr:nth-child(odd),
+  .ska-ptable tbody tr:nth-child(even){background:var(--ska-surface)}
+  .ska-ptable tbody td{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    width:auto !important; padding:11px 16px; border:none; border-bottom:1px solid var(--ska-line);
+    text-align:right; font-size:.92rem; overflow-wrap:normal;
+  }
+  .ska-ptable tbody td:last-child{border-bottom:none}
+  .ska-ptable tbody td::before{
+    content:attr(data-label); font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:.66rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ska-muted);
+    font-weight:600; text-align:left; flex:0 0 auto;
+  }
+  .ska-ptable tbody td.ska-col-name{text-align:left; font-size:1.02rem}
+  .ska-ptable tbody td.ska-col-name::before{content:"Produit"}
+  .ska-ptable tbody td.ska-col-name .ska-pname{font-weight:700}
+  .ska-ptable tbody td.ska-col-cta{justify-content:center; padding-top:14px}
+  .ska-ptable tbody td.ska-col-cta::before{display:none}
+  .ska-addcart{display:block; width:100%; text-align:center; white-space:nowrap;
+    font-size:.82rem; padding:.85em 1em; letter-spacing:.04em}
+  .ska-col-price b{font-size:1rem}
+  .ska-col-price span{font-size:.8rem}
+  .ska-blogo{height:20px}
 }
 
 /* ---------- Page boutique : tableau produits ---------- */
