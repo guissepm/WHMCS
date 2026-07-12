@@ -1,4 +1,4 @@
-<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.3.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.4.0" rel="stylesheet">
 
 {* ============================================================
    Accueil boutique — Sys Kabs Amazone
@@ -153,10 +153,10 @@
           {if isset($skaProducts) && $skaProducts|count > 0}
             {foreach $skaProducts as $sp}
               <tr data-cat="{$sp.cat}">
-                <td class="ska-col-name">
+                <td class="ska-col-name" data-label="Produit">
                   <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$sp.pid}" class="ska-pname">{$sp.name}</a>
                 </td>
-                <td class="ska-col-brand">
+                <td class="ska-col-brand" data-label="Marque">
                   {if $sp.brand != '—'}
                     <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/{$sp.brandslug}-logo.svg"
                          alt="{$sp.brand}" class="ska-blogo"
@@ -166,9 +166,9 @@
                     —
                   {/if}
                 </td>
-                <td><span class="ska-vbadge {$sp.valcls}">{$sp.val}</span></td>
-                <td class="ska-col-price"><b>{$sp.price}</b><span>{$sp.cycle}</span></td>
-                <td class="ska-col-cta">
+                <td data-label="Validation"><span class="ska-vbadge {$sp.valcls}">{$sp.val}</span></td>
+                <td class="ska-col-price" data-label="Prix le plus bas"><b>{$sp.price}</b><span>{$sp.cycle}</span></td>
+                <td class="ska-col-cta" data-label="">
                   <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$sp.pid}" class="ska-addcart">Ajouter au panier</a>
                 </td>
               </tr>

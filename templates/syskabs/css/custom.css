@@ -228,6 +228,38 @@
 @media (max-width:1100px){ .ska-websec-grid{grid-template-columns:1fr 1fr} }
 @media (max-width:640px){ .ska-websec-grid{grid-template-columns:1fr} }
 
+/* ---------- Tableau produits -> cartes empilées sur petit écran ----------
+   Sous 700px de large (portrait mobile, et paysage étroit), chaque ligne
+   devient une carte : plus de scroll horizontal, tout tient dans le cadre.
+   Basé sur la largeur -> la rotation du téléphone est gérée automatiquement. */
+@media (max-width:700px){
+  .ska-ptable-wrap{overflow-x:visible; border:none; box-shadow:none; background:transparent}
+  .ska-ptable{min-width:0; width:100%; background:transparent}
+  .ska-ptable thead{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+  .ska-ptable tbody tr{
+    display:block; background:var(--ska-surface); border:1px solid var(--ska-line);
+    border-radius:var(--ska-r); box-shadow:var(--ska-shadow); padding:6px 4px; margin:0 0 14px;
+  }
+  .ska-ptable tbody tr:nth-child(odd),
+  .ska-ptable tbody tr:nth-child(even){background:var(--ska-surface)}
+  .ska-ptable tbody td{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    padding:9px 14px; border:none; border-bottom:1px solid var(--ska-line); text-align:right;
+  }
+  .ska-ptable tbody td:last-child{border-bottom:none}
+  .ska-ptable tbody td::before{
+    content:attr(data-label); font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ska-muted);
+    font-weight:600; text-align:left; flex:0 0 auto;
+  }
+  .ska-ptable td.ska-col-name{font-size:1.02rem}
+  .ska-ptable td.ska-col-name .ska-pname{font-weight:700}
+  .ska-ptable td.ska-col-cta{justify-content:center; padding-top:12px}
+  .ska-ptable td.ska-col-cta::before{display:none}
+  .ska-ptable td.ska-col-cta .ska-addcart{width:100%; text-align:center}
+  .ska-blogo{height:20px}
+}
+
 /* ---------- Page boutique : tableau produits ---------- */
 .ska-ptable-wrap{overflow-x:auto; border-radius:8px; box-shadow:var(--ska-shadow)}
 .ska-ptable{border-collapse:collapse; width:100%; min-width:760px; margin:0; background:var(--ska-surface)}

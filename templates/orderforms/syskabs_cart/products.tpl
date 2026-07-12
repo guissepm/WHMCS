@@ -5,7 +5,7 @@
    Certificats -> tableau ; Sécurité Web -> cartes
    ============================================================ *}
 
-<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.3.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.4.0" rel="stylesheet">
 
 <div class="ska-store" id="skaStoreRoot">
 
@@ -96,14 +96,14 @@
               {/if}
 
               <tr data-brand="{$skaBrand}">
-                <td class="ska-col-name">
+                <td class="ska-col-name" data-label="Produit">
                   {if isset($product.slug) && isset($productGroup.slug)}
                     <a href="{$WEB_ROOT}/index.php?rp=/store/{$productGroup.slug}/{$product.slug}" class="ska-pname">{$product.name}</a>
                   {else}
                     <span class="ska-pname">{$product.name}</span>
                   {/if}
                 </td>
-                <td class="ska-col-brand">
+                <td class="ska-col-brand" data-label="Marque">
                   {if $skaBrand != '—'}
                     <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/{$skaBrand|lower}-logo.svg"
                          alt="{$skaBrand}" class="ska-blogo"
@@ -113,8 +113,8 @@
                     —
                   {/if}
                 </td>
-                <td><span class="ska-vbadge {$skaValCls}">{$skaVal}</span></td>
-                <td class="ska-col-price">
+                <td data-label="Validation"><span class="ska-vbadge {$skaValCls}">{$skaVal}</span></td>
+                <td class="ska-col-price" data-label="Prix le plus bas">
                   {if isset($product.pricing.minprice)}
                     <b>{$product.pricing.minprice.price}</b>
                     {if $product.pricing.minprice.cycle == 'annually'}<span>/an</span>
@@ -127,7 +127,7 @@
                     —
                   {/if}
                 </td>
-                <td class="ska-col-cta">
+                <td class="ska-col-cta" data-label="">
                   {if $product.bid}
                     <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-addcart">Ajouter au panier</a>
                   {else}
