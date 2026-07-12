@@ -5,7 +5,7 @@
    Certificats -> tableau ; Sécurité Web -> cartes
    ============================================================ *}
 
-<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.8.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.9.0" rel="stylesheet">
 
 <div class="ska-store" id="skaStoreRoot">
 

@@ -232,30 +232,36 @@
    On garde la disposition en tableau (mêmes colonnes) et on le laisse se
    compresser pour tenir dans l'écran, au lieu de forcer un scroll horizontal.
    Le texte des cellules passe à la ligne et les tailles se réduisent par palier. */
+/* Style thesslstore : colonnes larges qui s'enroulent verticalement (le texte
+   passe à la ligne, la hauteur de ligne grandit) et un bouton lisible qui
+   remplit sa colonne. Aucune police minuscule, aucun débordement horizontal. */
 @media (max-width:960px){
   .ska-ptable-wrap{overflow-x:hidden}
   .ska-ptable{table-layout:fixed}
-  .ska-ptable .ska-col-name{width:28%}
-  .ska-ptable .ska-col-brand{width:13%}
+  .ska-ptable .ska-col-name{width:26%}
+  .ska-ptable .ska-col-brand{width:12%}
   .ska-ptable .ska-col-price{width:18%}
-  .ska-ptable .ska-col-cta{width:21%}
-  .ska-ptable thead th, .ska-ptable tbody td{padding:12px 8px; font-size:.82rem}
-  /* seul le nom (potentiellement long) peut se couper ; le reste garde les mots entiers */
+  .ska-ptable .ska-col-cta{width:22%}
+  .ska-ptable thead th, .ska-ptable tbody td{padding:14px 8px; font-size:.8rem; vertical-align:top}
+  .ska-ptable thead th{vertical-align:middle}
+  /* les cellules de texte s'enroulent (mots entiers), la ligne grandit */
+  .ska-ptable td, .ska-ptable th{overflow-wrap:break-word}
   .ska-ptable td.ska-col-name{overflow-wrap:anywhere}
-  /* le bouton remplit exactement sa colonne et ne déborde jamais */
-  .ska-ptable td.ska-col-cta{overflow:hidden; padding-left:4px; padding-right:8px}
+  /* bouton lisible qui remplit sa colonne, jamais coupé */
+  .ska-ptable td.ska-col-cta{overflow:hidden}
   .ska-addcart{display:block; width:100%; box-sizing:border-box; text-align:center;
-    white-space:nowrap; padding:.6em .4em; font-size:.62rem; letter-spacing:.02em}
-  .ska-col-price b{font-size:.9rem}
+    white-space:nowrap; padding:.7em .4em; font-size:.64rem; letter-spacing:.03em}
+  .ska-col-price b{font-size:.92rem}
   .ska-blogo{height:18px}
 }
 @media (max-width:600px){
-  .ska-ptable thead th, .ska-ptable tbody td{padding:9px 5px; font-size:.72rem}
-  .ska-ptable thead th{font-size:.66rem; padding:10px 5px; letter-spacing:-.01em}
-  .ska-ptable .ska-col-cta{width:24%}
-  .ska-addcart{font-size:.58rem; padding:.55em .3em}
-  .ska-col-price b{font-size:.8rem}
-  .ska-col-price span{font-size:.64rem}
+  .ska-ptable .ska-col-name{width:24%}
+  .ska-ptable .ska-col-cta{width:26%}
+  .ska-ptable thead th, .ska-ptable tbody td{padding:11px 5px; font-size:.74rem}
+  .ska-ptable thead th{font-size:.66rem; letter-spacing:-.01em}
+  .ska-addcart{font-size:.6rem; padding:.65em .3em}
+  .ska-col-price b{font-size:.82rem}
+  .ska-col-price span{font-size:.66rem}
   .ska-blogo{height:15px}
 }
 
