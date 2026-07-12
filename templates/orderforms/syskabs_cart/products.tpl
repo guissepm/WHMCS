@@ -5,7 +5,7 @@
    Certificats -> tableau ; Sécurité Web -> cartes
    ============================================================ *}
 
-<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.6.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=1.7.0" rel="stylesheet">
 
 <div class="ska-store" id="skaStoreRoot">
 
@@ -129,9 +129,9 @@
                 </td>
                 <td class="ska-col-cta" data-label="">
                   {if $product.bid}
-                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-addcart">Ajouter au panier</a>
+                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-addcart">Commander</a>
                   {else}
-                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$product.pid}" class="ska-addcart">Ajouter au panier</a>
+                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$product.pid}" class="ska-addcart">Commander</a>
                   {/if}
                 </td>
               </tr>

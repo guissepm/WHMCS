@@ -1,4 +1,4 @@
-<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.6.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=1.7.0" rel="stylesheet">
 
 {* ============================================================
    Accueil boutique — Sys Kabs Amazone
@@ -169,7 +169,7 @@
                 <td data-label="Validation"><span class="ska-vbadge {$sp.valcls}">{$sp.val}</span></td>
                 <td class="ska-col-price" data-label="Prix le plus bas"><b>{$sp.price}</b><span>{$sp.cycle}</span></td>
                 <td class="ska-col-cta" data-label="">
-                  <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$sp.pid}" class="ska-addcart">Ajouter au panier</a>
+                  <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$sp.pid}" class="ska-addcart">Commander</a>
                 </td>
               </tr>
             {/foreach}
