@@ -25,7 +25,14 @@
 #main-menu .navbar-nav > li > a:hover{background:var(--ska-primary-dk) !important}
 
 /* ---------- Page ---------- */
-.ska-page{background:var(--ska-bg); color:var(--ska-ink); margin:-20px -15px 0; padding:0}
+.ska-page{background:var(--ska-bg); color:var(--ska-ink);
+  /* full-bleed : sort du conteneur ~1320px du thème parent et occupe
+     toute la largeur de l'écran. margin-top garde le collage au fil
+     d'Ariane. */
+  margin-top:-20px;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+  padding:0}
 .ska-page section{padding:56px 24px}
 .ska-eyebrow{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ska-green); font-weight:600}
 .ska-sec-head{max-width:640px; margin:0 auto 34px; text-align:center}
@@ -81,23 +88,13 @@
 /* ---------- Pleine largeur (full-bleed) ----------
    Le thème parent (twenty-one) enferme le contenu dans un conteneur
    Bootstrap ~1320px centré : sur grand écran, d'énormes marges grises
-   apparaissent. On fait DÉBORDER le hero et le bandeau de marques sur
-   toute la largeur de l'écran (comme thesslstore), tout en gardant le
-   catalogue centré et lisible.
-   - calc(50% - 50vw) : marges négatives qui tirent chaque bord jusqu'au
-     bord du viewport, sans utiliser width:100vw (évite les décalages).
-   - max-width:none / overflow-x:visible : neutralisent les garde-fous
-     ci-dessus qui, sinon, replafonneraient ces sections dans le conteneur.
+   apparaissent. On fait DÉBORDER TOUTE la page sur la largeur de
+   l'écran (comme thesslstore) — géré au niveau de .ska-page ci-dessus
+   (marges calc(50% - 50vw)). Les bandeaux (hero, marques) vont ainsi
+   bord à bord ; le catalogue remplit la largeur avec de fines
+   gouttières pour rester lisible (voir .ska-catalog-sec).
    Le petit dépassement dû à la barre de défilement est absorbé par
    body{overflow-x:hidden} (global-responsive.css). */
-.ska-page{overflow-x:visible}
-.ska-page .ska-slider,
-.ska-page .ska-brands{
-  max-width:none;
-  width:auto;
-  margin-left:calc(50% - 50vw);
-  margin-right:calc(50% - 50vw);
-}
 
 /* ---------- Carrousel de bannières ---------- */
 .ska-slider{position:relative; overflow:hidden; padding:0 !important}
@@ -166,7 +163,10 @@
 .ska-tab.active{background:var(--ska-primary); border-color:var(--ska-primary); color:#fff}
 
 /* ---------- Cartes produits ---------- */
-.ska-catalog-sec{max-width:1160px; margin:0 auto}
+/* Catalogue : remplit la page pleine largeur avec de fines gouttières.
+   Plafond large (1560px) pour éviter des lignes trop longues sur les
+   très grands écrans, tout en occupant nettement plus d'espace. */
+.ska-catalog-sec{max-width:1560px; margin:0 auto; padding:0 clamp(16px,3vw,40px)}
 .ska-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
 .ska-card{background:var(--ska-surface); border:1px solid var(--ska-line); border-radius:var(--ska-r); padding:18px; display:flex; flex-direction:column; gap:10px; transition:transform .15s, box-shadow .2s}
 .ska-card:hover{transform:translateY(-3px); box-shadow:var(--ska-shadow)}
@@ -220,7 +220,7 @@
 .ska-bfall{font-weight:750; color:var(--ska-muted); font-size:.95rem}
 
 /* ---------- Catalogue importé depuis la boutique (accueil) ---------- */
-.ska-imported .ska-store{padding:0; max-width:none}
+.ska-imported .ska-store{padding:0; max-width:none; margin-left:0; margin-right:0}
 .ska-imported .ska-store-head{display:none}
 
 /* ---------- Onglets de catégories (Certificats / Sécurité Web) ---------- */
@@ -341,7 +341,14 @@
 }
 
 /* ---------- Page boutique (order form syskabs_cart) ---------- */
-.ska-store{max-width:1160px; margin:0 auto; padding:8px 0 40px}
+/* Page boutique autonome (/store) : pleine largeur avec gouttières,
+   même rendu que le catalogue de l'accueil. (Neutralisé plus bas quand
+   la boutique est importée dans l'accueil, pour éviter un double
+   débordement hors des gouttières de .ska-catalog-sec.) */
+.ska-store{max-width:none;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+  padding:8px clamp(16px,3vw,40px) 40px}
 .ska-store-head{margin:6px 0 24px}
 .ska-store-head h1{font-size:1.8rem; font-weight:800; letter-spacing:-.02em; margin:0 0 6px}
 .ska-store-head p{color:var(--ska-muted); margin:0}
