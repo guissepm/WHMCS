@@ -36,6 +36,7 @@
 .ska-modal-x:hover{ background:rgba(255,255,255,.28); }
 
 .ska-modal-body{ padding:22px; }
+.ska-modal-intro{ margin:0 0 14px; font-size:.9rem; color:#54657E; }
 .ska-modal-body .ska-terms{ display:flex; flex-direction:column; gap:12px; margin:0 0 20px; }
 
 /* Cartes de durée (mêmes codes visuels que le tunnel de commande) */
