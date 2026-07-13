@@ -1,4 +1,4 @@
-<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=2.5.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=2.6.0" rel="stylesheet">
 
 {* ============================================================
    Accueil boutique — Sys Kabs Amazone
@@ -262,6 +262,83 @@
           <tr><td>Recommandé pour</td><td>Blogs, vitrines</td><td>E-commerce, SaaS</td><td>Banques, marques</td></tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  {* ---------- SÉCURITÉ APPLICATIVE (Acunetix / Invicti) ---------- *}
+  <section class="ska-appsec" id="ska-appsec">
+    <div class="ska-appsec-inner">
+      <div class="ska-sec-head ska-appsec-head">
+        <span class="ska-eyebrow">Audit de vulnérabilités web · DAST</span>
+        <h2>Trouvez vos failles <span class="ska-green">avant les attaquants</span></h2>
+        <p class="ska-lede">Partenaire <strong>Acunetix (by Invicti)</strong> — le scanner de sécurité
+        applicative de référence. Nous auditons vos sites, applications et API, du conseil au
+        déploiement clé en main.</p>
+      </div>
+
+      <div class="ska-appsec-stats">
+        <div><b>99,98&nbsp;%</b><span>de précision — Proof-Based&trade;</span></div>
+        <div><b>7&nbsp;000+</b><span>vulnérabilités détectées</span></div>
+        <div><b>20+ ans</b><span>d'expertise DAST</span></div>
+        <div><b>4&nbsp;000+</b><span>organisations protégées</span></div>
+      </div>
+
+      <div class="ska-appsec-grid">
+        <article class="ska-appsec-card">
+          <span class="ska-appsec-ic">&#127760;</span>
+          <h3>Scan applicatif complet</h3>
+          <p>Sites web, applications, SPA et API (REST, GraphQL, SOAP) — ce qui n'est pas trouvé ne peut être testé.</p>
+        </article>
+        <article class="ska-appsec-card">
+          <span class="ska-appsec-ic">&#127919;</span>
+          <h3>Preuve d'exploitabilité</h3>
+          <p>Chaque faille est confirmée par une preuve : quasi zéro faux positif, vous corrigez ce qui compte vraiment.</p>
+        </article>
+        <article class="ska-appsec-card">
+          <span class="ska-appsec-ic">&#128737;</span>
+          <h3>OWASP Top 10 &amp; API Top 10</h3>
+          <p>Injections SQL, XSS, failles de logique métier, API exposées… couverture approfondie.</p>
+        </article>
+        <article class="ska-appsec-card">
+          <span class="ska-appsec-ic">&#128272;</span>
+          <h3>Tests authentifiés</h3>
+          <p>Parcours à rôles et scénarios de connexion complexes, pour auditer aussi les zones protégées.</p>
+        </article>
+        <article class="ska-appsec-card">
+          <span class="ska-appsec-ic">&#9881;&#65039;</span>
+          <h3>Intégration DevSecOps</h3>
+          <p>CI/CD, Jira, GitLab, Jenkins : passez à l'audit continu, intégré à vos pipelines.</p>
+        </article>
+        <article class="ska-appsec-card">
+          <span class="ska-appsec-ic">&#129513;</span>
+          <h3>Au-delà du DAST</h3>
+          <p>SAST, SCA, conteneurs, IaC et pilotage du risque (ASPM) avec les éditions Core &amp; Platform.</p>
+        </article>
+      </div>
+
+      <div class="ska-appsec-tiers">
+        <div class="ska-tier">
+          <h4>Acunetix</h4>
+          <p>Le DAST essentiel pour auditer un site ou une application.</p>
+          <small>PME, agences, sites vitrines &amp; e-commerce</small>
+        </div>
+        <div class="ska-tier ska-tier-hot">
+          <span class="ska-tier-badge">Le plus complet</span>
+          <h4>Invicti Core</h4>
+          <p>Tout-en-un : DAST + SAST + SCA + conteneurs + IaC, opérationnel en quelques minutes.</p>
+          <small>Équipes dev &amp; sécurité</small>
+        </div>
+        <div class="ska-tier">
+          <h4>Invicti Platform + ASPM</h4>
+          <p>Plateforme entreprise : couverture massive, corrélation des résultats et pilotage du risque.</p>
+          <small>Banques, administrations, grands comptes</small>
+        </div>
+      </div>
+
+      <div class="ska-appsec-cta">
+        <a href="{$WEB_ROOT}/submitticket.php" class="ska-btn ska-btn-primary ska-btn-lg">Demander un audit</a>
+        <a href="{$WEB_ROOT}/contact.php" class="ska-btn ska-btn-ghost ska-btn-lg ska-btn-ghost-dark">Parler à un expert / devis</a>
+      </div>
     </div>
   </section>
 

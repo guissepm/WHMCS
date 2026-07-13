@@ -53,4 +53,22 @@ add_hook('ClientAreaPrimaryNavbar', 1, function (MenuItem $primaryNavbar) {
         'uri'   => 'cart.php?gid=1',
         'order' => 30,
     ]);
+
+    // Sécurité applicative (Acunetix / Invicti) — pointe vers la section
+    // dédiée de la page d'accueil.
+    $appsec = $primaryNavbar->addChild('securite-applicative', [
+        'label' => 'Sécurité applicative',
+        'uri'   => 'index.php#ska-appsec',
+        'order' => 40,
+    ]);
+    $appsec->addChild('appsec-audit', [
+        'label' => 'Audit de vulnérabilités (DAST)',
+        'uri'   => 'index.php#ska-appsec',
+        'order' => 10,
+    ]);
+    $appsec->addChild('appsec-devis', [
+        'label' => 'Demander un audit / un devis',
+        'uri'   => 'submitticket.php',
+        'order' => 20,
+    ]);
 });

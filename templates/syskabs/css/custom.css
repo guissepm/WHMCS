@@ -216,6 +216,40 @@
 .ska-cta h2{font-size:1.7rem; font-weight:800; margin:0}
 .ska-cta p{color:rgba(255,255,255,.85); margin:.5em 0 0}
 
+/* ---------- Sécurité applicative (Acunetix / Invicti) ---------- */
+/* Bandeau sombre pleine largeur : contraste avec le reste (code = sécurité). */
+.ska-appsec{background:linear-gradient(160deg,#0B1220,#16233B); color:#E7EEF9; padding:66px 24px; margin:0 0 56px}
+.ska-appsec-inner{max-width:1160px; margin:0 auto}
+.ska-appsec-head{text-align:center; margin-bottom:8px}
+.ska-appsec-head h2{color:#fff}
+.ska-appsec-head .ska-lede{color:#9FB2CE; max-width:660px; margin:10px auto 0}
+.ska-appsec-head strong{color:#fff}
+.ska-appsec-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:34px 0}
+.ska-appsec-stats > div{text-align:center; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:14px; padding:18px 12px}
+.ska-appsec-stats b{display:block; font-size:1.7rem; font-weight:820; color:#fff; letter-spacing:-.02em; line-height:1.1}
+.ska-appsec-stats span{display:block; margin-top:4px; font-size:.78rem; color:#9FB2CE}
+.ska-appsec-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:36px}
+.ska-appsec-card{background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); border-radius:16px; padding:22px}
+.ska-appsec-ic{font-size:1.5rem; line-height:1}
+.ska-appsec-card h3{margin:.55em 0 .35em; font-size:1.06rem; color:#fff; font-weight:750}
+.ska-appsec-card p{font-size:.9rem; color:#9FB2CE; margin:0; line-height:1.5}
+.ska-appsec-tiers{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px}
+.ska-tier{position:relative; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.11); border-radius:16px; padding:24px 20px; text-align:center}
+.ska-tier-hot{border-color:var(--ska-green); box-shadow:0 0 0 1px var(--ska-green)}
+.ska-tier-badge{position:absolute; top:-11px; left:50%; transform:translateX(-50%); background:var(--ska-green); color:#04231a; font-size:.6rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:3px 11px; border-radius:999px; white-space:nowrap}
+.ska-tier h4{margin:.1em 0 .5em; color:#fff; font-size:1.12rem; font-weight:780}
+.ska-tier p{font-size:.88rem; color:#9FB2CE; margin:0 0 .7em; line-height:1.5}
+.ska-tier small{font-size:.72rem; color:#7C90AE}
+.ska-appsec-cta{display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
+/* bouton fantôme lisible sur fond sombre */
+.ska-btn-ghost-dark{color:#fff !important; border-color:rgba(255,255,255,.45) !important}
+.ska-btn-ghost-dark:hover{background:rgba(255,255,255,.10) !important}
+@media (max-width:900px){
+  .ska-appsec{padding:48px 18px}
+  .ska-appsec-stats{grid-template-columns:repeat(2,1fr)}
+  .ska-appsec-grid, .ska-appsec-tiers{grid-template-columns:1fr}
+}
+
 /* ---------- Logos des autorités (SVG fournis par le module TSS) ---------- */
 .ska-brandlogo{height:26px; width:auto; opacity:.85; transition:opacity .15s}
 .ska-brandlogo:hover{opacity:1}
