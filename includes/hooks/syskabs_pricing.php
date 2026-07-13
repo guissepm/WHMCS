@@ -74,12 +74,36 @@ add_hook('ClientAreaPageCart', 1, function ($vars) {
                 }
             }
 
+            // Détail de toutes les durées, pour la modale « façon thesslstore ».
+            $cycleName = [1 => 'annually', 2 => 'biennially', 3 => 'triennially'];
+            $termList = [];
+            foreach ($terms as $years => $total) {
+                $per  = $total / $years;
+                $list = ($annual !== null) ? $annual * $years : 0.0;
+                $save = ($list > 0) ? $list - $total : 0.0;
+                $pct  = ($list > 0) ? (int) round($save / $list * 100) : 0;
+                $termList[] = [
+                    'y'    => $years,
+                    'c'    => isset($cycleName[$years]) ? $cycleName[$years] : '',
+                    't'    => round($total, 2),
+                    'per'  => round($per, 2),
+                    'list' => round($list, 2),
+                    'save' => round(max(0, $save), 2),
+                    'pct'  => max(0, $pct),
+                ];
+            }
+            $termsJson = json_encode(
+                ['cur' => $currency->prefix, 'sfx' => trim((string) $currency->suffix), 'terms' => $termList],
+                JSON_UNESCAPED_UNICODE
+            );
+
             $map[(int) $r->relid] = [
                 'peryear'   => $fmt($bestPerYear),
                 'years'     => $bestYears,
                 'discount'  => $discount,
                 'multiyear' => count($terms) > 1,
                 'annualref' => ($discount > 0 && $annual !== null) ? $fmt($annual) : '',
+                'termsjson' => $termsJson,
             ];
         }
 

@@ -1,0 +1,106 @@
+/* =============================================================================
+   Sys Kabs Amazone — Modale de commande rapide (façon thesslstore)
+   Boîte de dialogue ouverte au clic sur « Commander » dans le catalogue :
+   choix de la durée en cartes, total en direct, ajout au panier.
+   Chargée globalement (hook) ; ne s'active que si la modale est ouverte.
+   ============================================================================= */
+.ska-modal-open{ overflow:hidden; }
+
+.ska-modal-ov{
+  position:fixed; inset:0; z-index:9999;
+  background:rgba(14,26,43,.58); backdrop-filter:blur(2px);
+  display:flex; align-items:center; justify-content:center; padding:18px;
+  opacity:0; transition:opacity .18s ease;
+}
+.ska-modal-ov.show{ opacity:1; }
+
+.ska-modal{
+  background:#fff; width:100%; max-width:540px; max-height:92vh; overflow:auto;
+  border-radius:18px; box-shadow:0 30px 80px -20px rgba(14,26,43,.6);
+  transform:translateY(12px) scale(.98); transition:transform .2s ease;
+  font-family:inherit;
+}
+.ska-modal-ov.show .ska-modal{ transform:none; }
+
+.ska-modal-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:linear-gradient(120deg,#1E50E2,#173FB0); color:#fff;
+  padding:18px 22px; position:sticky; top:0;
+}
+.ska-modal-head h3{ margin:0; font-size:1.15rem; font-weight:800; letter-spacing:-.01em; line-height:1.25; }
+.ska-modal-x{
+  flex:0 0 auto; width:34px; height:34px; border-radius:9px; border:0; cursor:pointer;
+  background:rgba(255,255,255,.15); color:#fff; font-size:1.3rem; line-height:1;
+  display:flex; align-items:center; justify-content:center; transition:background .15s;
+}
+.ska-modal-x:hover{ background:rgba(255,255,255,.28); }
+
+.ska-modal-body{ padding:22px; }
+.ska-modal-body .ska-terms{ display:flex; flex-direction:column; gap:12px; margin:0 0 20px; }
+
+/* Cartes de durée (mêmes codes visuels que le tunnel de commande) */
+.ska-term{
+  display:flex; align-items:flex-start; gap:14px;
+  background:#EEF1F7; border:1.5px solid #E2E8F2; border-radius:12px;
+  padding:14px 16px; cursor:pointer;
+  transition:border-color .15s, background .15s, box-shadow .15s;
+}
+.ska-term:hover{ border-color:#C6D2E6; }
+.ska-term.active{
+  background:#fff; border-color:#1E50E2;
+  box-shadow:0 0 0 3px rgba(30,80,226,.14), 0 12px 32px -14px rgba(14,26,43,.22);
+}
+.ska-term-radio{
+  flex:0 0 auto; width:20px; height:20px; margin-top:2px; border-radius:50%;
+  border:2px solid #B7C3D8; background:#fff; position:relative; transition:.15s;
+}
+.ska-term.active .ska-term-radio{ border-color:#1E50E2; }
+.ska-term.active .ska-term-radio::after{
+  content:""; position:absolute; inset:3px; border-radius:50%; background:#1E50E2;
+}
+.ska-term-body{ flex:1 1 auto; }
+.ska-term-main{ font-size:1.02rem; color:#0E1A2B; font-weight:600; }
+.ska-term-main b{ font-weight:820; }
+.ska-term-main span{ color:#54657E; font-weight:600; font-size:.9rem; }
+.ska-term-sub{ margin-top:5px; font-size:.85rem; color:#54657E; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.ska-term-sub s{ color:#8798AE; }
+.ska-term-save{ font-style:normal; font-weight:750; color:#08916A; }
+.ska-term-off{ font-style:normal; font-weight:800; color:#E8730C; background:rgba(232,115,12,.1); padding:1px 8px; border-radius:6px; font-size:.8rem; }
+
+/* Total */
+.ska-modal-total{
+  display:flex; align-items:baseline; justify-content:space-between;
+  border-top:1px solid #E2E8F2; padding-top:16px; margin-top:4px;
+}
+.ska-modal-total .lbl{ font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:#54657E; font-weight:700; }
+.ska-modal-total .amt{ font-size:1.7rem; font-weight:850; color:#173FB0; letter-spacing:-.02em; }
+.ska-modal-total .per{ display:block; font-size:.75rem; color:#54657E; font-weight:600; text-align:right; }
+
+/* Boutons */
+.ska-modal-cta{ display:flex; flex-direction:column; gap:10px; margin-top:18px; }
+.ska-modal-add{
+  display:block; width:100%; text-align:center; cursor:pointer; border:0;
+  background:linear-gradient(120deg,#08916A,#0B6E52); color:#fff !important;
+  font-weight:800; font-size:1rem; padding:.95em 1em; border-radius:12px;
+  text-decoration:none !important; box-shadow:0 10px 24px -10px rgba(8,145,106,.7);
+  transition:transform .12s, filter .15s;
+}
+.ska-modal-add:hover{ transform:translateY(-1px); filter:brightness(1.05); }
+.ska-modal-ghost{
+  display:block; width:100%; text-align:center; cursor:pointer;
+  background:#fff; color:#1E50E2 !important; border:1.5px solid #E2E8F2;
+  font-weight:700; padding:.8em 1em; border-radius:12px; text-decoration:none !important;
+  transition:border-color .15s;
+}
+.ska-modal-ghost:hover{ border-color:#1E50E2; }
+
+.ska-modal-note{
+  margin-top:16px; font-size:.82rem; line-height:1.5; color:#7a6a2e;
+  background:#FBF6DC; border:1px solid #EBDFA6; border-radius:10px; padding:12px 14px;
+}
+
+@media (max-width:560px){
+  .ska-modal-ov{ padding:0; align-items:stretch; }
+  .ska-modal{ max-width:none; max-height:100vh; border-radius:0; }
+  .ska-modal-head h3{ font-size:1.05rem; }
+}

@@ -136,10 +136,11 @@
                   {/if}
                 </td>
                 <td class="ska-col-cta" data-label="">
+                  {if isset($skaYear[$product.pid].termsjson)}{assign var=tj value=$skaYear[$product.pid].termsjson}{else}{assign var=tj value=''}{/if}
                   {if $product.bid}
-                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-addcart">Commander</a>
+                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-addcart"{if $tj} data-ska-modal="1" data-ska-name="{$product.name|escape}" data-ska-terms='{$tj}'{/if}>Commander</a>
                   {else}
-                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$product.pid}" class="ska-addcart">Commander</a>
+                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$product.pid}" class="ska-addcart"{if $tj} data-ska-modal="1" data-ska-name="{$product.name|escape}" data-ska-terms='{$tj}'{/if}>Commander</a>
                   {/if}
                 </td>
               </tr>
@@ -197,10 +198,11 @@
               {/if}
             </div>
             <div class="ska-card-cta">
+              {if isset($skaYear[$product.pid].termsjson)}{assign var=wtj value=$skaYear[$product.pid].termsjson}{else}{assign var=wtj value=''}{/if}
               {if $product.bid}
-                <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-btn ska-btn-primary">Commander</a>
+                <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-btn ska-btn-primary"{if $wtj} data-ska-modal="1" data-ska-name="{$product.name|escape}" data-ska-terms='{$wtj}'{/if}>Commander</a>
               {else}
-                <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$product.pid}" class="ska-btn ska-btn-primary">Commander</a>
+                <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$product.pid}" class="ska-btn ska-btn-primary"{if $wtj} data-ska-modal="1" data-ska-name="{$product.name|escape}" data-ska-terms='{$wtj}'{/if}>Commander</a>
               {/if}
             </div>
           </article>
