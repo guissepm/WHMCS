@@ -10,7 +10,18 @@ add_hook('ClientAreaHeadOutput', 1, function ($vars) {
     $root = rtrim($vars['WEB_ROOT'] ?? '', '/');
     $css  = $root . '/templates/syskabs/css/global-responsive.css?v=1.1.0';
 
-    return
+    $out =
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
         . '<link rel="stylesheet" href="' . $css . '">';
+
+    // Habillage pro du tunnel de commande : chargé UNIQUEMENT sur cart.php
+    // (panier, configuration, checkout, confirmation). Scoppé sous
+    // [id^="order-"] dans la feuille -> n'affecte pas le reste du site.
+    $script = $_SERVER['SCRIPT_NAME'] ?? ($_SERVER['PHP_SELF'] ?? '');
+    if (preg_match('#/cart\.php$#', (string) $script)) {
+        $out .= '<link rel="stylesheet" href="' . $root
+              . '/templates/syskabs/css/cart.css?v=1.0.0">';
+    }
+
+    return $out;
 });
