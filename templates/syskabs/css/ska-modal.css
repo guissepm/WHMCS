@@ -99,8 +99,40 @@
   background:#FBF6DC; border:1px solid #EBDFA6; border-radius:10px; padding:12px 14px;
 }
 
+/* ---------- Formulaire de configuration importé de WHMCS ---------- */
+.ska-modal-cfg{ max-width:600px; }
+.ska-modal-loading{ padding:48px 20px; text-align:center; color:#54657E; font-weight:600; }
+.ska-hide{ display:none !important; }
+
+.ska-cfg-form{ margin:0; }
+.ska-cfg-form .form-group,
+.ska-cfg-form .mb-3{ margin-bottom:16px; }
+.ska-cfg-form label{ font-weight:600; color:#0E1A2B; display:block; margin-bottom:6px; }
+.ska-cfg-form select,
+.ska-cfg-form input[type="text"],
+.ska-cfg-form input[type="email"],
+.ska-cfg-form input[type="number"],
+.ska-cfg-form textarea{
+  width:100%; border:1px solid #E2E8F2; border-radius:10px; padding:.6em .85em;
+  background:#fff; color:#0E1A2B; transition:border-color .15s, box-shadow .15s;
+}
+.ska-cfg-form select:focus,
+.ska-cfg-form input:focus,
+.ska-cfg-form textarea:focus{
+  border-color:#1E50E2; box-shadow:0 0 0 3px rgba(30,80,226,.15); outline:0;
+}
+.ska-cfg-form .product-desc,
+.ska-cfg-form .product-description{ font-size:.88rem; color:#54657E; line-height:1.5; }
+/* on masque les entêtes / résumés redondants du formulaire d'origine */
+.ska-cfg-form h1, .ska-cfg-form h2, .ska-cfg-form .cart-title,
+.ska-cfg-form .summary-container, .ska-cfg-form .order-summary,
+.ska-cfg-form .sidebar, .ska-cfg-form .alert{ display:none !important; }
+.ska-cfg-form .row{ margin:0; }
+.ska-cfg-form [class*="col-"]{ width:100%; max-width:100%; flex:0 0 100%; padding:0; }
+
 @media (max-width:560px){
   .ska-modal-ov{ padding:0; align-items:stretch; }
   .ska-modal{ max-width:none; max-height:100vh; border-radius:0; }
+  .ska-modal-cfg{ max-width:none; }
   .ska-modal-head h3{ font-size:1.05rem; }
 }

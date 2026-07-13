@@ -17,8 +17,8 @@ add_hook('ClientAreaHeadOutput', 1, function ($vars) {
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'
         . '<link rel="stylesheet" href="' . $css . '">'
         // Modale de commande rapide (façon thesslstore) : catalogue accueil + boutique.
-        . '<link rel="stylesheet" href="' . $root . '/templates/syskabs/css/ska-modal.css?v=1.0.0">'
-        . '<script src="' . $root . '/templates/syskabs/js/ska-cart-modal.js?v=1.0.0" defer></script>';
+        . '<link rel="stylesheet" href="' . $root . '/templates/syskabs/css/ska-modal.css?v=1.1.0">'
+        . '<script src="' . $root . '/templates/syskabs/js/ska-cart-modal.js?v=2.0.0" defer></script>';
 
     return $out;
 });
