@@ -40,8 +40,8 @@ function skaInitCatalog(root) {
     bar.dataset.skaBound = '1';
     var hero = q('skaBHero'), ht = q('skaBHeroTitle'), hl = q('skaBHeroLogo');
     var scope = views.cert || root;
-    bar.addEventListener('click', function (e) {
-      var t = e.target.closest('.ska-tab'); if (!t) return;
+    function selectBrand(t) {
+      if (!t) return;
       bar.querySelectorAll('.ska-tab').forEach(function (b) { b.classList.remove('active'); });
       t.classList.add('active');
       var f = t.getAttribute('data-b');
@@ -61,7 +61,13 @@ function skaInitCatalog(root) {
           hero.style.display = '';
         }
       }
+    }
+    bar.addEventListener('click', function (e) {
+      var t = e.target.closest('.ska-tab'); if (!t) return;
+      selectBrand(t);
     });
+    // Applique la marque active par défaut (DigiCert) dès le chargement.
+    selectBrand(bar.querySelector('.ska-tab.active') || bar.querySelector('.ska-tab'));
   }
 
   var vf = q('skaFilters');

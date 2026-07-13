@@ -25,8 +25,8 @@
   <div id="skaViewCert">
 
     <div class="ska-filters" id="skaBrandTabs">
-      <button class="ska-tab active" data-b="all">Toutes les marques</button>
-      <button class="ska-tab" data-b="DigiCert">DigiCert</button>
+      <button class="ska-tab" data-b="all">Toutes les marques</button>
+      <button class="ska-tab active" data-b="DigiCert">DigiCert</button>
       <button class="ska-tab" data-b="GeoTrust">GeoTrust</button>
       <button class="ska-tab" data-b="Thawte">Thawte</button>
       <button class="ska-tab" data-b="RapidSSL">RapidSSL</button>
@@ -247,4 +247,4 @@
 
 </div>
 
-<script src="{$WEB_ROOT}/templates/syskabs/js/ska-catalog.js?v=1.2.0"></script>
+<script src="{$WEB_ROOT}/templates/syskabs/js/ska-catalog.js?v=1.3.0"></script>
