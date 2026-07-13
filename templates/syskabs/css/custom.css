@@ -333,6 +333,12 @@
 .ska-pname:hover{color:var(--ska-primary) !important}
 .ska-col-price b{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:1rem; font-variant-numeric:tabular-nums}
 .ska-col-price span{color:var(--ska-muted); font-size:.8rem}
+/* Multi-annuel : étiquette « à partir de », tarif 1 an barré, badge remise */
+.ska-fromlbl{display:block; font-size:.6rem; text-transform:uppercase; letter-spacing:.05em;
+  color:var(--ska-muted); font-weight:600; margin-bottom:1px}
+.ska-col-price s, .ska-wprice s{color:#8798AE; font-family:ui-monospace,Menlo,monospace;
+  font-size:.72rem; margin-left:6px}
+.ska-col-price .ska-save, .ska-wprice .ska-save{margin-left:6px; display:inline-block}
 .ska-col-cta{text-align:right; white-space:nowrap}
 .ska-addcart{display:inline-block; background:#1F2B6C; color:#fff !important; font-weight:700; font-size:.74rem; letter-spacing:.06em; text-transform:uppercase; padding:.75em 1.3em; border-radius:4px; text-decoration:none !important; transition:background .15s, transform .12s}
 .ska-addcart:hover{background:var(--ska-primary); transform:translateY(-1px)}

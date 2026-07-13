@@ -5,7 +5,7 @@
    Certificats -> tableau ; Sécurité Web -> cartes
    ============================================================ *}
 
-<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=2.4.1" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=2.5.0" rel="stylesheet">
 
 <div class="ska-store" id="skaStoreRoot">
 
@@ -49,7 +49,7 @@
             <th class="ska-col-name">Produits</th>
             <th>Marque</th>
             <th>Validation</th>
-            <th class="ska-col-price">Prix le plus bas</th>
+            <th class="ska-col-price">À partir de</th>
             <th class="ska-col-cta"></th>
           </tr>
         </thead>
@@ -114,8 +114,16 @@
                   {/if}
                 </td>
                 <td data-label="Validation"><span class="ska-vbadge {$skaValCls}">{$skaVal}</span></td>
-                <td class="ska-col-price" data-label="Prix le plus bas">
-                  {if isset($product.pricing.minprice)}
+                <td class="ska-col-price" data-label="À partir de">
+                  {if isset($skaYear[$product.pid])}
+                    {assign var=yp value=$skaYear[$product.pid]}
+                    {if $yp.multiyear}<small class="ska-fromlbl">à partir de</small>{/if}
+                    <b>{$yp.peryear}</b><span>/an</span>
+                    {if $yp.discount > 0}
+                      {if $yp.annualref}<s>{$yp.annualref}/an</s>{/if}
+                      <em class="ska-save">&minus;{$yp.discount}%</em>
+                    {/if}
+                  {elseif isset($product.pricing.minprice)}
                     <b>{$product.pricing.minprice.price}</b>
                     {if $product.pricing.minprice.cycle == 'annually'}<span>/an</span>
                     {elseif $product.pricing.minprice.cycle == 'biennially'}<span>/2 ans</span>
@@ -172,7 +180,12 @@
               <div class="ska-desc">{$product.description|strip_tags|truncate:130:"…"}</div>
             {/if}
             <div class="ska-price ska-wprice">
-              {if isset($product.pricing.minprice)}
+              {if isset($skaYear[$product.pid])}
+                {assign var=wyp value=$skaYear[$product.pid]}
+                {if $wyp.multiyear}<small class="ska-fromlbl">à partir de</small>{/if}
+                <b>{$wyp.peryear}</b><span>/an</span>
+                {if $wyp.discount > 0}<em class="ska-save">&minus;{$wyp.discount}%</em>{/if}
+              {elseif isset($product.pricing.minprice)}
                 <b>{$product.pricing.minprice.price}</b>
                 {if $product.pricing.minprice.cycle == 'monthly'}<span>/mois</span>
                 {elseif $product.pricing.minprice.cycle == 'annually'}<span>/an</span>
