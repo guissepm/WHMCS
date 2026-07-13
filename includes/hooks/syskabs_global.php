@@ -20,7 +20,9 @@ add_hook('ClientAreaHeadOutput', 1, function ($vars) {
     $script = $_SERVER['SCRIPT_NAME'] ?? ($_SERVER['PHP_SELF'] ?? '');
     if (preg_match('#/cart\.php$#', (string) $script)) {
         $out .= '<link rel="stylesheet" href="' . $root
-              . '/templates/syskabs/css/cart.css?v=1.0.0">';
+              . '/templates/syskabs/css/cart.css?v=1.1.0">'
+              . '<script src="' . $root
+              . '/templates/syskabs/js/ska-configure.js?v=1.0.0" defer></script>';
     }
 
     return $out;

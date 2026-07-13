@@ -166,6 +166,45 @@
 [id^="order-"] .item-domain,
 [id^="order-"] .cart-item .domain{ color:var(--ska-muted); }
 
+/* ---------- Sélecteur de durée façon thesslstore (cartes radio) ---------- */
+[id^="order-"] .ska-select-hidden{ display:none !important; }
+[id^="order-"] .ska-terms{ display:flex; flex-direction:column; gap:12px; margin:6px 0 20px; }
+[id^="order-"] .ska-term{
+  display:flex; align-items:flex-start; gap:14px;
+  background:#EEF1F7; border:1.5px solid var(--ska-line);
+  border-radius:12px; padding:15px 18px; cursor:pointer;
+  transition:border-color .15s, background .15s, box-shadow .15s, transform .1s;
+}
+[id^="order-"] .ska-term:hover{ border-color:#C6D2E6; }
+[id^="order-"] .ska-term.active{
+  background:var(--ska-surface); border-color:var(--ska-primary);
+  box-shadow:0 0 0 3px rgba(30,80,226,.14), var(--ska-shadow);
+}
+/* pastille radio */
+[id^="order-"] .ska-term-radio{
+  flex:0 0 auto; width:20px; height:20px; margin-top:2px; border-radius:50%;
+  border:2px solid #B7C3D8; background:#fff; position:relative; transition:.15s;
+}
+[id^="order-"] .ska-term.active .ska-term-radio{ border-color:var(--ska-primary); }
+[id^="order-"] .ska-term.active .ska-term-radio::after{
+  content:""; position:absolute; inset:3px; border-radius:50%;
+  background:var(--ska-primary);
+}
+[id^="order-"] .ska-term-body{ flex:1 1 auto; }
+[id^="order-"] .ska-term-main{ font-size:1.02rem; color:var(--ska-ink); font-weight:600; }
+[id^="order-"] .ska-term-main b{ font-weight:820; }
+[id^="order-"] .ska-term-main span{ color:var(--ska-muted); font-weight:600; font-size:.9rem; }
+[id^="order-"] .ska-term-sub{
+  margin-top:5px; font-size:.86rem; color:var(--ska-muted);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+[id^="order-"] .ska-term-sub s{ color:#8798AE; }
+[id^="order-"] .ska-term-save{ font-style:normal; font-weight:750; color:var(--ska-green); }
+[id^="order-"] .ska-term-off{
+  font-style:normal; font-weight:800; color:#E8730C;
+  background:rgba(232,115,12,.1); padding:1px 8px; border-radius:6px; font-size:.8rem;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width:991px){
   [id^="order-"] .cart-summary,
