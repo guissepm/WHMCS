@@ -5,7 +5,7 @@
    Certificats -> tableau ; Sécurité Web -> cartes
    ============================================================ *}
 
-<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=2.6.0" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/syskabs/css/custom.css?v=2.7.0" rel="stylesheet">
 
 <div class="ska-store" id="skaStoreRoot">
 
@@ -217,10 +217,57 @@
 
     <div class="ska-bhero">
       <div>
-        <h2>Automatisation SSL (ACME)</h2>
-        <p>Certificats compatibles ACME : émission, renouvellement et installation automatiques — prêts pour les cycles de vie raccourcis à 47 jours d'ici 2029.</p>
+        <h2>Automatisation SSL</h2>
+        <p>Émission, validation, installation et renouvellement automatiques de vos certificats — prêts pour les cycles de vie raccourcis à 47 jours d'ici 2029. Deux approches selon votre infrastructure.</p>
       </div>
     </div>
+
+    {* --- Les deux voies d'automatisation (façon thesslstore) --- *}
+    <div class="ska-grid ska-auto-grid">
+      <article class="ska-card ska-autocard">
+        <header>
+          <h3>&#9881;&#65039; AutoInstall SSL pour Windows / Linux</h3>
+        </header>
+        <div class="ska-desc">
+          Outil d'installation automatique compatible avec <b>tous les certificats de notre catalogue</b>.
+          Idéal si votre site est hébergé sur cPanel/WHM (Linux) ou IIS (Windows) : aucune manipulation
+          technique, le certificat est généré, validé, installé puis réémis automatiquement.
+        </div>
+        <ul>
+          <li>Génération du CSR et validation de domaine automatiques</li>
+          <li>Installation et renouvellement sans intervention</li>
+          <li>Réémission automatique en cas de révocation imminente</li>
+          <li>Compatible cPanel/WHM (Linux) et IIS (Windows)</li>
+        </ul>
+        <div class="ska-card-cta">
+          <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl" class="ska-btn ska-btn-primary">Choisir un certificat</a>
+          <a href="{$WEB_ROOT}/submitticket.php" class="ska-btn ska-btn-ghost">Être accompagné</a>
+        </div>
+      </article>
+
+      <article class="ska-card ska-autocard">
+        <header>
+          <h3>&#9889; Certificats compatibles ACME</h3>
+        </header>
+        <div class="ska-desc">
+          Certificats supportant nativement le <b>protocole ACME</b> : connectez votre client habituel
+          (Certbot, acme.sh, win-acme, Posh-ACME…) et automatisez l'émission et le renouvellement
+          sur n'importe quel serveur, conteneur ou équilibreur de charge.
+        </div>
+        <ul>
+          <li>Standard ouvert ACME — aucun outil propriétaire requis</li>
+          <li>Renouvellements illimités pendant la période souscrite</li>
+          <li>DV, OV et EV disponibles (gamme Flex multi-années)</li>
+          <li>Parfait pour DevOps : scripts, CI/CD, Kubernetes</li>
+        </ul>
+        <div class="ska-card-cta">
+          <a href="#skaAcmeGrid" class="ska-btn ska-btn-primary">Voir les certificats ACME</a>
+        </div>
+      </article>
+    </div>
+
+    <h2 class="ska-auto-subhead" id="skaAcmeGrid">Certificats SSL compatibles ACME</h2>
+    <p class="ska-auto-subintro">Gamme Flex : un seul abonnement multi-années, des réémissions et renouvellements automatiques illimités via ACME.</p>
 
     <div class="ska-ptable-wrap">
       <table class="ska-ptable">

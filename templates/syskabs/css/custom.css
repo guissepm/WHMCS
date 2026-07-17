@@ -414,3 +414,11 @@
   .ska-grid{grid-template-columns:1fr}
   .ska-cta{padding:32px 24px !important}
 }
+
+/* ---------- Automatisation SSL : deux voies (AutoInstall vs ACME) ---------- */
+.ska-auto-grid{grid-template-columns:1fr 1fr; margin-bottom:26px}
+.ska-autocard h3{font-size:1.08rem; line-height:1.35}
+.ska-autocard .ska-desc{flex:0 0 auto}
+.ska-auto-subhead{font-size:1.35rem; font-weight:800; letter-spacing:-.01em; color:var(--ska-ink); margin:6px 0 4px; scroll-margin-top:90px}
+.ska-auto-subintro{color:var(--ska-muted); font-size:.92rem; margin:0 0 14px}
+@media (max-width:860px){ .ska-auto-grid{grid-template-columns:1fr} }
