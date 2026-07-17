@@ -18,6 +18,7 @@
   <div class="ska-cattabs" id="skaCatTabs">
     <button class="ska-cattab" data-v="websec">&#128737;&nbsp; Sécurité Web</button>
     <button class="ska-cattab active" data-v="cert">&#128274;&nbsp; Certificats</button>
+    <button class="ska-cattab" data-v="auto">&#9889;&nbsp; Automatisation SSL</button>
     <button class="ska-cattab" data-v="pki">&#128273;&nbsp; PKI</button>
   </div>
 
@@ -211,6 +212,99 @@
     </div>
   </div>
 
+  {* ============== VUE AUTOMATISATION SSL (produits FLEX / ACME) ============== *}
+  <div id="skaViewAuto" style="display:none">
+
+    <div class="ska-bhero">
+      <div>
+        <h2>Automatisation SSL (ACME)</h2>
+        <p>Certificats compatibles ACME : émission, renouvellement et installation automatiques — prêts pour les cycles de vie raccourcis à 47 jours d'ici 2029.</p>
+      </div>
+    </div>
+
+    <div class="ska-ptable-wrap">
+      <table class="ska-ptable">
+        <thead>
+          <tr>
+            <th class="ska-col-name">Produits</th>
+            <th>Marque</th>
+            <th>Validation</th>
+            <th class="ska-col-price">À partir de</th>
+            <th class="ska-col-cta"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {foreach $products as $product}
+            {assign var=n value=$product.name|lower}
+            {if $n|strstr:'flex' or $n|strstr:'automate'}
+
+              {assign var=skaABrand value='DigiCert'}
+              {if $n|strstr:'geotrust'}{assign var=skaABrand value='GeoTrust'}
+              {elseif $n|strstr:'thawte'}{assign var=skaABrand value='Thawte'}
+              {elseif $n|strstr:'rapidssl'}{assign var=skaABrand value='RapidSSL'}
+              {/if}
+
+              {assign var=skaAVal value='Domaine (DV)'}
+              {assign var=skaAValCls value='ska-v-dv'}
+              {if $n|strstr:'ev'}
+                {assign var=skaAVal value='Domaine + Organisation (EV)'}{assign var=skaAValCls value='ska-v-ev'}
+              {elseif $n|strstr:'ov' or $n|strstr:'businessid' or $n|strstr:'secure site' or $n|strstr:'web server'}
+                {assign var=skaAVal value='Domaine + Organisation (OV)'}{assign var=skaAValCls value='ska-v-ov'}
+              {/if}
+
+              <tr>
+                <td class="ska-col-name" data-label="Produit">
+                  {if isset($product.slug) && isset($productGroup.slug)}
+                    <a href="{$WEB_ROOT}/index.php?rp=/store/{$productGroup.slug}/{$product.slug}" class="ska-pname">{$product.name}</a>
+                  {else}
+                    <span class="ska-pname">{$product.name}</span>
+                  {/if}
+                  <span class="ska-vbadge ska-v-dv" style="margin-left:6px">ACME</span>
+                </td>
+                <td class="ska-col-brand" data-label="Marque">
+                  <img src="{$WEB_ROOT}/assets/ssl_resources/images/emails/{$skaABrand|lower}-logo.svg"
+                       alt="{$skaABrand}" class="ska-blogo"
+                       onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+                  <span class="ska-bfall" style="display:none">{$skaABrand}</span>
+                </td>
+                <td data-label="Validation"><span class="ska-vbadge {$skaAValCls}">{$skaAVal}</span></td>
+                <td class="ska-col-price" data-label="À partir de">
+                  {if isset($skaYear[$product.pid])}
+                    {assign var=ayp value=$skaYear[$product.pid]}
+                    {if $ayp.multiyear}<small class="ska-fromlbl">à partir de</small>{/if}
+                    <b>{$ayp.peryear}</b><span>/an</span>
+                    {if $ayp.discount > 0}
+                      {if $ayp.annualref}<s>{$ayp.annualref}/an</s>{/if}
+                      <em class="ska-save">&minus;{$ayp.discount}%</em>
+                    {/if}
+                  {elseif isset($product.pricing.minprice)}
+                    <b>{$product.pricing.minprice.price}</b>
+                    {if $product.pricing.minprice.cycle == 'annually'}<span>/an</span>
+                    {elseif $product.pricing.minprice.cycle == 'biennially'}<span>/2 ans</span>
+                    {elseif $product.pricing.minprice.cycle == 'triennially'}<span>/3 ans</span>
+                    {/if}
+                  {elseif isset($product.pricing.totalonetime)}
+                    <b>{$product.pricing.totalonetime}</b>
+                  {else}
+                    —
+                  {/if}
+                </td>
+                <td class="ska-col-cta" data-label="">
+                  {if isset($skaYear[$product.pid].termsjson)}{assign var=atj value=$skaYear[$product.pid].termsjson}{else}{assign var=atj value=''}{/if}
+                  {if $product.bid}
+                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;bid={$product.bid}" class="ska-addcart"{if $atj} data-ska-modal="1" data-ska-name="{$product.name|escape}" data-ska-terms='{$atj}'{/if}>Commander</a>
+                  {else}
+                    <a href="{$WEB_ROOT}/cart.php?a=add&amp;pid={$product.pid}" class="ska-addcart"{if $atj} data-ska-modal="1" data-ska-name="{$product.name|escape}" data-ska-terms='{$atj}'{/if}>Commander</a>
+                  {/if}
+                </td>
+              </tr>
+            {/if}
+          {/foreach}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   {* ============== VUE PKI (solutions sur devis) ============== *}
   <div id="skaViewPki" style="display:none">
     <div class="ska-grid ska-store-grid ska-websec-grid">
@@ -247,4 +341,4 @@
 
 </div>
 
-<script src="{$WEB_ROOT}/templates/syskabs/js/ska-catalog.js?v=1.3.0"></script>
+<script src="{$WEB_ROOT}/templates/syskabs/js/ska-catalog.js?v=1.4.0"></script>

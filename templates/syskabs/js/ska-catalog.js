@@ -19,7 +19,7 @@ function skaInitCatalog(root) {
   root = root || document;
   function q(id) { return root.querySelector('#' + id) || document.getElementById(id); }
 
-  var views = { cert: q('skaViewCert'), websec: q('skaViewWebsec'), pki: q('skaViewPki') };
+  var views = { cert: q('skaViewCert'), websec: q('skaViewWebsec'), auto: q('skaViewAuto'), pki: q('skaViewPki') };
 
   var tabs = q('skaCatTabs');
   if (tabs && !tabs.dataset.skaBound) {
@@ -33,6 +33,12 @@ function skaInitCatalog(root) {
         if (views[k]) views[k].style.display = (k === v) ? '' : 'none';
       });
     });
+    // Lien profond : /store/...#auto ouvre directement l'onglet correspondant.
+    var want = (window.location.hash || '').replace('#', '');
+    if (want && views[want]) {
+      var wantBtn = tabs.querySelector('.ska-cattab[data-v="' + want + '"]');
+      if (wantBtn) wantBtn.click();
+    }
   }
 
   var bar = q('skaBrandTabs');

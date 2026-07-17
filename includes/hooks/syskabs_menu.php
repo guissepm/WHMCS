@@ -42,6 +42,14 @@ add_hook('ClientAreaPrimaryNavbar', 1, function (MenuItem $primaryNavbar) {
         'order' => 50,
     ]);
 
+    // Certificats compatibles ACME (gamme FLEX) — ouvre l'onglet
+    // « Automatisation SSL » du catalogue via le lien profond #auto.
+    $primaryNavbar->addChild('automatisation-ssl', [
+        'label' => 'Automatisation SSL',
+        'uri'   => 'cart.php?gid=1#auto',
+        'order' => 15,
+    ]);
+
     $primaryNavbar->addChild('signature-code', [
         'label' => 'Signature de code',
         'uri'   => 'cart.php?gid=1',

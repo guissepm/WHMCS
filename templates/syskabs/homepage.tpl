@@ -354,7 +354,7 @@
 </div>
 
 <script>var skaStoreUrl='{$WEB_ROOT}/index.php?rp=/store/certificats-ssl';</script>
-<script src="{$WEB_ROOT}/templates/syskabs/js/ska-catalog.js?v=1.3.0"></script>
+<script src="{$WEB_ROOT}/templates/syskabs/js/ska-catalog.js?v=1.4.0"></script>
 {literal}
 <script>
 /* Import du catalogue de la boutique : source unique de verite.
