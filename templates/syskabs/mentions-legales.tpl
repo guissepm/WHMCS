@@ -2,8 +2,6 @@
    Mentions légales · CGU · Confidentialité — mit-sec.com
    Produit édité par Sys Kabs Amazone SAS.
    Rendu dans l'habillage du thème (page cliente mentions-legales.php).
-   Les champs [À COMPLÉTER] doivent être renseignés avec les
-   informations légales réelles de Sys Kabs Amazone SAS.
    ============================================================ *}
 
 <link href="{$WEB_ROOT}/templates/{$template}/css/custom.css?v=2.7.0" rel="stylesheet">
@@ -48,12 +46,6 @@
   <div class="ska-legal-box">
     <table>
       <tr><td class="ska-lbl">Société</td><td><strong>Sys Kabs Amazone SAS</strong></td></tr>
-      <tr><td class="ska-lbl">Forme juridique</td><td>Société par Actions Simplifiée (SAS)</td></tr>
-      <tr><td class="ska-lbl">Capital social</td><td><span class="ska-todo">[À COMPLÉTER]</span></td></tr>
-      <tr><td class="ska-lbl">RCCM / N° RC</td><td><span class="ska-todo">[À COMPLÉTER]</span></td></tr>
-      <tr><td class="ska-lbl">NINEA / N° fiscal</td><td><span class="ska-todo">[À COMPLÉTER]</span></td></tr>
-      <tr><td class="ska-lbl">Siège social</td><td><span class="ska-todo">[À COMPLÉTER — adresse complète]</span></td></tr>
-      <tr><td class="ska-lbl">Téléphone</td><td><span class="ska-todo">[À COMPLÉTER]</span></td></tr>
       <tr><td class="ska-lbl">Email</td><td>contact@mit-sec.com</td></tr>
       <tr><td class="ska-lbl">Directeur de la publication</td><td>Papa Guisse</td></tr>
     </table>
@@ -64,15 +56,7 @@
   et de services de sécurité, <strong>éditée et exploitée par Sys Kabs Amazone SAS</strong>. Sys Kabs Amazone
   agit en qualité de revendeur agréé auprès des Autorités de Certification et de leurs distributeurs.</p>
 
-  <h3>1.3 Hébergement</h3>
-  <div class="ska-legal-box">
-    <table>
-      <tr><td class="ska-lbl">Hébergeur</td><td><span class="ska-todo">[À COMPLÉTER — ex. LWS, OVH…]</span></td></tr>
-      <tr><td class="ska-lbl">Adresse</td><td><span class="ska-todo">[À COMPLÉTER — adresse de l'hébergeur]</span></td></tr>
-    </table>
-  </div>
-
-  <h3>1.4 Responsable du traitement des données</h3>
+  <h3>1.3 Responsable du traitement des données</h3>
   <p><strong>Sys Kabs Amazone SAS</strong> est responsable du traitement des données personnelles
   collectées via mit-sec.com. Voir la section <a href="#confidentialite">Confidentialité</a>.</p>
 
@@ -140,7 +124,7 @@
 
   <h3>2.10 Droit applicable et juridiction</h3>
   <p>Les présentes conditions sont régies par le droit sénégalais. À défaut de résolution amiable, tout litige
-  relève des tribunaux compétents de <span class="ska-todo">[À COMPLÉTER — ex. Dakar]</span>.</p>
+  relève des tribunaux compétents du ressort du siège social de Sys Kabs Amazone SAS.</p>
 
   {* ---------- 3. CONFIDENTIALITÉ ---------- *}
   <h2 id="confidentialite">3. Politique de Confidentialité</h2>
