@@ -38,7 +38,7 @@
     <div class="ska-bhero" id="skaBHero" style="display:none">
       <div>
         <h2 id="skaBHeroTitle"></h2>
-        <p>Tarifs revendeur — économisez par rapport aux prix éditeur</p>
+        <p>Les meilleurs prix du marché — économisez sur vos certificats</p>
       </div>
       <img id="skaBHeroLogo" class="ska-bhero-logo" alt="" src="">
     </div>

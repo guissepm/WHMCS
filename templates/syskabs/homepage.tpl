@@ -17,9 +17,9 @@
       <div class="ska-slide ska-sl-a">
         <div class="ska-slide-inner">
           <div class="ska-slide-copy">
-            <span class="ska-eyebrow">Revendeur agréé — Autorités de certification mondiales</span>
+            <span class="ska-eyebrow">Certificats officiels des Autorités de certification mondiales</span>
             <h2>Chaque connexion mérite le <span class="ska-green">cadenas vert</span>.</h2>
-            <p>Certificats SSL/TLS, signature de code et sécurité web — émis en quelques minutes, aux tarifs revendeur.</p>
+            <p>Certificats SSL/TLS, signature de code et sécurité web — émis en quelques minutes, aux meilleurs tarifs.</p>
             <div class="ska-hero-cta">
               <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl" class="ska-btn ska-btn-primary ska-btn-lg">Choisir mon certificat</a>
               <a href="#ska-compare" class="ska-btn ska-btn-ghost ska-btn-lg">Comparer DV / OV / EV</a>
@@ -47,7 +47,7 @@
         <div class="ska-slide-inner">
           <div class="ska-slide-copy">
             <span class="ska-eyebrow">Le leader mondial de la PKI</span>
-            <h2>Certificats DigiCert au tarif revendeur.</h2>
+            <h2>Certificats DigiCert au meilleur prix.</h2>
             <p>Secure Site, Basic et Multi-domaine — la référence des grandes marques, émise en un temps record.</p>
             <div class="ska-hero-cta">
               <a href="{$WEB_ROOT}/index.php?rp=/store/certificats-ssl" class="ska-btn ska-btn-white ska-btn-lg">Voir les certificats</a>

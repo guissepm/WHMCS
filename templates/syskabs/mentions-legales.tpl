@@ -53,8 +53,8 @@
 
   <h3>1.2 Nature de la plateforme</h3>
   <p><strong>mit-sec.com</strong> est une plateforme de vente et de configuration de certificats SSL/TLS
-  et de services de sécurité, <strong>éditée et exploitée par Sys Kabs Amazone SAS</strong>. Sys Kabs Amazone
-  agit en qualité de revendeur agréé auprès des Autorités de Certification et de leurs distributeurs.</p>
+  et de services de sécurité, <strong>éditée et exploitée par Sys Kabs Amazone SAS</strong>. Sys Kabs Amazone SAS
+  assure la fourniture, la configuration, l'émission et le support des certificats pour le compte de ses clients.</p>
 
   <h3>1.3 Responsable du traitement des données</h3>
   <p><strong>Sys Kabs Amazone SAS</strong> est responsable du traitement des données personnelles
