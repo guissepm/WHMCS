@@ -23,18 +23,37 @@ use WHMCS\Database\Capsule;
 
 add_hook('ClientAreaPageCart', 1, function ($vars) {
     try {
-        $currency = Capsule::table('tblcurrencies')->where('default', 1)->first();
+        // Devise ACTIVE : celle du client connecté, sinon celle de la session
+        // (posée par le sélecteur de devise ou le hook syskabs_currency),
+        // sinon la devise par défaut.
+        $currency = null;
+        if (!empty($_SESSION['uid'])) {
+            $cid = Capsule::table('tblclients')->where('id', (int) $_SESSION['uid'])->value('currency');
+            if ($cid) {
+                $currency = Capsule::table('tblcurrencies')->find((int) $cid);
+            }
+        }
+        if (!$currency && !empty($_SESSION['currency'])) {
+            $currency = Capsule::table('tblcurrencies')->find((int) $_SESSION['currency']);
+        }
         if (!$currency) {
-            $currency = Capsule::table('tblcurrencies')->orderBy('id')->first();
+            $currency = Capsule::table('tblcurrencies')->where('default', 1)->first()
+                ?: Capsule::table('tblcurrencies')->orderBy('id')->first();
         }
         if (!$currency) {
             return [];
         }
 
+        // Formats WHMCS : 1 = 1234.56 ; 2 = 1,234.56 ; 3 = 1.234,56 ; 4 = 1,234 (sans décimales).
         $fmt = function ($v) use ($currency) {
+            switch ((int) $currency->format) {
+                case 1:  $n = number_format((float) $v, 2, '.', '');  break;
+                case 3:  $n = number_format((float) $v, 2, ',', '.'); break;
+                case 4:  $n = number_format((float) $v, 0, '.', ','); break;
+                default: $n = number_format((float) $v, 2, '.', ','); break;
+            }
             $suffix = trim((string) $currency->suffix);
-            return $currency->prefix . number_format((float) $v, 2)
-                . ($suffix !== '' ? ' ' . $suffix : '');
+            return $currency->prefix . $n . ($suffix !== '' ? ' ' . $suffix : '');
         };
 
         // Un seul passage sur les tarifs produits de la devise par défaut.
@@ -93,7 +112,12 @@ add_hook('ClientAreaPageCart', 1, function ($vars) {
                 ];
             }
             $termsJson = json_encode(
-                ['cur' => $currency->prefix, 'sfx' => trim((string) $currency->suffix), 'terms' => $termList],
+                [
+                    'cur'   => $currency->prefix,
+                    'sfx'   => trim((string) $currency->suffix),
+                    'dec'   => ((int) $currency->format === 4) ? 0 : 2,
+                    'terms' => $termList,
+                ],
                 JSON_UNESCAPED_UNICODE
             );
 

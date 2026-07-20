@@ -14,8 +14,9 @@
 (function () {
   var ov = null;
 
+  var moneyDec = 2; // décimales de la devise active (0 pour le FCFA)
   function money(cur, sfx, n) {
-    var s = cur + Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    var s = cur + Number(n).toFixed(moneyDec).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return sfx ? s + ' ' + sfx : s;
   }
   function yLabel(y) { return y + (y > 1 ? ' ans' : ' an'); }
@@ -44,6 +45,7 @@
     if (!data || !data.terms || !data.terms.length) return false;
 
     var cur = data.cur || '$', sfx = data.sfx || '';
+    moneyDec = (typeof data.dec === 'number') ? data.dec : 2;
     var terms = data.terms.slice().sort(function (a, b) { return a.y - b.y; });
     var sel = terms.length - 1; // durée la plus longue par défaut (meilleur prix/an)
 
