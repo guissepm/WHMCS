@@ -8,6 +8,7 @@ on:
       - "assets/**"
       - "templates/**"
       - "includes/**"
+      - "pages/**"
   workflow_dispatch: {}
 
 jobs:
@@ -23,9 +24,11 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Synchroniser modules, assets, templates et hooks vers le staging du VPS
+      - name: Synchroniser modules, assets, templates, hooks et pages vers le staging du VPS
         run: |
-          for dir in modules assets templates includes; do
+          # modules/assets/templates/includes -> sous-dossiers du webroot ;
+          # pages -> fichiers PHP autonomes copiés à la RACINE du webroot.
+          for dir in modules assets templates includes pages; do
             if [ -d "$dir" ]; then
               rsync -rlptzv --checksum \
                 -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT }}" \
@@ -41,4 +44,9 @@ jobs:
                 docker cp "/opt/whmcs-boutique/overlay/$dir/." "whmcs_php:/var/www/html/$dir/" || exit 1
               fi
             done
-            docker exec whmcs_php chown -R www-data:www-data /var/www/html/modules /var/www/html/assets /var/www/html/templates /var/www/html/includes'
+            # Pages autonomes : contenu de pages/ copié à la racine du webroot.
+            if [ -d "/opt/whmcs-boutique/overlay/pages" ]; then
+              docker cp "/opt/whmcs-boutique/overlay/pages/." "whmcs_php:/var/www/html/" || exit 1
+            fi
+            docker exec whmcs_php chown -R www-data:www-data /var/www/html/modules /var/www/html/assets /var/www/html/templates /var/www/html/includes
+            docker exec whmcs_php sh -c "chown www-data:www-data /var/www/html/mentions-legales.php 2>/dev/null || true"'
